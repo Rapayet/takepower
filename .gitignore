@@ -1,0 +1,36 @@
+# Secrets — NEVER commit these
+.env
+env.txt
+*.key
+*.pem
+id_ed25519*
+
+# Database
+*.db
+*.db-journal
+*.db-wal
+*.db-shm
+
+# Node
+node_modules/
+package-lock.json
+
+# phoenixd
+phoenixd*/
+seed.dat
+phoenix.conf
+
+# OS
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# Logs
+*.log
+npm-debug.log*

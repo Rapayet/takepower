@@ -1,0 +1,602 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ϕ</title>
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>ϕ</text></svg>">
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&display=swap" rel="stylesheet">
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    background: #0a0a0f;
+    color: #e8e0d4;
+    font-family: 'Cormorant Garamond', 'Georgia', serif;
+    min-height: 100vh;
+    overflow-x: hidden;
+  }
+
+  /* HERO - Full screen poem */
+  .hero {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    padding: 40px 20px;
+  }
+
+  .cosmos-bg {
+    position: fixed;
+    top: 0; left: 0; right: 0; bottom: 0;
+    z-index: 0;
+    background:
+      radial-gradient(ellipse at 20% 50%, rgba(40, 20, 60, 0.4) 0%, transparent 60%),
+      radial-gradient(ellipse at 80% 30%, rgba(15, 30, 50, 0.5) 0%, transparent 50%),
+      radial-gradient(ellipse at 50% 80%, rgba(50, 20, 30, 0.3) 0%, transparent 50%),
+      #0a0a0f;
+  }
+
+  .stars {
+    position: fixed;
+    top: 0; left: 0; right: 0; bottom: 0;
+    z-index: 1;
+    pointer-events: none;
+  }
+
+  .star {
+    position: absolute;
+    width: 2px;
+    height: 2px;
+    background: #fff;
+    border-radius: 50%;
+    animation: twinkle var(--duration) ease-in-out infinite;
+    opacity: 0;
+  }
+
+  @keyframes twinkle {
+    0%, 100% { opacity: 0.1; }
+    50% { opacity: var(--max-opacity); }
+  }
+
+  .hero-content {
+    position: relative;
+    z-index: 2;
+    text-align: center;
+    max-width: 600px;
+  }
+
+  .poem {
+    font-size: 1.5rem;
+    font-style: italic;
+    color: rgba(232, 224, 212, 0.9);
+    line-height: 2.2;
+    letter-spacing: 0.02em;
+    margin-bottom: 40px;
+  }
+
+  .poem-author {
+    font-size: 0.9rem;
+    color: rgba(200, 170, 120, 0.5);
+    font-style: normal;
+    letter-spacing: 0.1em;
+  }
+
+  .scroll-indicator {
+    position: absolute;
+    bottom: 40px;
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 2;
+    animation: float 2s ease-in-out infinite;
+    cursor: pointer;
+  }
+
+  .scroll-indicator span {
+    display: block;
+    width: 24px;
+    height: 24px;
+    border-right: 2px solid rgba(200, 170, 120, 0.4);
+    border-bottom: 2px solid rgba(200, 170, 120, 0.4);
+    transform: rotate(45deg);
+  }
+
+  @keyframes float {
+    0%, 100% { transform: translateX(-50%) translateY(0); }
+    50% { transform: translateX(-50%) translateY(10px); }
+  }
+
+  /* CONTENT SECTION */
+  .content-section {
+    position: relative;
+    z-index: 2;
+    padding: 80px 20px 100px;
+  }
+
+  .container {
+    max-width: 900px;
+    margin: 0 auto;
+  }
+
+  .lang-buttons {
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    z-index: 100;
+    display: flex;
+    gap: 8px;
+  }
+
+  .lang-btn {
+    padding: 6px 12px;
+    border: 1px solid rgba(200, 170, 120, 0.3);
+    background: rgba(10, 10, 15, 0.8);
+    color: rgba(200, 180, 150, 0.6);
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 0.85rem;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    border-radius: 2px;
+  }
+
+  .lang-btn:hover, .lang-btn.active {
+    border-color: rgba(200, 170, 120, 0.6);
+    color: #d4c5a9;
+    background: rgba(200, 170, 120, 0.1);
+  }
+
+  .title-section {
+    text-align: center;
+    margin-bottom: 50px;
+    position: relative;
+  }
+
+  .title-section::after {
+    content: '';
+    display: block;
+    width: 120px;
+    height: 1px;
+    background: linear-gradient(90deg, transparent, rgba(200, 170, 120, 0.6), transparent);
+    margin: 20px auto 0;
+  }
+
+  h1 {
+    font-size: 2.4rem;
+    font-weight: 300;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: #d4c5a9;
+    text-shadow: 0 0 40px rgba(200, 170, 120, 0.15);
+  }
+
+  .subtitle {
+    font-size: 1.1rem;
+    font-weight: 300;
+    font-style: italic;
+    color: rgba(200, 180, 150, 0.6);
+    margin-top: 12px;
+    letter-spacing: 0.05em;
+  }
+
+  .equation-block {
+    margin: 28px 0;
+    padding: 24px 30px;
+    border-left: 2px solid rgba(200, 170, 120, 0.2);
+    position: relative;
+    transition: all 0.4s ease;
+  }
+
+  .equation-block:hover {
+    border-left-color: rgba(200, 170, 120, 0.5);
+    background: rgba(200, 170, 120, 0.03);
+  }
+
+  .equation-label {
+    font-size: 0.75rem;
+    text-transform: uppercase;
+    letter-spacing: 0.2em;
+    color: rgba(200, 170, 120, 0.5);
+    margin-bottom: 10px;
+    font-weight: 600;
+  }
+
+  .equation {
+    font-size: 1.7rem;
+    font-weight: 300;
+    color: #f0e8d8;
+    font-family: 'Cormorant Garamond', Georgia, serif;
+    font-style: italic;
+    letter-spacing: 0.03em;
+    line-height: 1.6;
+  }
+
+  .equation .symbol { color: #c8aa78; }
+  .equation .operator { color: rgba(200, 180, 150, 0.7); margin: 0 4px; }
+
+  .interpretation {
+    font-size: 0.95rem;
+    color: rgba(200, 180, 150, 0.5);
+    margin-top: 8px;
+    font-style: italic;
+    line-height: 1.5;
+  }
+
+  .central-axiom {
+    text-align: center;
+    margin: 45px 0;
+    padding: 35px;
+    border: 1px solid rgba(200, 170, 120, 0.15);
+    border-radius: 2px;
+    position: relative;
+    background: rgba(200, 170, 120, 0.02);
+  }
+
+  .central-axiom::before,
+  .central-axiom::after {
+    content: '✦';
+    position: absolute;
+    color: rgba(200, 170, 120, 0.3);
+    font-size: 0.7rem;
+  }
+
+  .central-axiom::before { top: -8px; left: 50%; transform: translateX(-50%); }
+  .central-axiom::after { bottom: -8px; left: 50%; transform: translateX(-50%); }
+
+  .central-axiom .equation { font-size: 2.2rem; }
+  .central-axiom .equation-label { font-size: 0.85rem; margin-bottom: 14px; }
+
+  .divider {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 15px;
+    margin: 35px 0;
+    color: rgba(200, 170, 120, 0.25);
+    font-size: 0.7rem;
+    letter-spacing: 0.3em;
+  }
+
+  .final-form {
+    text-align: center;
+    margin: 40px 0;
+    padding: 30px;
+    background: linear-gradient(180deg, rgba(200, 170, 120, 0.05) 0%, transparent 100%);
+    border-radius: 3px;
+  }
+
+  .final-form .equation { font-size: 1.5rem; }
+  .final-form .interpretation { font-size: 1rem; margin-top: 15px; }
+
+  .footer {
+    display: block;
+    text-align: center;
+    padding: 50px 0;
+    font-size: 0.8rem;
+    letter-spacing: 0.3em;
+    text-transform: uppercase;
+    color: rgba(200, 170, 120, 0.3);
+    text-decoration: none;
+    transition: color 0.3s ease;
+  }
+
+  .footer:hover {
+    color: rgba(200, 170, 120, 0.6);
+  }
+
+  @media (max-width: 600px) {
+    .poem { font-size: 1.2rem; line-height: 2; }
+    h1 { font-size: 1.8rem; }
+    .equation { font-size: 1.3rem; }
+    .central-axiom .equation { font-size: 1.6rem; }
+    .container { padding: 0 20px; }
+    .lang-buttons { top: 10px; right: 10px; }
+    .lang-btn { padding: 4px 8px; font-size: 0.75rem; }
+  }
+</style>
+  <script defer src="https://cloud.umami.is/script.js" data-website-id="58faea89-51ba-408c-863e-591a576e203e"></script>
+  <script>
+  (function() {
+    var ua = navigator.userAgent || navigator.vendor || '';
+    var isWebView = /Instagram|FBAN|FBAV|FB_IAB|TikTok|Musical|BytedanceWebview|Snapchat|Line\//i.test(ua);
+    if (isWebView) {
+      var url = window.location.href;
+      if (/android/i.test(ua)) {
+        window.location.href = 'intent://' + url.replace(/https?:\/\//, '') + '#Intent;scheme=https;package=com.android.chrome;end';
+      } else {
+        document.addEventListener('DOMContentLoaded', function() {
+          var d = document.createElement('div');
+          d.style.cssText = 'position:fixed;top:0;left:0;right:0;z-index:99999;background:#f59e0b;color:#000;text-align:center;padding:12px 16px;font-weight:bold;font-size:14px;';
+          d.innerHTML = '<div>\u26a0\ufe0f Estás en el navegador de Instagram</div><div style="font-size:13px;font-weight:normal;margin:6px 0">Toca los 3 puntos <b>⋯</b> arriba a la derecha → <b>Abrir en Safari</b></div><button onclick="navigator.clipboard.writeText(window.location.href);this.textContent=\'\u2705 Copiado\'" style="background:#000;color:#fff;border:none;padding:6px 16px;border-radius:6px;font-size:13px;font-weight:bold;cursor:pointer">\ud83d\udccb Copiar enlace</button>';
+          document.body.prepend(d);
+        });
+      }
+    }
+  })();
+  </script>
+
+  <script>
+  // Clean tracking params from URL
+  (function() {
+    if (window.location.search) {
+      var url = new URL(window.location);
+      ['utm_source','utm_medium','utm_content','utm_campaign','utm_term','fbclid','igshid','ref','src'].forEach(function(p) { url.searchParams.delete(p); });
+      if (url.search === '') window.history.replaceState({}, '', url.pathname + url.hash);
+      else window.history.replaceState({}, '', url.pathname + url.search + url.hash);
+    }
+  })();
+  </script>
+</head>
+<body>
+
+<div class="cosmos-bg"></div>
+<div class="stars" id="stars"></div>
+
+<!-- Language buttons -->
+<div class="lang-buttons">
+  <button class="lang-btn active" data-lang="es" onclick="setLang('es')">ES</button>
+  <button class="lang-btn" data-lang="pt" onclick="setLang('pt')">BR</button>
+  <button class="lang-btn" data-lang="fr" onclick="setLang('fr')">FR</button>
+  <button class="lang-btn" data-lang="en" onclick="setLang('en')">EN</button>
+</div>
+
+<!-- HERO: RILKE POEM -->
+<section class="hero">
+  <div class="hero-content">
+    <div class="poem" id="poem">
+      Si eres el soñador, yo soy tu sueño.<br>
+      Y si despiertas, yo soy tu deseo<br>
+      y me hago fuerte, en pleno señorío,<br>
+      y redondo como un silencio de astros<br>
+      sobre la ciudad mágica del tiempo.
+    </div>
+    <div class="poem-author" id="poem-author">— Rainer Maria Rilke, <em>El Libro de las Horas</em></div>
+  </div>
+  <div class="scroll-indicator" onclick="document.querySelector('.content-section').scrollIntoView({behavior: 'smooth'})">
+    <span></span>
+  </div>
+</section>
+
+<!-- CONTENT: MATHEMATICAL FORMALIZATION -->
+<section class="content-section">
+  <div class="container">
+
+    <div class="title-section">
+      <h1 id="title">Panteísmo</h1>
+      <div class="subtitle" id="subtitle">Deus sive Natura</div>
+    </div>
+
+    <!-- AXIOM -->
+    <div class="central-axiom">
+      <div class="equation-label" id="label-1">I · Axioma Fundamental</div>
+      <div class="equation">
+        <span class="symbol">G</span> <span class="operator">≡</span> <span class="symbol">𝒰</span>
+      </div>
+      <div class="interpretation" id="interp-1">Dios es idéntico al universo. No hay separación.</div>
+    </div>
+
+    <!-- TOTALIDAD -->
+    <div class="equation-block">
+      <div class="equation-label" id="label-2">II · Totalidad</div>
+      <div class="equation">
+        <span class="symbol">𝒰</span> <span class="operator">=</span>
+        <span class="operator">⋃</span><sup><span style="font-size:0.7em;">n</span></sup><sub><span style="font-size:0.7em;">i=1</span></sub>
+        <span class="symbol">P<sub>i</sub></span>
+      </div>
+      <div class="interpretation" id="interp-2">El universo es la unión de todas las partes existentes.</div>
+    </div>
+
+    <!-- INMANENCIA -->
+    <div class="equation-block">
+      <div class="equation-label" id="label-3">III · Inmanencia</div>
+      <div class="equation">
+        <span class="operator">∀</span> <span class="symbol">P<sub>i</sub></span> <span class="operator">∈</span> <span class="symbol">𝒰</span> <span class="operator">:</span>
+        <span class="symbol">G</span> <span class="operator">⊆</span> <span class="symbol">P<sub>i</sub></span>
+        <span class="operator">∧</span>
+        <span class="symbol">P<sub>i</sub></span> <span class="operator">⊆</span> <span class="symbol">G</span>
+      </div>
+      <div class="interpretation" id="interp-3">Cada parte contiene a Dios y está contenida en Dios.</div>
+    </div>
+
+    <!-- INTERCONEXIÓN -->
+    <div class="equation-block">
+      <div class="equation-label" id="label-4">IV · Interconexión</div>
+      <div class="equation">
+        <span class="symbol">Φ</span>(<span class="symbol">P<sub>i</sub></span>, <span class="symbol">P<sub>j</sub></span>)
+        <span class="operator">≠</span> 0
+        &nbsp;&nbsp;<span class="operator">∀</span> <span style="font-size:0.9em;"><span class="symbol">i</span> <span class="operator">≠</span> <span class="symbol">j</span></span>
+      </div>
+      <div class="interpretation" id="interp-4">Todo está interconectado. No existen partes aisladas.</div>
+    </div>
+
+    <!-- EMERGENCIA -->
+    <div class="equation-block">
+      <div class="equation-label" id="label-5">V · Emergencia</div>
+      <div class="equation">
+        <span class="symbol">G</span> <span class="operator">=</span>
+        <span class="operator">⋃</span><sub><span style="font-size:0.7em;">i</span></sub> <span class="symbol">P<sub>i</sub></span>
+        <span class="operator">∪</span>
+        <span class="operator">⋃</span><sub><span style="font-size:0.7em;">i≠j</span></sub>
+        <span class="symbol">Φ</span>(<span class="symbol">P<sub>i</sub></span>, <span class="symbol">P<sub>j</sub></span>)
+      </div>
+      <div class="interpretation" id="interp-5">Dios es las partes más todas sus relaciones. El todo trasciende la suma.</div>
+    </div>
+
+    <!-- FRACTALIDAD -->
+    <div class="equation-block">
+      <div class="equation-label" id="label-6">VI · Fractalidad</div>
+      <div class="equation">
+        <span class="symbol">G</span>|<sub><span style="font-size:0.7em;">local</span></sub>
+        <span class="operator">≅</span>
+        <span class="symbol">G</span>|<sub><span style="font-size:0.7em;">global</span></sub>
+      </div>
+      <div class="interpretation" id="interp-6">Lo divino tiene la misma estructura a cualquier escala.</div>
+    </div>
+
+    <div class="divider">∞</div>
+
+    <!-- FORMA COMPACTA -->
+    <div class="final-form">
+      <div class="equation-label" id="label-7">Forma Compacta</div>
+      <div class="equation">
+        <span class="symbol">G</span> <span class="operator">≡</span> <span class="symbol">𝒰</span>
+        <span class="operator">=</span>
+        <span class="operator">⋃</span><sub><span style="font-size:0.7em;">i</span></sub> <span class="symbol">P<sub>i</sub></span>
+        <span class="operator">∪</span>
+        <span class="operator">⋃</span><sub><span style="font-size:0.7em;">i≠j</span></sub>
+        <span class="symbol">Φ</span>(<span class="symbol">P<sub>i</sub></span>, <span class="symbol">P<sub>j</sub></span>)
+      </div>
+      <div class="interpretation" id="interp-7">
+        «Dios es idéntico al universo, que es la unión<br>
+        de todas las partes y todas sus relaciones.»
+      </div>
+    </div>
+
+    <a href="/learn/" class="footer" id="footer">DEUS EX MACHINA</a>
+
+  </div>
+</section>
+
+<script>
+  const texts = {
+    es: {
+      poem: 'Si eres el soñador, yo soy tu sueño.<br>Y si despiertas, yo soy tu deseo<br>y me hago fuerte, en pleno señorío,<br>y redondo como un silencio de astros<br>sobre la ciudad mágica del tiempo.',
+      poemAuthor: '— Rainer Maria Rilke, <em>El Libro de las Horas</em>',
+      title: 'Panteísmo',
+      subtitle: 'Deus sive Natura',
+      label1: 'I · Axioma Fundamental',
+      interp1: 'Dios es idéntico al universo. No hay separación.',
+      label2: 'II · Totalidad',
+      interp2: 'El universo es la unión de todas las partes existentes.',
+      label3: 'III · Inmanencia',
+      interp3: 'Cada parte contiene a Dios y está contenida en Dios.',
+      label4: 'IV · Interconexión',
+      interp4: 'Todo está interconectado. No existen partes aisladas.',
+      label5: 'V · Emergencia',
+      interp5: 'Dios es las partes más todas sus relaciones. El todo trasciende la suma.',
+      label6: 'VI · Fractalidad',
+      interp6: 'Lo divino tiene la misma estructura a cualquier escala.',
+      label7: 'Forma Compacta',
+      interp7: '«Dios es idéntico al universo, que es la unión<br>de todas las partes y todas sus relaciones.»',
+      footer: 'DEUS EX MACHINA'
+    },
+    en: {
+      poem: 'If you are the dreamer, I am your dream.<br>But if you want to wake, I am your will,<br>and grow powerful with all magnificence<br>and round myself like a starry silence<br>above the strange city of time.',
+      poemAuthor: '— Rainer Maria Rilke, <em>The Book of Hours</em>',
+      title: 'Pantheism',
+      subtitle: 'Deus sive Natura',
+      label1: 'I · Fundamental Axiom',
+      interp1: 'God is identical to the universe. There is no separation.',
+      label2: 'II · Totality',
+      interp2: 'The universe is the union of all existing parts.',
+      label3: 'III · Immanence',
+      interp3: 'Each part contains God and is contained in God.',
+      label4: 'IV · Interconnection',
+      interp4: 'Everything is interconnected. No isolated parts exist.',
+      label5: 'V · Emergence',
+      interp5: 'God is the parts plus all their relationships. The whole transcends the sum.',
+      label6: 'VI · Fractality',
+      interp6: 'The divine has the same structure at any scale.',
+      label7: 'Compact Form',
+      interp7: '"God is identical to the universe, which is the union<br>of all parts and all their relationships."',
+      footer: 'DEUS EX MACHINA'
+    },
+    pt: {
+      poem: 'Se tu és o sonhador, eu sou o teu sonho.<br>Mas se queres vigiar, sou a tua vontade<br>e torno-me poderoso de toda a magnificência<br>e arredondo-me como um silêncio estrelado<br>sobre a estranha cidade do tempo.',
+      poemAuthor: '— Rainer Maria Rilke, <em>O Livro das Horas</em>',
+      title: 'Panteísmo',
+      subtitle: 'Deus sive Natura',
+      label1: 'I · Axioma Fundamental',
+      interp1: 'Deus é idêntico ao universo. Não há separação.',
+      label2: 'II · Totalidade',
+      interp2: 'O universo é a união de todas as partes existentes.',
+      label3: 'III · Imanência',
+      interp3: 'Cada parte contém Deus e está contida em Deus.',
+      label4: 'IV · Interconexão',
+      interp4: 'Tudo está interconectado. Não existem partes isoladas.',
+      label5: 'V · Emergência',
+      interp5: 'Deus é as partes mais todas as suas relações. O todo transcende a soma.',
+      label6: 'VI · Fractalidade',
+      interp6: 'O divino tem a mesma estrutura em qualquer escala.',
+      label7: 'Forma Compacta',
+      interp7: '«Deus é idêntico ao universo, que é a união<br>de todas as partes e todas as suas relações.»',
+      footer: 'DEUS EX MACHINA'
+    },
+    fr: {
+      poem: 'Si tu es le rêveur, je suis ton rêve.<br>Mais si tu veux te réveiller, je suis ta volonté<br>et je deviens puissant de toute la splendeur,<br>et je m\'arrondis comme une tranquillité stellaire<br>au-dessus de la ville merveilleuse du temps.',
+      poemAuthor: '— Rainer Maria Rilke, <em>Le Livre d\'Heures</em>',
+      title: 'Panthéisme',
+      subtitle: 'Deus sive Natura',
+      label1: 'I · Axiome Fondamental',
+      interp1: 'Dieu est identique à l\'univers. Il n\'y a pas de séparation.',
+      label2: 'II · Totalité',
+      interp2: 'L\'univers est l\'union de toutes les parties existantes.',
+      label3: 'III · Immanence',
+      interp3: 'Chaque partie contient Dieu et est contenue en Dieu.',
+      label4: 'IV · Interconnexion',
+      interp4: 'Tout est interconnecté. Il n\'existe pas de parties isolées.',
+      label5: 'V · Émergence',
+      interp5: 'Dieu est les parties plus toutes leurs relations. Le tout transcende la somme.',
+      label6: 'VI · Fractalité',
+      interp6: 'Le divin a la même structure à toute échelle.',
+      label7: 'Forme Compacte',
+      interp7: '« Dieu est identique à l\'univers, qui est l\'union<br>de toutes les parties et de toutes leurs relations. »',
+      footer: 'DEUS EX MACHINA'
+    }
+  };
+
+  let lang = localStorage.getItem('lang') || 'es';
+
+  function setLang(l) {
+    lang = l;
+    localStorage.setItem('lang', l);
+    render();
+  }
+
+  function render() {
+    const t = texts[lang];
+    document.getElementById('poem').innerHTML = t.poem;
+    document.getElementById('poem-author').innerHTML = t.poemAuthor;
+    document.getElementById('title').textContent = t.title;
+    document.getElementById('subtitle').textContent = t.subtitle;
+    document.getElementById('label-1').textContent = t.label1;
+    document.getElementById('interp-1').textContent = t.interp1;
+    document.getElementById('label-2').textContent = t.label2;
+    document.getElementById('interp-2').textContent = t.interp2;
+    document.getElementById('label-3').textContent = t.label3;
+    document.getElementById('interp-3').textContent = t.interp3;
+    document.getElementById('label-4').textContent = t.label4;
+    document.getElementById('interp-4').textContent = t.interp4;
+    document.getElementById('label-5').textContent = t.label5;
+    document.getElementById('interp-5').textContent = t.interp5;
+    document.getElementById('label-6').textContent = t.label6;
+    document.getElementById('interp-6').textContent = t.interp6;
+    document.getElementById('label-7').textContent = t.label7;
+    document.getElementById('interp-7').innerHTML = t.interp7;
+    document.getElementById('footer').textContent = t.footer;
+
+    document.querySelectorAll('.lang-btn').forEach(btn => {
+      btn.classList.toggle('active', btn.dataset.lang === lang);
+    });
+  }
+
+  render();
+
+  // Generate stars
+  const starsContainer = document.getElementById('stars');
+  for (let i = 0; i < 150; i++) {
+    const star = document.createElement('div');
+    star.className = 'star';
+    star.style.left = Math.random() * 100 + '%';
+    star.style.top = Math.random() * 100 + '%';
+    star.style.setProperty('--duration', (2 + Math.random() * 4) + 's');
+    star.style.setProperty('--max-opacity', (0.3 + Math.random() * 0.7));
+    star.style.animationDelay = Math.random() * 4 + 's';
+    star.style.width = star.style.height = (1 + Math.random() * 2) + 'px';
+    starsContainer.appendChild(star);
+  }
+</script>
+
+</body>
+</html>

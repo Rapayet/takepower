@@ -1,0 +1,320 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Privacy Policy | Take Power</title>
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>₿</text></svg>">
+  <link href="https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400;0,700;1,400;1,700&display=swap" rel="stylesheet">
+  <script src="https://cdn.tailwindcss.com"></script>
+  <meta name="description" content="Política de privacidad de Take Power. Respetamos tu soberanía digital.">
+  <link rel="canonical" href="https://www.takepower.world/privacy/">
+</head>
+<body class="min-h-screen" style="background: #071510; color: #e0e0e0; font-family: Lora, serif;">
+  <div id="app"></div>
+
+  <script>
+    let lang = localStorage.getItem('lang') || 'es';
+
+    const chestIcon = '<svg class="w-10 h-10 mx-auto" viewBox="0 0 32 32" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="7" y="15" width="18" height="13" rx="3"/><circle cx="16" cy="22" r="2"/><path d="M16 22v3"/><path d="M10.5 15V11a5.5 5.5 0 0 1 11 0v4"/></svg>';
+
+    const content = {
+      es: {
+        back: '← Volver',
+        title: 'Política de Privacidad',
+        subtitle: 'Tu soberanía digital es nuestra prioridad',
+        lastUpdate: 'Última actualización: Febrero 2026',
+        body: `
+          <h2>Filosofía</h2>
+          <p>Take Power nació de la convicción de que la riqueza debe ser redistribuida y que los datos no deben usarse para concentrar poder. Recolectamos la mínima información necesaria para que el servicio funcione. No vendemos, compartimos ni monetizamos datos personales. Nunca lo haremos.</p>
+
+          <h2>Qué datos procesamos</h2>
+
+          <h3>1. Reclamo de sats (Claim)</h3>
+          <p>Cuando reclamas tus 10,000 sats, almacenamos:</p>
+          <ul>
+            <li><strong>Lightning Address</strong> o <strong>identidad del nodo</strong> (payee): Se usa únicamente para controlar el intervalo de 21 días entre reclamos y evitar abusos. No se vincula a tu nombre ni a ningún dato personal.</li>
+            <li><strong>Hash de la transacción</strong>: Registro del pago Lightning para auditoría del fondo.</li>
+            <li><strong>Fecha del reclamo</strong> y monto.</li>
+          </ul>
+          <p>No almacenamos tu IP, tu ubicación geográfica ni ningún dato del navegador para esta función.</p>
+
+          <h3>2. Donaciones</h3>
+          <p>Cuando donas al fondo, se genera un invoice Lightning. Solo almacenamos el hash del pago y el monto. No hay forma de vincular una donación a una identidad personal.</p>
+
+          <h3>3. Patrón Energético (Votos)</h3>
+          <p>Para el sistema de votación de productos, almacenamos tu dirección IP de forma temporal con el único fin de evitar votos duplicados. Esta IP no se cruza con ningún otro dato ni se usa para rastreo.</p>
+
+          <h3>4. Verificación humana (Cloudflare Turnstile)</h3>
+          <p>Usamos Cloudflare Turnstile para proteger el fondo de bots y abusos automatizados. Turnstile es una alternativa a los captchas tradicionales que <strong>no usa cookies de rastreo</strong> y <strong>no recolecta datos personales identificables</strong>. La verificación se procesa en los servidores de Cloudflare. Puedes leer su política en <a href="https://www.cloudflare.com/privacypolicy/" target="_blank" class="text-amber-400 hover:text-amber-300">cloudflare.com/privacypolicy</a>.</p>
+
+          <h3>5. Analítica (Umami)</h3>
+          <p>Usamos Umami, una herramienta de analítica de código abierto, para entender el tráfico del sitio de forma agregada. Umami <strong>no usa cookies</strong>, <strong>no rastrea individuos</strong>, no recolecta datos personales y no comparte información con terceros. Solo vemos métricas generales como número de visitas y páginas más vistas.</p>
+
+          <h2>Qué NO hacemos</h2>
+          <ul>
+            <li>No usamos Google Analytics ni servicios de analítica invasivos.</li>
+            <li>No instalamos cookies de rastreo ni de publicidad.</li>
+            <li>No almacenamos contraseñas (no hay cuentas de usuario).</li>
+            <li>No vendemos ni compartimos datos con terceros.</li>
+            <li>No mostramos publicidad.</li>
+            <li>No hacemos perfilado de usuarios.</li>
+            <li>No recolectamos emails ni datos de contacto.</li>
+          </ul>
+
+          <h2>Almacenamiento local (localStorage)</h2>
+          <p>Usamos localStorage del navegador únicamente para recordar tu preferencia de idioma. Este dato permanece en tu dispositivo y nunca se envía a nuestros servidores.</p>
+
+          <h2>Código abierto</h2>
+          <p>Todo nuestro código es abierto y auditable. Puedes verificar exactamente qué datos procesamos y cómo los manejamos. No hay puertas traseras ni código oculto.</p>
+
+          <h2>Sobre este proyecto</h2>
+          <p>Take Power es un proyecto anónimo y autónomo. No hay una empresa, organización ni individuo detrás recibiendo consultas. El fondo opera de manera automática: distribuye sats a quien los reclama y acepta donaciones de quien quiera contribuir. El código habla por sí mismo.</p>
+        `
+      },
+      en: {
+        back: '← Back',
+        title: 'Privacy Policy',
+        subtitle: 'Your digital sovereignty is our priority',
+        lastUpdate: 'Last updated: February 2026',
+        body: `
+          <h2>Philosophy</h2>
+          <p>Take Power was born from the conviction that wealth must be redistributed and that data should not be used to concentrate power. We collect the minimum information necessary for the service to work. We do not sell, share, or monetize personal data. We never will.</p>
+
+          <h2>What data we process</h2>
+
+          <h3>1. Sats Claim</h3>
+          <p>When you claim your 10,000 sats, we store:</p>
+          <ul>
+            <li><strong>Lightning Address</strong> or <strong>node identity</strong> (payee): Used solely to enforce the 21-day interval between claims and prevent abuse. It is not linked to your name or any personal data.</li>
+            <li><strong>Transaction hash</strong>: Record of the Lightning payment for fund auditing.</li>
+            <li><strong>Claim date</strong> and amount.</li>
+          </ul>
+          <p>We do not store your IP address, geographic location, or any browser data for this function.</p>
+
+          <h3>2. Donations</h3>
+          <p>When you donate to the fund, a Lightning invoice is generated. We only store the payment hash and amount. There is no way to link a donation to a personal identity.</p>
+
+          <h3>3. Energy Standard (Votes)</h3>
+          <p>For the product voting system, we temporarily store your IP address solely to prevent duplicate votes. This IP is not cross-referenced with any other data and is not used for tracking.</p>
+
+          <h3>4. Human verification (Cloudflare Turnstile)</h3>
+          <p>We use Cloudflare Turnstile to protect the fund from bots and automated abuse. Turnstile is an alternative to traditional captchas that <strong>does not use tracking cookies</strong> and <strong>does not collect personally identifiable data</strong>. Verification is processed on Cloudflare's servers. You can read their policy at <a href="https://www.cloudflare.com/privacypolicy/" target="_blank" class="text-amber-400 hover:text-amber-300">cloudflare.com/privacypolicy</a>.</p>
+
+          <h3>5. Analytics (Umami)</h3>
+          <p>We use Umami, an open-source analytics tool, to understand site traffic in aggregate. Umami <strong>does not use cookies</strong>, <strong>does not track individuals</strong>, does not collect personal data, and does not share information with third parties. We only see general metrics like visit counts and most viewed pages.</p>
+
+          <h2>What we do NOT do</h2>
+          <ul>
+            <li>We do not use Google Analytics or invasive analytics services.</li>
+            <li>We do not install tracking or advertising cookies.</li>
+            <li>We do not store passwords (there are no user accounts).</li>
+            <li>We do not sell or share data with third parties.</li>
+            <li>We do not display advertising.</li>
+            <li>We do not profile users.</li>
+            <li>We do not collect emails or contact information.</li>
+          </ul>
+
+          <h2>Local storage (localStorage)</h2>
+          <p>We use the browser's localStorage solely to remember your language preference. This data stays on your device and is never sent to our servers.</p>
+
+          <h2>Open source</h2>
+          <p>All our code is open and auditable. You can verify exactly what data we process and how we handle it. There are no backdoors or hidden code.</p>
+
+          <h2>About this project</h2>
+          <p>Take Power is an anonymous and autonomous project. There is no company, organization, or individual behind it handling inquiries. The fund operates automatically: it distributes sats to those who claim them and accepts donations from those who wish to contribute. The code speaks for itself.</p>
+        `
+      },
+      pt: {
+        back: '← Voltar',
+        title: 'Política de Privacidade',
+        subtitle: 'Sua soberania digital é nossa prioridade',
+        lastUpdate: 'Última atualização: Fevereiro 2026',
+        body: `
+          <h2>Filosofia</h2>
+          <p>Take Power nasceu da convicção de que a riqueza deve ser redistribuída e que os dados não devem ser usados para concentrar poder. Coletamos a informação mínima necessária para que o serviço funcione. Não vendemos, compartilhamos nem monetizamos dados pessoais. Nunca faremos isso.</p>
+
+          <h2>Quais dados processamos</h2>
+
+          <h3>1. Reivindicação de sats (Claim)</h3>
+          <p>Quando você reivindica seus 10.000 sats, armazenamos:</p>
+          <ul>
+            <li><strong>Lightning Address</strong> ou <strong>identidade do nó</strong> (payee): Usado unicamente para controlar o intervalo de 21 dias entre reivindicações e evitar abusos. Não é vinculado ao seu nome nem a nenhum dado pessoal.</li>
+            <li><strong>Hash da transação</strong>: Registro do pagamento Lightning para auditoria do fundo.</li>
+            <li><strong>Data da reivindicação</strong> e valor.</li>
+          </ul>
+          <p>Não armazenamos seu IP, sua localização geográfica nem nenhum dado do navegador para esta função.</p>
+
+          <h3>2. Doações</h3>
+          <p>Quando você doa ao fundo, é gerado um invoice Lightning. Apenas armazenamos o hash do pagamento e o valor. Não há como vincular uma doação a uma identidade pessoal.</p>
+
+          <h3>3. Padrão Energético (Votos)</h3>
+          <p>Para o sistema de votação de produtos, armazenamos seu endereço IP de forma temporária com o único fim de evitar votos duplicados. Este IP não é cruzado com nenhum outro dado nem usado para rastreamento.</p>
+
+          <h3>4. Verificação humana (Cloudflare Turnstile)</h3>
+          <p>Usamos Cloudflare Turnstile para proteger o fundo de bots e abusos automatizados. Turnstile é uma alternativa aos captchas tradicionais que <strong>não usa cookies de rastreamento</strong> e <strong>não coleta dados pessoais identificáveis</strong>. A verificação é processada nos servidores da Cloudflare. Você pode ler a política deles em <a href="https://www.cloudflare.com/privacypolicy/" target="_blank" class="text-amber-400 hover:text-amber-300">cloudflare.com/privacypolicy</a>.</p>
+
+          <h3>5. Análise (Umami)</h3>
+          <p>Usamos Umami, uma ferramenta de análise de código aberto, para entender o tráfego do site de forma agregada. Umami <strong>não usa cookies</strong>, <strong>não rastreia indivíduos</strong>, não coleta dados pessoais e não compartilha informações com terceiros. Apenas vemos métricas gerais como número de visitas e páginas mais vistas.</p>
+
+          <h2>O que NÃO fazemos</h2>
+          <ul>
+            <li>Não usamos Google Analytics nem serviços de análise invasivos.</li>
+            <li>Não instalamos cookies de rastreamento ou publicidade.</li>
+            <li>Não armazenamos senhas (não há contas de usuário).</li>
+            <li>Não vendemos nem compartilhamos dados com terceiros.</li>
+            <li>Não exibimos publicidade.</li>
+            <li>Não fazemos perfil de usuários.</li>
+            <li>Não coletamos emails nem dados de contato.</li>
+          </ul>
+
+          <h2>Armazenamento local (localStorage)</h2>
+          <p>Usamos localStorage do navegador unicamente para lembrar sua preferência de idioma. Este dado permanece no seu dispositivo e nunca é enviado aos nossos servidores.</p>
+
+          <h2>Código aberto</h2>
+          <p>Todo nosso código é aberto e auditável. Você pode verificar exatamente quais dados processamos e como os manuseamos. Não há portas traseiras nem código oculto.</p>
+
+          <h2>Sobre este projeto</h2>
+          <p>Take Power é um projeto anônimo e autônomo. Não há uma empresa, organização nem indivíduo por trás recebendo consultas. O fundo opera de maneira automática: distribui sats a quem os reivindica e aceita doações de quem quiser contribuir. O código fala por si mesmo.</p>
+        `
+      },
+      fr: {
+        back: '← Retour',
+        title: 'Politique de Confidentialité',
+        subtitle: 'Votre souveraineté numérique est notre priorité',
+        lastUpdate: 'Dernière mise à jour : Février 2026',
+        body: `
+          <h2>Philosophie</h2>
+          <p>Take Power est né de la conviction que la richesse doit être redistribuée et que les données ne doivent pas être utilisées pour concentrer le pouvoir. Nous collectons le minimum d'informations nécessaires au fonctionnement du service. Nous ne vendons, ne partageons ni ne monétisons les données personnelles. Nous ne le ferons jamais.</p>
+
+          <h2>Quelles données nous traitons</h2>
+
+          <h3>1. Réclamation de sats (Claim)</h3>
+          <p>Lorsque vous réclamez vos 10 000 sats, nous stockons :</p>
+          <ul>
+            <li><strong>Lightning Address</strong> ou <strong>identité du nœud</strong> (payee) : Utilisé uniquement pour contrôler l'intervalle de 21 jours entre les réclamations et prévenir les abus. Il n'est pas lié à votre nom ni à aucune donnée personnelle.</li>
+            <li><strong>Hash de la transaction</strong> : Enregistrement du paiement Lightning pour l'audit du fonds.</li>
+            <li><strong>Date de réclamation</strong> et montant.</li>
+          </ul>
+          <p>Nous ne stockons pas votre IP, votre localisation géographique ni aucune donnée du navigateur pour cette fonction.</p>
+
+          <h3>2. Dons</h3>
+          <p>Lorsque vous faites un don au fonds, une facture Lightning est générée. Nous ne stockons que le hash du paiement et le montant. Il n'y a aucun moyen de lier un don à une identité personnelle.</p>
+
+          <h3>3. Standard Énergétique (Votes)</h3>
+          <p>Pour le système de vote des produits, nous stockons votre adresse IP de façon temporaire dans le seul but d'éviter les votes en double. Cette IP n'est croisée avec aucune autre donnée et n'est pas utilisée pour le suivi.</p>
+
+          <h3>4. Vérification humaine (Cloudflare Turnstile)</h3>
+          <p>Nous utilisons Cloudflare Turnstile pour protéger le fonds contre les bots et les abus automatisés. Turnstile est une alternative aux captchas traditionnels qui <strong>n'utilise pas de cookies de suivi</strong> et <strong>ne collecte pas de données personnelles identifiables</strong>. La vérification est traitée sur les serveurs de Cloudflare. Vous pouvez lire leur politique sur <a href="https://www.cloudflare.com/privacypolicy/" target="_blank" class="text-amber-400 hover:text-amber-300">cloudflare.com/privacypolicy</a>.</p>
+
+          <h3>5. Analytique (Umami)</h3>
+          <p>Nous utilisons Umami, un outil d'analytique open source, pour comprendre le trafic du site de manière agrégée. Umami <strong>n'utilise pas de cookies</strong>, <strong>ne suit pas les individus</strong>, ne collecte pas de données personnelles et ne partage pas d'informations avec des tiers. Nous ne voyons que des métriques générales comme le nombre de visites et les pages les plus consultées.</p>
+
+          <h2>Ce que nous ne faisons PAS</h2>
+          <ul>
+            <li>Nous n'utilisons pas Google Analytics ni de services d'analyse invasifs.</li>
+            <li>Nous n'installons pas de cookies de suivi ou de publicité.</li>
+            <li>Nous ne stockons pas de mots de passe (il n'y a pas de comptes utilisateur).</li>
+            <li>Nous ne vendons ni ne partageons de données avec des tiers.</li>
+            <li>Nous n'affichons pas de publicité.</li>
+            <li>Nous ne faisons pas de profilage des utilisateurs.</li>
+            <li>Nous ne collectons pas d'emails ni de données de contact.</li>
+          </ul>
+
+          <h2>Stockage local (localStorage)</h2>
+          <p>Nous utilisons le localStorage du navigateur uniquement pour mémoriser votre préférence de langue. Cette donnée reste sur votre appareil et n'est jamais envoyée à nos serveurs.</p>
+
+          <h2>Code ouvert</h2>
+          <p>Tout notre code est ouvert et auditable. Vous pouvez vérifier exactement quelles données nous traitons et comment nous les gérons. Il n'y a pas de portes dérobées ni de code caché.</p>
+
+          <h2>À propos de ce projet</h2>
+          <p>Take Power est un projet anonyme et autonome. Il n'y a pas d'entreprise, d'organisation ni d'individu derrière qui répond aux demandes. Le fonds fonctionne de manière automatique : il distribue des sats à ceux qui les réclament et accepte les dons de ceux qui souhaitent contribuer. Le code parle de lui-même.</p>
+        `
+      }
+    };
+
+    function setLang(l) {
+      lang = l;
+      localStorage.setItem('lang', l);
+      render();
+    }
+
+    function render() {
+      const t = content[lang] || content.es;
+
+      const langBtns = ['es','pt','fr','en'].map(l => {
+        const display = l === 'pt' ? 'BR' : l.toUpperCase();
+        return `<button onclick="setLang('${l}')" class="px-3 py-1 rounded text-sm ${lang===l ? 'bg-emerald-600 text-white' : 'bg-[#0d2620] text-emerald-200 hover:bg-emerald-700'}">${display}</button>`;
+      }).join('');
+
+      document.getElementById('app').innerHTML = `
+        <div class="max-w-3xl mx-auto px-4 py-8">
+          <!-- Header -->
+          <div class="flex flex-wrap justify-between items-center gap-4 mb-8">
+            <a href="https://takepower.world" class="px-3 py-1 rounded text-sm bg-[#0d2620] text-amber-300 hover:bg-amber-600 hover:text-white flex items-center gap-1">
+              ${t.back}
+            </a>
+            <div class="flex gap-2">${langBtns}</div>
+          </div>
+
+          <!-- Title -->
+          <div class="bg-gradient-to-r from-[#0d2620] to-[#15403a] rounded-2xl p-8 mb-8 text-center border border-emerald-800">
+            <div class="mb-3 text-amber-400">${chestIcon}</div>
+            <h1 class="text-3xl font-bold text-white mb-2">${t.title}</h1>
+            <p class="text-emerald-200">${t.subtitle}</p>
+            <p class="text-emerald-400/60 text-sm mt-2">${t.lastUpdate}</p>
+          </div>
+
+          <!-- Content -->
+          <div class="bg-[#0d2620] rounded-2xl p-6 md:p-8 border border-emerald-800 prose-privacy">
+            ${t.body}
+          </div>
+
+          <!-- Footer -->
+          <div class="text-center mt-8 mb-4">
+            <a href="https://takepower.world" class="text-amber-400 hover:text-amber-300 text-sm">₿ takepower.world</a>
+          </div>
+        </div>
+      `;
+    }
+
+    render();
+  </script>
+
+  <style>
+    .prose-privacy h2 {
+      font-size: 1.4rem;
+      font-weight: 700;
+      margin-top: 2rem;
+      margin-bottom: 0.75rem;
+      color: #f7931a;
+      font-family: Lora, serif;
+    }
+    .prose-privacy h3 {
+      font-size: 1.15rem;
+      font-weight: 700;
+      margin-top: 1.5rem;
+      margin-bottom: 0.5rem;
+      color: #10b981;
+    }
+    .prose-privacy p {
+      margin-bottom: 1rem;
+      line-height: 1.8;
+      color: #d1d5db;
+    }
+    .prose-privacy ul {
+      list-style-type: disc;
+      padding-left: 1.5rem;
+      margin-bottom: 1rem;
+    }
+    .prose-privacy li {
+      margin-bottom: 0.5rem;
+      line-height: 1.7;
+      color: #d1d5db;
+    }
+    .prose-privacy strong {
+      color: #e5e7eb;
+    }
+  </style>
+</body>
+</html>

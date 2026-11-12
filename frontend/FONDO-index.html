@@ -1,0 +1,888 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Take Power | Chest</title>
+  <meta name="description" content="Bitcoin redistribuido para todos. Reclama 10,000 sats cada 21 días del Baúl Común de la Humanidad. Sin condiciones, sin fronteras, sin políticos.">
+  <link rel="canonical" href="https://www.takepower.world/">
+  <!-- Open Graph -->
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://www.takepower.world/">
+  <meta property="og:title" content="Take Power | Chest">
+  <meta property="og:description" content="Bitcoin redistribuido para todos. Reclama 10,000 sats cada 21 días. Sin condiciones, sin fronteras.">
+  <meta property="og:image" content="https://www.takepower.world/og-image.png">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta property="og:locale" content="es_ES">
+  <meta property="og:locale:alternate" content="en_US">
+  <meta property="og:locale:alternate" content="pt_BR">
+  <meta property="og:locale:alternate" content="fr_FR">
+  <!-- Twitter -->
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Take Power | Chest">
+  <meta name="twitter:description" content="Bitcoin redistribuido para todos. Reclama 10,000 sats cada 21 días.">
+  <meta name="twitter:image" content="https://www.takepower.world/og-image.png">
+  <!-- Extra SEO -->
+  <meta name="robots" content="index, follow">
+  <meta name="theme-color" content="#071510">
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "WebSite",
+    "name": "Take Power",
+    "url": "https://www.takepower.world",
+    "description": "Bitcoin redistribuido para todos. Baúl Común de la Humanidad.",
+    "inLanguage": ["es", "en", "pt", "fr"]
+  }
+  </script>
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>₿</text></svg>">
+  <link href="https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400;0,700;1,400;1,700&display=swap" rel="stylesheet">
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
+  <script src="https://challenges.cloudflare.com/turnstile/v0/api.js?render=explicit" async defer></script>
+</head>
+<body class="min-h-screen" style="background: #071510;">
+  <!-- LIMPIEZA DE UTM PARAMS + DETECCIÓN DE NAVEGADOR IN-APP -->
+  <script>
+  (function() {
+    // 1. Limpiar UTM y tracking params de la URL
+    if (window.location.search) {
+      var cleanUrl = window.location.protocol + '//' + window.location.host + window.location.pathname + window.location.hash;
+      window.history.replaceState({}, document.title, cleanUrl);
+    }
+
+    // 2. Detectar navegador in-app
+    var ua = navigator.userAgent || navigator.vendor || window.opera;
+    var isInApp = /Instagram|FBAN|FBAV|FB_IAB|TikTok|Snapchat|Line\//i.test(ua);
+    if (!isInApp) return;
+
+    // URL limpia para compartir
+    var cleanLink = window.location.protocol + '//' + window.location.host + window.location.pathname;
+
+    // Android: intent:// abre el navegador por defecto
+    if (/android/i.test(ua)) {
+      window.location.href = 'intent://' + cleanLink.replace(/^https?:\/\//, '') + '#Intent;scheme=https;end';
+    }
+
+    // Pantalla de instrucciones en inglés
+    document.documentElement.innerHTML = '<!DOCTYPE html><html lang="en"><head>' +
+      '<meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1.0">' +
+      '<title>Open in browser</title>' +
+      '<style>' +
+      '*{margin:0;padding:0;box-sizing:border-box}' +
+      'body{min-height:100vh;display:flex;align-items:center;justify-content:center;' +
+      'background:#071510;font-family:-apple-system,BlinkMacSystemFont,sans-serif;color:white;padding:24px}' +
+      '.card{text-align:center;max-width:380px}' +
+      '.icon{font-size:64px;margin-bottom:20px}' +
+      'h1{font-size:22px;margin-bottom:12px;color:#f59e0b}' +
+      'p{font-size:15px;color:#a7f3d0;line-height:1.6;margin-bottom:20px}' +
+      '.steps{background:rgba(16,185,129,0.1);border:1px solid rgba(16,185,129,0.3);' +
+      'border-radius:16px;padding:20px;text-align:left;margin-bottom:20px}' +
+      '.step{display:flex;align-items:flex-start;gap:12px;margin-bottom:14px;font-size:14px;color:#d1fae5}' +
+      '.step:last-child{margin-bottom:0}' +
+      '.num{background:#f59e0b;color:#000;width:24px;height:24px;border-radius:50%;' +
+      'display:flex;align-items:center;justify-content:center;font-weight:700;font-size:13px;flex-shrink:0}' +
+      '.btn{display:inline-block;padding:14px 28px;background:linear-gradient(to right,#f59e0b,#d97706);' +
+      'color:#000;border-radius:12px;font-weight:700;font-size:15px;text-decoration:none;cursor:pointer;border:none}' +
+      '.btn:active{transform:scale(0.97)}' +
+      '.copy-msg{color:#34d399;font-size:13px;margin-top:10px;min-height:20px}' +
+      '</style></head><body>' +
+      '<div class="card">' +
+      '<div class="icon">🌐</div>' +
+      '<h1>Open in your browser</h1>' +
+      '<p>You\\\'re viewing this inside Instagram. Please open it in Safari, Chrome or your default browser for the best experience.</p>' +
+      '<div class="steps">' +
+      '<div class="step"><span class="num">1</span><span>Tap the <strong>three dots ⋯</strong> or menu icon at the top right</span></div>' +
+      '<div class="step"><span class="num">2</span><span>Select <strong>"Open in browser"</strong></span></div>' +
+      '</div>' +
+      '<button class="btn" onclick="copyLink()">Copy link</button>' +
+      '<div class="copy-msg" id="copyMsg"></div>' +
+      '</div>' +
+      '<script>' +
+      'function copyLink(){' +
+      'var u="' + cleanLink + '";' +
+      'if(navigator.clipboard&&navigator.clipboard.writeText){' +
+      'navigator.clipboard.writeText(u).then(function(){showMsg()}).catch(function(){fallback(u)})}' +
+      'else{fallback(u)}}' +
+      'function fallback(u){var t=document.createElement("textarea");t.value=u;t.style.position="fixed";' +
+      't.style.left="-9999px";document.body.appendChild(t);t.select();try{document.execCommand("copy");showMsg()}' +
+      'catch(e){showMsg("Copy manually: "+u)}document.body.removeChild(t)}' +
+      'function showMsg(m){document.getElementById("copyMsg").textContent=m||"✓ Link copied! Paste it in your browser."}' +
+      '<\/script></body></html>';
+  })();
+  </script>
+
+  <!-- NAVBAR FLOTANTE -->
+  <nav class="fixed top-0 left-0 right-0 z-50 flex flex-col sm:flex-row justify-between items-center px-2 sm:px-4 py-2 sm:py-3 bg-[#071510]/90 backdrop-blur-sm gap-2">
+    <div class="flex gap-1 sm:gap-2 flex-wrap justify-center">
+      <a href="/vision/" class="px-2 sm:px-3 py-1 rounded text-xs sm:text-sm bg-[#0d2620] text-emerald-200 hover:bg-emerald-600 hover:text-white flex items-center gap-1">
+        <svg class="w-3 h-3 sm:w-4 sm:h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polygon points="16.24 7.76 14.12 14.12 7.76 16.24 9.88 9.88 16.24 7.76"/></svg>
+        <span id="nav-vision">Visión</span>
+      </a>
+      <a href="/energystandard/" class="px-2 sm:px-3 py-1 rounded text-xs sm:text-sm bg-[#0d2620] text-amber-300 hover:bg-amber-600 hover:text-white">⚡ <span id="nav-energy">Patrón Energético</span></a>
+      <a href="/learn/" class="px-2 sm:px-3 py-1 rounded text-xs sm:text-sm bg-[#0d2620] text-orange-400 hover:bg-orange-600 hover:text-white">₿ Bitcoin</a>
+      <a href="/tactic/" class="px-2 sm:px-3 py-1 rounded text-xs sm:text-sm bg-[#0d2620] text-gray-300 hover:bg-gray-600 hover:text-white flex items-center gap-1"><svg class="w-3 h-3 sm:w-4 sm:h-4" viewBox="0 0 45 48" fill="currentColor"><path d="M 22,10 C 32.5,11 38.5,18 38,39 L 15,39 C 15,30 25,32.5 23,18"/><path d="M 24,18 C 24.38,20.91 18.45,25.37 16,27 C 13,29 13.18,31.34 11,31 C 9.958,30.06 12.41,27.96 11,28 C 10,28 11.19,29.23 10,30 C 9,30 5.997,31 6,26 C 6,24 12,14 12,14 C 12,14 13.89,12.1 14,10.5 C 13.27,9.506 13.5,8.5 13.5,7.5 C 14.5,6.5 16.5,10 16.5,10 L 18.5,10 C 18.5,10 19.28,8.008 21,7 C 22,7 22,10 22,10"/><rect x="4" y="39" width="37" height="6" rx="1.5"/></svg> <span id="nav-tactic">Táctica</span></a>
+    </div>
+    <div class="flex gap-1 sm:gap-2">
+      <button onclick="setLang('es')" class="lang-btn px-2 sm:px-3 py-1 rounded text-xs sm:text-sm bg-emerald-900/50 text-emerald-200 hover:bg-emerald-600 hover:text-white transition" data-lang="es">ES</button>
+      <button onclick="setLang('pt')" class="lang-btn px-2 sm:px-3 py-1 rounded text-xs sm:text-sm bg-emerald-900/50 text-emerald-200 hover:bg-emerald-600 hover:text-white transition" data-lang="pt">BR</button>
+      <button onclick="setLang('fr')" class="lang-btn px-2 sm:px-3 py-1 rounded text-xs sm:text-sm bg-emerald-900/50 text-emerald-200 hover:bg-emerald-600 hover:text-white transition" data-lang="fr">FR</button>
+      <button onclick="setLang('en')" class="lang-btn px-2 sm:px-3 py-1 rounded text-xs sm:text-sm bg-emerald-900/50 text-emerald-200 hover:bg-emerald-600 hover:text-white transition" data-lang="en">EN</button>
+    </div>
+  </nav>
+
+  <!-- HERO SECTION -->
+  <div id="hero-section" class="relative min-h-screen flex flex-col justify-center items-center text-center px-6 py-10 pt-24 sm:pt-20 overflow-hidden" style="background: radial-gradient(ellipse at center, #0d2620 0%, #071510 70%, #030a08 100%);">
+    <!-- Toroid Canvas -->
+    <canvas id="toroidCanvas" class="absolute inset-0 w-full h-full pointer-events-none" style="z-index: 0;"></canvas>
+    
+    <!-- Hero Content -->
+    <div class="relative z-10 max-w-4xl">
+      <div class="mb-4" style="animation: float 6s ease-in-out infinite;">
+        <span class="text-6xl md:text-8xl text-amber-500">₿</span>
+      </div>
+      
+      <h1 id="hero-title" class="text-2xl md:text-4xl lg:text-5xl font-bold mb-4 leading-tight text-white" style="text-shadow: 0 0 40px rgba(247, 147, 26, 0.3);"></h1>
+      
+      <p id="hero-subtitle" class="text-lg md:text-xl text-emerald-200 mb-3 max-w-3xl mx-auto"></p>
+      
+      <p id="hero-contract" class="text-base text-emerald-300/80 mb-6 max-w-2xl mx-auto italic"></p>
+      
+      <div class="bg-emerald-900/30 border border-emerald-700 rounded-2xl p-4 mb-6 max-w-sm mx-auto backdrop-blur-sm">
+        <div class="text-3xl md:text-4xl font-bold text-amber-400 mb-1">10,000 sats</div>
+        <div id="hero-sats" class="text-emerald-200 text-sm"></div>
+      </div>
+      
+      <div class="flex flex-col sm:flex-row gap-3 justify-center mb-6">
+        <a href="#recibir" onclick="hideHero()" class="px-6 py-3 bg-gradient-to-r from-amber-500 to-amber-600 text-black rounded-xl font-bold text-base hover:from-amber-400 hover:to-amber-500 transition transform hover:scale-105 shadow-lg shadow-amber-500/25" id="hero-btn-claim"></a>
+        <a href="/energystandard/" class="px-6 py-3 bg-transparent border-2 border-emerald-500 text-emerald-300 rounded-xl font-bold text-base hover:bg-emerald-500 hover:text-white transition backdrop-blur-sm" id="hero-btn-manifesto"></a>
+      </div>
+      
+      <p id="hero-footer" class="text-emerald-300/60 text-sm"></p>
+      
+      <!-- Scroll indicator -->
+      <div class="absolute bottom-8 left-1/2 transform -translate-x-1/2 animate-bounce">
+        <svg class="w-6 h-6 text-emerald-400/60" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 14l-7 7m0 0l-7-7m7 7V3"></path>
+        </svg>
+      </div>
+    </div>
+  </div>
+  
+  <!-- SPACER: mantiene el espacio del hero cuando está fixed -->
+  <div id="hero-spacer"></div>
+
+  <!-- APP SECTION -->
+  <div id="app" class="p-4"></div>
+  
+  <style>
+    @keyframes float {
+      0%, 100% { transform: translateY(0); }
+      50% { transform: translateY(-10px); }
+    }
+    /* Hero fixed: se desliza fuera sin alterar el flujo del documento */
+    #hero-section {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      z-index: 40;
+      transition: transform 0.5s cubic-bezier(0.4, 0, 0.2, 1), opacity 0.4s ease;
+    }
+    #hero-section.hidden {
+      transform: translateY(-100%);
+      opacity: 0;
+      pointer-events: none;
+    }
+    /* Spacer: ocupa el espacio del hero para que el contenido no salte */
+    #hero-spacer {
+      height: 100vh;
+      transition: height 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+    #hero-spacer.collapsed {
+      height: 0;
+    }
+  </style>
+  <script>
+    const SHARE_URL = 'https://takepower.world/';const VISION_URL = 'https://takepower.world/vision/';
+    const manifesto = {
+      es: {
+        title: "REVOLUCIÓN DE LA PAZ: HACIA EL CRIPTO COLECTIVISMO",
+        quote: "\"La verdad oculta fundamental del mundo es que es algo que creamos juntos y que fácilmente podríamos crear diferente\" — David Graeber",
+        content: `<h2>Preámbulo: El momento de la convergencia</h2>
+<p>La humanidad afronta una policrisis. En primer término, una crisis medioambiental, donde peligra la vida del organismo tierra, nuestra madre. Una crisis monetaria, por un dinero sin respaldo, deuda infinita, desigualdad estructural y una lucha monetaria sin vencedores posibles. Una crisis energética, por la adicción a los combustibles fósiles, desperdicio masivo, contaminación del agua y el suelo que nos alimenta. Crisis de significado: debido al extremo individualismo, hay una pérdida de propósito y una desesperanza por el futuro. Estas no son crises separadas, sino una sola: <strong>El sistema económico actual nubló la conciencia y nos desconectó de la Naturaleza</strong>, es un sistema incompatible con la supervivencia ecológica y la dignidad humana. Debemos develar la ilusión de la separación.</p>
+
+<h2>Primer principio: Integración de la voluntad y elevación de la conciencia</h2>
+<p>Para superar la ilusión de la separación usaremos los cuatro principios de integración socio-política: <strong>La realidad es superior a la idea, el todo es superior a la parte, la unión es superior al conflicto, el tiempo es superior al espacio.</strong></p>
+
+<p>Se propone con frecuencia el biocentrismo como ideología para afrontar la policrisis. La vida es demasiado vasta para definirla, pero debemos posicionar en el centro de la conciencia esta verdad: <strong>lo vivo —todo aquello que tiene textura, temperatura y duración— es lo real</strong>. Aunque la experiencia encarnada nos persuade de que el mundo y el yo son cosas separadas, no podemos olvidar lo primero si queremos avanzar hacia la integración, pues la realidad es siempre superior a la idea del yo. Desde esta perspectiva, se hace evidente que somos microcosmos del organismo Tierra y que, como ella, también estamos enfermos. Nuestra enfermedad exige escuchar al resto de la Naturaleza, porque es ella quien guarda los remedios más profundos.</p>
+
+<p>Aislarse, intentando reproducir el pasado en aldeas autosustentables, no solo resulta imposible en un mundo globalizado; sino que es sobre todo una ilusión vana. Como lo demuestra el ciclo del agua y del CO2, no hay salvación individual. Los organismos en un bosque están todos interligados, las luchas están todas interligadas. Debemos cooperar para continuar, el Neoludismo sería aceptar que el capitalismo mutiló la imaginación humana.</p>
+
+<p>Recordemos que estamos hechos de los mismos elementos que las estrellas y la madera. Que materia y energía son una sola sustancia, vibrando en distintas longitudes de onda, pues <strong>la energía no se crea ni se destruye, solo se transforma</strong>. Considerando esto, podemos ver que si bien las ideas existen fuera del espacio, nada existe fuera del tiempo, y por tanto, el tiempo es superior al espacio. Si el tiempo es infinito, entonces aquello que contiene —la existencia misma— no tiene un propósito externo, como no lo tienen el arte o el amor, que quizá son simples sinónimos. Quien se conmueve ante la vida intenta expresar esos enigmas, aún sabiendo que su belleza es indecible. Y así, en lugar de preguntarnos «¿por qué?» o «¿para qué?», hagámonos una pregunta más íntima y reveladora: <em>¿cómo se encarnó el tiempo en mí?</em></p>
+
+<p>Vamos a elevar la conciencia colectiva modificando juntas economía y cultura. Las formas en que nos amamos, nos alimentamos, nos organizamos, nos expresamos, vamos a transformar todo, si y sólo si tenemos la valentía de confiar los unos en los otros, para hacer la paz, compartir recursos y reconectar entre organismos vivos. En este recomenzar, las matemáticas —esa gramática secreta de la Naturaleza— vuelven a ofrecernos una herramienta de integración, una armonía preexistente, como en la música. <strong>Imaginar y trabajar juntos para continuar esa divina historia de la Tierra, es el poema colectivo que devolverá la dignidad a nuestra especie.</strong></p>
+
+<p>Debemos transformar nuestra relación con la muerte y el nacimiento. Así veremos en las nuevas generaciones, crecidas en una economía circular —de moneda social global—, el entendimiento de que lo que tiene masa decae, pero que <strong>no existe la muerte, sólo transformación</strong>. No es la muerte lo que debe aterrarnos, sino la obstinación por prolongar al individuo, además a costa de las generaciones futuras y la biodiversidad. Todo cuerpo, toda posesión material, es un instante fugaz en el flujo universal de la energía. Hoy, sin embargo, nuestro consumo son objetos que niegan su fugacidad: materiales que decaen tan lento están estancando la corriente. La Tierra se ahoga en cosas abandonadas; nos hemos convertido, sobre todo, en productores de basura. Poner el trabajo en lo primordial y no en el deseo es equilibrar el proceso, vamos a producir más lento y a asumir la responsabilidad del libre albedrío. Consumir es fácil (satisfacer el deseo), crear es difícil (hacer el amor). <strong>Ser valiente entonces es aceptar nuestra fugacidad y aún así elegir lo difícil. Reunamos, pues, la voluntad para el amor.</strong></p>
+
+<h2>Segundo principio: El asunto del dinero</h2>
+<p>Es un hecho que el dinero es anterior al capitalismo y surgió como herramienta para la cooperación. Comprenderlo como representación simbólica de energía es clave para entender que <strong>Bitcoin, que es acuñado matemáticamente, a través de una prueba de gasto energético —trabajo computacional—, es la solución de la humanidad para la arbitrariedad del poder de un banco central</strong>, pues hace más abierto y justo el juego del dinero. Ahora bien, con las leyes de la termodinámica en mente y conscientes de la finitud de nuestro planeta, sabemos que no podemos crear energía de la nada. Por ello, no pueden existir bitcoins infinitos, como tampoco deuda infinita. La herramienta es coherente con la Naturaleza.</p>
+
+<p>Diremos además que <strong>Bitcoin es energía social congelada en el tiempo</strong>. Social, porque es producto del trabajo del computador —símbolo físico del progreso colectivo de la humanidad, símbolo de la magia, símbolo del poder del fuego—. Nadie puede declararse dueño de la red de Bitcoin, como nadie puede proclamarse dueño del planeta Tierra, pues ambos son sistemas entrópicos, organismos vivos que, siendo finitos, requieren compromiso individual para ser cuidados y mantenidos en equilibrio. Y es energía congelada en el tiempo porque Bitcoin es un bien digital cuyo valor y seguridad vienen de la transformación irreversible de trabajo colectivo y recursos comunes del mundo real, en un registro contable inmutable (la cadena de bloques), que preserva su valor a través del tiempo y no es limitado por el espacio.</p>
+
+<p>Hay que ver Bitcoin como la arquitectura financiera para un nuevo sistema económico basado en el colectivismo. En su esencia, son los mineros y los nodos quienes validan y aseguran la red. Incluso, si fuera necesario en el futuro, su código podría modificarse por acuerdo de la mayoría —como en todo relato colectivo el consenso es la llave—. No obstante, en este tejido también reside la responsabilidad y la libertad irrevocable del individuo que participa. He ahí la confianza que respalda el valor de Bitcoin: poder computacional colectivo y libertad de elección. Podemos decir entonces que <strong>Bitcoin es la síntesis hegeliana (tesis: capitalismo, antítesis: comunismo)</strong> pues realiza un concilio filosófico en una herramienta práctica para la revolución. ¿Y qué es una revolución, sino una nueva y mejor forma de cooperación?</p>
+
+<p>Enfatizamos que para solucionar la policrisis es fundamental atender la injusticia social. Abandonar otras monedas centralizadas (el dólar, el euro, el yuan, etc) fundadas en el extractivismo, la división y la explotación, posibilitará una cooperación internacional sin precedentes. Cualquier testigo de la guerra comprende que no se puede prosperar en un territorio violento. <strong>Para afrontar la policrisis, es imperativo detener el gasto en armas.</strong> Bitcoin, al ser descentralizado, de código abierto, fundado en el consenso y de contabilidad pública, puede servir como el instrumento para una economía circular global. Un sistema donde, al primar la superioridad del todo sobre la parte, se elimina la necesidad de ataque y defensa entre naciones. Así, incluye y redistribuye la riqueza para todos, como un sistema cerrado que busca el equilibrio térmico. La transparencia radical de su contabilidad y las prioridades del apoyo mutuo desmantelarán los negocios ilícitos y el lucro armamentista. <strong>Por primera vez, la paz mundial se vislumbra no como un anhelo, sino como una posibilidad técnica y ética en el horizonte.</strong></p>
+
+<p>Para quienes temen que los milionários ya acumularon demasiado Bitcoin y que no hay remedio para el egoísmo humano: Llegado el punto donde Bitcoin sea la única moneda aceptada por los trabajadores, la acumulación de dinero se vuelve absurda termodinámicamente, es como almacenar electricidad en baterías gigantes para nunca usarla. Será crucial participar, comerciar bienes y servicios bajo el escrutinio público de la contabilidad. La responsabilidad con la comunidad consistirá, precisamente, en hacer que la energía circule y de potencia a las iniciativas más funcionales. He aquí el principio reductor de la desigualdad e inequidad: <strong>Bitcoin redistribuye la energía social</strong> y en la medida en que el sistema se vaya cerrando, tenderá naturalmente hacia la entropía —hacia el equilibrio que disuelve los acaparamientos estériles y abona el futuro de todos.</p>
+
+<p>Por último, es crucial recordar que las soluciones reales para reconfigurar nuestras formas de vivir encuentran su traba más dura en lo financiero. Cualquiera que haya intentado lanzar una iniciativa de permacultura, de adaptación climática o de atención social puede testimoniarlo: el obstáculo principal siempre es hallar los recursos para materiales y trabajadores. Bitcoin, en su esencia, propone una emancipación financiera radical. Al eliminar la necesidad de un intermediario central —un banco, un Estado, una institución que conceda o niegue permiso—, desarma el mecanismo fundamental de la dominación. Porque toda dominación —de clase, estatal, monetaria, de género— se consolida, en última instancia, propiciando la coerción mediante el control del dinero. <strong>Bitcoin posibilita que el oprimido se libere, no mediante concesiones del opresor, sino mediante el apoyo mutuo y la acción directa.</strong> Sin pedir autorización, puede acceder y canalizar la energía social que precisa para su subsistencia y para su proyecto.</p>
+
+<h2>Agenda política de acción y demandas</h2>
+<p>Sabemos que el planeta está llegando al punto de inflexión. Los científicos lo advierten y los habitantes del mundo entero perciben cómo el clima es cada vez más extremo. Está claro que es el momento de la revolución; vamos a tomar acción ahora. <strong>La revolución será triple o no será.</strong> No basta con cambiar el dinero, no basta con cambiar la energía, no basta con cambiar la distribución del capital. Deben cambiarse las tres simultáneamente:</p>
+
+<ol>
+<li><strong>La revolución de la paz empieza con rehusarse en el diario vivir a alimentar el sistema capitalista;</strong> pues no es posible transformar el mundo reproduciendo la lógica del poder que lo organiza. Los trabajadores con poder adquisitivo deben cambiar su dinero a Bitcoin y usar solo este para el comercio. Los trabajadores sin poder adquisitivo deben exigir Bitcoin como única compensación justa de su trabajo. Juntos acabaremos la especulación con Bitcoin porque uno no cambia semillas fértiles por basura. Vamos a manifestar nuestro hastío saliendo del juego de la banca tradicional y del dinero infinito que no es más que irresponsabilidad de las generaciones anteriores.</li>
+
+<li>Así como en la pandemia del Covid, demandamos que se aborde este asunto como lo que es: <strong>una crisis global.</strong> Se deben prohibir los vuelos comerciales que no tengan fines humanitarios y pedimos que se desmantelen y reutilicen aeronaves, buques, armas y maquinarias de gasolina para construir una infraestructura energética limpia. El objetivo será hallar utilidad a toda la basura que hemos dejado. Ya hay cientos de iniciativas al respecto; debemos destinarles fondos y mano de obra.</li>
+
+<li><strong>Llamamos a la desobediencia civil,</strong> nadie pagará sus deudas a ningún banco, ni nadie pagará más impuestos a un sistema quebrado y corrupto. Se discutió por años como cobrar impuestos a los más ricos, esa pelea se acabó, que se queden los millonarios su dinero falso que ningún trabajador les aceptará más esa mentira. La energía social fluye donde se encuentra la voluntad de poder (el potencial de la vida).</li>
+
+<li>Cambiamos de moneda para boicotear las instituciones y atacar el bolsillo de los poderosos. Pero es necesario apoderarse de los medios de emisión monetaria. <strong>Le exigimos a los gobiernos del mundo que utilicen Bitcoin para apalancar el financiamiento de la transición energética y que establezcan una Renta Básica Universal de Bitcoin</strong> con el excedente de energía producida, así también financiaremos los servicios públicos.</li>
+
+<li>Aprovechando el trabajo computacional que sostiene el nuevo sistema cripto colectivista. <strong>Vamos a establecer una jornada de trabajo de cuatro días laborales por tres de descanso,</strong> esto para ralentizar la producción, y a su vez bajar la oferta de bienes; las personas tendrán que reutilizar lo que creían inutil —estamos desafiando nuestra creatividad.</li>
+
+<li>Demandamos que se reconozcan y protejan los territorios de los pueblos originarios y comunidades tradicionales. Se debe demarcar y titular terrenos a nombre de comunidades y no de individuos. <strong>Haremos realidad la reforma agraria</strong> y la llevaremos a cabo desde la agroecología para alcanzar seguridad nutricional y soberanía alimentaria sin explotación ni maltrato animal.</li>
+
+<li><strong>Se debe parar la exploración y explotación de más yacimientos de hidrocarburos.</strong> Y se debe destinar el combustible ya refinado para la distribución de alimentos e insumos para la agroecología. Las personas dejarán de preocuparse por empleos inútiles y deseos fugaces para preocuparse por la adaptabilidad climática de sus comunidades.</li>
+
+<li>Construiremos un <strong>feminismo interseccional, antirracista y anticolonial,</strong> para la diversidad étnica, sexual y de género. Ser feminista es una postura necesaria para cualquiera que aspire a vivir en un mundo más equitativo, libre y justo para todas las personas, incluyendo a las generaciones futuras. Es, finalmente, un acto de empatía y de responsabilidad social.</li>
+
+<li>Vamos a reformar la educación básica para enfocarnos en el <strong>biocentrismo,</strong> que reconoce a la Naturaleza como sujeto de derechos y nos responsabiliza de proteger y conservar la biodiversidad. Recuperaremos el valor de los saberes y prácticas ancestrales para demostrar cómo la perspectiva del Buen Vivir no es una cosa de pobreza o lujo, sino de equilibrio con la Naturaleza.</li>
+
+<li>Para evitar la concentración de poder, tanto el planeta como el ciberespacio deben ser lugares abiertos para todos. <strong>Estableceremos el derecho a la libre circulación de los pueblos</strong> y acabaremos la criminalización de las personas migrantes. También <strong>haremos del acceso a internet un derecho fundamental</strong>, garantizando así una gobernanza global y una democratización del conocimiento humano.</li>
+
+<li>Fomentaremos la reutilización, la reparación, el reciclaje y el ecodiseño para maximizar la durabilidad de los productos y minimizar su impacto ambiental. <strong>Una economía de la funcionalidad</strong> impulsará una transición desde la posesión hacia el uso, donde el proveedor será responsable del bien durante todo su ciclo de vida y se encargará de su mantenimiento, desmantelamiento y reutilización al final de su vida útil.</li>
+
+<li><strong>Reconectar con la Naturaleza y aprender de la permacultura revivirá el deseo de imaginar y crear.</strong> Libres del miedo al desempleo y con el derecho a una parte de la riqueza producida por los trabajadores durante siglos, pondremos la energía social en lo necesario; al menos hasta que la matriz energética sea del todo limpia y podamos decir que hemos construido una economía circular global.</li>
+</ol>
+
+<p>En síntesis, utilizaremos Bitcoin para inicialmente apoderarnos de los medios de emisión monetaria, descentralizar y descarbonizar la generación y distribución de energía y posteriormente apoderarnos de todos los medios de producción. <strong>Tendremos éxito por medios pacíficos.</strong></p>
+
+<h2>Para los escépticos que aún no han estudiado Bitcoin:</h2>
+<p><strong>¿Qué respalda Bitcoin?</strong><br>El poder computacional de la red, el cual brinda enorme seguridad criptográfica y en el futuro será el poder computacional de toda la humanidad.</p>
+
+<ul>
+<li><strong>"Es riesgoso por la volatilidad":</strong> La volatilidad es una observación en relación a la especulación con el precio en otras monedas de Bitcoin. ¿Bitcoin es más riesgoso que depender del petróleo? ¿Más riesgoso que la deuda infinita ($251 Trillones) exportada por EE.UU.? ¿Más riesgoso que seguir perdiendo recursos y energía en armas ($2.5 Trillones a nivel global)? ¿Más riesgoso que esperar la buena voluntad de millonarios para la redistribución de la riqueza ($32 Trillones en paraísos fiscales)? Bitcoin está basado en la ciencia computacional y posibilita la verdadera cooperación internacional (consenso matemático).</li>
+
+<li><strong>"Gasta mucha energía":</strong> Se encuentran con facilidad datos y proyecciones sobre cómo el gasto de energía de la red de Bitcoin es 28 veces menor que el del sistema financiero actual y podría funcionar hasta 60 veces más eficientemente. Bitcoin convierte la energía desperdiciada en riqueza. Si la matriz energética es limpia Bitcoin también.</li>
+
+<li><strong>"Los países más ricos se opondrán":</strong> EE.UU. ya es el mayor minero de Bitcoin del mundo. Ni China ni Rusia consiguen controlar el crecimiento de la red de Bitcoin. Está comprobado que ante la prohibición del minado, el Hash Power simplemente se traslada a otros lugares. Llegado el momento todas las naciones entrarán a cooperar pues, la unión es superior al conflicto.</li>
+
+<li><strong>"Se requiere mucha agua para refrigerar a los mineros":</strong> Siendo propiedad colectiva de la humanidad, los mineros pueden ubicarse en lugares fríos donde la Naturaleza los refrigera gratis y con el calor que producen se pueden calentar invernaderos u hogares. También sumergir los dispositivos en un fluido dieléctrico puede proporcionar refrigeración sin depender del agua.</li>
+</ul>
+
+<p>Hay que confiar en las capacidades de la ciencia humana, con inversión libre del interés de lucro, los investigadores hallarán maneras de hacer más eficiente la matriz energética (energía de fusión e.g.) y de aprovechar materiales que se querían descartar. Debemos actuar ahora y ser osados, pues la gente pierde la esperanza y la imaginación. La ONU habla de un mapa de ruta, pero sabemos que nuestros ancestros viajaron a lo desconocido muchas veces sin mapa, apenas con instrumentos para avanzar, sin saber el destino, pero con valentía y siguiendo la brújula del instinto.</p>
+
+<p><strong>Bitcoin es una herramienta más; podemos usarla para la creación de un mundo nuevo. Abre una billetera virtual y promueve el uso de Bitcoin para ayudar.</strong></p>`
+      },
+      en: {
+        title: "THE PEACE REVOLUTION: TOWARD CRYPTO COLLECTIVISM",
+        quote: "\"The fundamental hidden truth of the world is that it is something we create together and could easily create differently.\" — David Graeber",
+        content: `<h2>Prelude: The moment of convergence</h2>
+<p>Humanity faces a polycrisis. First, an environmental crisis, where the life of the organism Earth, our mother, is in peril. A monetary crisis, driven by fiat currency, infinite debt, structural inequality, and a monetary struggle with no possible victors. An energy crisis, fueled by addiction to fossil fuels, massive waste, and the pollution of the water and soil that feed us. A crisis of meaning: due to extreme individualism, there is a loss of purpose and despair for the future. These are not separate crises, but a single one: <strong>The current economic system has clouded our consciousness and disconnected us from Nature.</strong> It is a system incompatible with ecological survival and human dignity. We must unveil the illusion of separation.</p>
+
+<h2>First Principle: Integration of will and elevation of consciousness</h2>
+<p>To overcome the illusion of separation, we will use the four principles of socio-political integration: <strong>Reality is superior to the idea, the whole is superior to the part, unity is superior to conflict, time is superior to space.</strong></p>
+
+<p>Biocentrism is often proposed as an ideology to address the polycrisis. Life is too vast to define, but we must place this truth at the center of our consciousness: <strong>the living—everything that has texture, temperature, and duration—is what is real.</strong> Although embodied experience persuades us that the world and the self are separate things, we cannot forget the former if we wish to advance toward integration, for reality is always superior to the idea of the self. From this perspective, it becomes evident that we are microcosms of the Earth organism and that, like her, we are also sick. Our sickness demands that we listen to the rest of Nature, for it is she who holds the deepest remedies.</p>
+
+<p>Isolating ourselves, attempting to reproduce the past in self-sustaining villages, is not only impossible in a globalized world; it is, above all, a vain illusion. As demonstrated by the water and CO2 cycles, there is no individual salvation. The organisms in a forest are all interconnected, the struggles are all interconnected. We must cooperate to continue; neo-Luddism would be to accept that capitalism mutilated the human imagination.</p>
+
+<p>Let us remember that we are made of the same elements as the stars and wood. That matter and energy are a single substance, vibrating at different wavelengths, for <strong>energy is neither created nor destroyed, only transformed.</strong> Considering this, we can see that while ideas exist outside of space, nothing exists outside of time, and therefore, time is superior to space. If time is infinite, then that which it contains—existence itself—has no external purpose, just as art or love do not, which are perhaps simple synonyms. Those moved by life try to express these enigmas, even knowing their beauty is ineffable. And so, instead of asking "why?" or "for what?", let us ask a more intimate and revealing question: <em>How has time incarnated itself in me?</em></p>
+
+<p>We will elevate collective consciousness by jointly transforming economy and culture. The ways we love, feed ourselves, organize, and express ourselves—we will transform everything, if and only if we have the courage to trust one another, to make peace, share resources, and reconnect among living organisms. In this new beginning, mathematics—that secret grammar of Nature—offers us once again a tool for integration, a pre-existing harmony, as in music. <strong>Imagining and working together to continue this divine story of Earth is the collective poem that will restore dignity to our species.</strong></p>
+
+<p>We must transform our relationship with death and birth. Thus, we will see in new generations, raised in a circular economy—with a global social currency—the understanding that what has mass decays, but that <strong>death does not exist, only transformation.</strong> It is not death that should terrify us, but the stubbornness to prolong the individual, especially at the expense of future generations and biodiversity. Every body, every material possession, is a fleeting instant in the universal flow of energy. Today, however, our consumption consists of objects that deny their transience: materials that decay so slowly are stagnating the flow. Earth is drowning in abandoned things; we have become, above all, producers of garbage. Putting work into the essential and not into desire is to balance the process. We will produce more slowly and assume the responsibility of free will. Consuming is easy (satisfying desire), creating is difficult (making love). <strong>Being brave, then, is accepting our transience and still choosing the difficult path. Let us, therefore, gather the will for love.</strong></p>
+
+<h2>Second Principle: The matter of money</h2>
+<p>It is a fact that money came before capitalism and emerged as a tool for cooperation. Understanding it as a symbolic representation of energy is key to seeing that <strong>Bitcoin, which is minted mathematically through a proof of energy expenditure—computational proof of work—is humanity's solution to the arbitrariness of central bank power,</strong> for it makes the game of money more open and fair. Now, with the laws of thermodynamics in mind and aware of our planet's finitude, we know we cannot create energy from nothing. Therefore, there cannot be infinite bitcoins, just as there cannot be infinite debt. Finally the tool is coherent with Nature.</p>
+
+<p>We will also say that <strong>Bitcoin is social energy frozen in time.</strong> Social, because it is the product of the computer's work—a physical symbol of humanity's collective progress, a symbol of magic, a symbol of the power of fire. No one can declare themselves the owner of the Bitcoin network, just as no one can proclaim themselves the owner of planet Earth, for both are entropic systems, living organisms that, being finite, require individual commitment to be cared for and maintained in equilibrium. And it is energy frozen in time because Bitcoin is a digital asset whose value and security come from the irreversible transformation of collective work and common resources of the real world, into an immutable accounting ledger (the blockchain), which preserves its value through time and is not limited by space.</p>
+
+<p>Bitcoin must be seen as the financial architecture for a new economic system based on collectivism. At its essence, it is the miners and nodes who validate and secure the network. Even if necessary in the future, its code could be modified by majority agreement—as in any collective story, consensus is the key. Nevertheless, within this fabric also lies the irrevocable responsibility and freedom of the participating individual. Therein lies the trust backing Bitcoin's value: collective computational power and freedom of choice. We can say, then, that <strong>Bitcoin is the Hegelian synthesis (thesis: capitalism, antithesis: communism)</strong> for it achieves a philosophical conciliation in a practical tool for revolution. And what is a revolution, if not a new and better form of cooperation?</p>
+
+<p>We emphasize that to solve the polycrisis, addressing social injustice is fundamental. Abandoning other centralized currencies (the dollar, euro, yuan, etc.) founded on extractivism, division, and exploitation will enable unprecedented international cooperation. Any witness to war understands that one cannot prosper in a violent territory. <strong>To address the polycrisis, it is imperative to stop spending on weapons.</strong> Bitcoin, being decentralized, open-source, founded on consensus, and with public accounting, can serve as the instrument for a global circular economy. A system where, by prioritizing the superiority of the whole over the part, the need for attack and defense between nations is eliminated. Thus, it includes and redistributes wealth for all, like a closed system seeking thermal equilibrium. The radical transparency of its accounting and the priorities of mutual aid will dismantle illicit businesses and the military-industrial complex. <strong>For the first time, world peace is glimpsed not as a yearning, but as a technical and ethical possibility on the horizon.</strong></p>
+
+<p>For those who fear that millionaires have already accumulated too much Bitcoin and that there is no remedy for human selfishness: When Bitcoin becomes the only currency accepted by workers, the accumulation of money becomes thermodynamically absurd, like storing electricity in giant batteries to never use it. It will be crucial to participate, to trade goods and services under the public scrutiny of the blockchain. Responsibility to the community will consist, precisely, in making energy circulate and empower the most functional initiatives. Here lies the principle for reducing inequality and inequity: <strong>Bitcoin redistributes social energy,</strong> and as the system closes, it will naturally tend toward entropy—toward the equilibrium that dissolves sterile hoarding and nourishes everyone's future.</p>
+
+<p>Finally, it is crucial to remember that real solutions for reconfiguring our ways of living find their hardest obstacle in finance. Anyone who has tried to launch a permaculture, climate adaptation, or social care initiative can testify: the main obstacle is always finding resources for materials and workers. Bitcoin, in its essence, proposes radical financial emancipation. By eliminating the need for a central intermediary—a bank, a state, an institution that grants or denies permission—it disarms the fundamental mechanism of domination. Because all domination—of class, state, monetary, gender—is consolidated, ultimately, by enabling coercion through control of money. <strong>Bitcoin enables the oppressed to liberate themselves, not through concessions from the oppressor, but through mutual aid and direct action.</strong> Without asking for authorization, they can access and channel the social energy needed for their subsistence and projects.</p>
+
+<h2>Political agenda of action and demands</h2>
+<p>We know the planet is reaching the tipping point. Scientists warn of it, and inhabitants worldwide perceive the climate becoming increasingly extreme. It is clear that it is the time for revolution; we will take action now. <strong>The revolution will be triple or it will not be.</strong> It is not enough to change the currency, not enough to change the power grid, not enough to change the distribution of capital. All three must change simultaneously:</p>
+
+<ol>
+<li><strong>The peace revolution begins with refusing, in daily life, to feed the capitalist system;</strong> for it is impossible to transform the world by reproducing the logic of the power that organizes it. Workers with purchasing power must change their money to Bitcoin and use only this for commerce. Workers without purchasing power must demand Bitcoin as the only just compensation for their work. Together we will end Bitcoin speculation because one does not exchange fertile seeds for garbage. We will manifest our weariness by leaving the game of traditional banking and infinite money, which is nothing but the irresponsibility of previous generations.</li>
+
+<li>Just as during the Covid pandemic, we demand that this matter be addressed for what it is: <strong>a global crisis.</strong> Commercial flights for non-humanitarian purposes must be banned, and we call for aircraft, ships, weapons, and gasoline machinery to be dismantled and repurposed to build clean energy infrastructure. The goal will be to find a use for all the garbage we have left behind. There are already hundreds of initiatives in this regard; we must allocate funds and labor to them.</li>
+
+<li><strong>We call for civil disobedience:</strong> no one will pay their debts to any bank, nor will anyone pay more taxes to a broken and corrupt system. For years, they debated how to tax the richest; that fight is over. Let the millionaires keep their fake money, which no worker will accept anymore their lie. Social energy flows where the will to power (the potential of life) is found.</li>
+
+<li>We change currency to boycott institutions and attack the pockets of the powerful. But it is necessary to seize the means of monetary issuance. <strong>We demand that the world's governments use Bitcoin to leverage the financing of the energy transition and establish a Universal Basic Income in Bitcoin</strong> with the surplus energy produced, thus also funding public services.</li>
+
+<li>Taking advantage of the computational work that sustains the new crypto-collectivist system, <strong>we will establish a four-day workweek with three days of rest,</strong> to slow down production and lower the supply of goods; people will have to reuse what they thought was useless—we are challenging our creativity.</li>
+
+<li>We demand that the territories of indigenous peoples and traditional communities be recognized and protected. Land must be demarcated and titled in the name of communities, not individuals. <strong>We will make agrarian reform a reality</strong> and carry it out through agroecology to achieve nutritional security and food sovereignty, without exploitation or animal abuse.</li>
+
+<li><strong>The exploration and exploitation of new hydrocarbon deposits must be halted.</strong> Refined fuel must be allocated for the distribution of food and supplies for agroecology. People will stop worrying about useless jobs and fleeting desires to focus on the climate adaptability of their communities.</li>
+
+<li>We will build an <strong>intersectional, anti-racist, and anti-colonial feminism,</strong> for ethnic, sexual, and gender diversity. Being a feminist is a necessary stance for anyone who aspires to live in a more equitable, free, and just world for all people, including future generations. It is, ultimately, an act of empathy and social responsibility.</li>
+
+<li>We will reform basic education to focus on <strong>biocentrism,</strong> which recognizes Nature as a rights-bearing subject and holds us responsible for protecting and conserving biodiversity. We will recover the value of ancestral knowledge and practices to show how the perspective of Buen Vivir (Good Living) is not a matter of poverty or luxury, but of balance with Nature.</li>
+
+<li>To avoid the concentration of power, both the planet and cyberspace must be open places for all. <strong>We will establish the right to free movement of peoples</strong> and end the criminalization of migrants. <strong>We will also make internet access a fundamental right</strong>, thus guaranteeing global governance and the democratization of human knowledge.</li>
+
+<li>We will promote reuse, repair, recycling, and eco-design to maximize product durability and minimize environmental impact. <strong>A functional economy</strong> will drive a transition from ownership to usership, where the provider will be responsible for the good throughout its life cycle and will handle its maintenance, dismantling, and reuse at the end of its useful life.</li>
+
+<li><strong>Reconnecting with Nature and learning from permaculture will revive the desire to imagine and create.</strong> Free from the fear of unemployment and with the right to a share of the wealth produced by workers over centuries, we will put social energy into what is necessary; at least until the power grid is completely clean and we can say we have built a global circular economy.</li>
+</ol>
+
+<p>In summary, we will use Bitcoin to initially seize the means of monetary issuance, decentralize and decarbonize the generation and distribution of energy, and subsequently seize all means of production. <strong>We will succeed by peaceful means.</strong></p>
+
+<h2>For the skeptics who have not yet studied Bitcoin:</h2>
+<p><strong>What backs Bitcoin?</strong><br>The computational power of the network, which provides enormous cryptographic security and in the future will be the computational power of all humanity.</p>
+
+<ul>
+<li><strong>"It's risky due to volatility":</strong> Volatility is an observation in relation to price speculation of Bitcoin in other currencies. Is Bitcoin riskier than depending on oil? Riskier than infinite debt ($251 Trillion) exported by the USA? Riskier than continuing to lose resources and energy on weapons ($2.5 Trillion globally)? Riskier than waiting for the goodwill of millionaires for wealth redistribution ($32 Trillion in tax havens)? Bitcoin is based on computer science and enables true international cooperation (mathematical consensus).</li>
+
+<li><strong>"It uses too much energy":</strong> Data is easily found showing how the energy consumption of the Bitcoin network is 28 times lower than the current financial system consumption and could operate up to 60 times more efficiently. Bitcoin converts wasted energy into wealth. If the power grid is clean, Bitcoin is too.</li>
+
+<li><strong>"The richest countries will oppose it":</strong> The USA is already the world's largest Bitcoin miner. Neither China nor Russia can control the growth of the Bitcoin network. It has been proven that when mining is banned, the Hash Power simply moves elsewhere. When the time comes, all nations will enter into cooperation, for unity is superior to conflict.</li>
+
+<li><strong>"It requires a lot of water to cool the miners":</strong> As the collective property of humanity, miners can be located in cold places where Nature cools them for free, and the heat they produce can warm greenhouses or homes. Also, submerging devices in a dielectric fluid can provide cooling without depending on water.</li>
+</ul>
+
+<p>We must trust in the capabilities of human science. With investment free from the profit motive, researchers will find ways to make the power grid more efficient (Fusion Energy e.g.) and to utilize materials that were to be discarded. We must act now and be bold, for people are losing hope and imagination. The UN speaks of a roadmap, but we know our ancestors journeyed into the unknown many times without a map, barely with instruments to move forward, without knowing the destination, but with courage following the compass of instinct.</p>
+
+<p><strong>Bitcoin is just one more tool; we can use it to create a new world. Open a virtual wallet and promote the use of Bitcoin to help.</strong></p>`
+      },
+      pt: {
+        title: "REVOLUÇÃO DA PAZ: RUMO AO CRIPTO COLETIVISMO",
+        quote: "\"A verdade oculta fundamental do mundo é que é algo que criamos juntos e que facilmente poderíamos criar diferente\" — David Graeber",
+        content: `<h2>Preâmbulo: O momento da convergência</h2>
+<p>A humanidade enfrenta uma policrise. Em primeiro lugar, uma crise ambiental, onde a vida do organismo Terra, nossa mãe, está em perigo. Uma crise monetária, por um dinheiro sem lastro, dívida infinita, desigualdade estrutural e uma luta monetária sem vencedores possíveis. Uma crise energética, pelo vício em combustíveis fósseis, desperdício massivo, contaminação da água e do solo que nos alimenta. Crise de significado: devido ao extremo individualismo, há uma perda de propósito e uma desesperança quanto ao futuro. Estas não são crises separadas, mas uma só: <strong>O sistema econômico atual nublou a consciência e nos desconectou da Natureza</strong>, é um sistema incompatível com a sobrevivência ecológica e a dignidade humana. Devemos desvelar a ilusão da separação.</p>
+
+<h2>Primeiro princípio: Integração da vontade e elevação da consciência</h2>
+<p>Para superar a ilusão da separação, usaremos os quatro princípios de integração sociopolítica: <strong>A realidade é superior à ideia, o todo é superior à parte, a união é superior ao conflito, o tempo é superior ao espaço.</strong></p>
+
+<p>Propõe-se frequentemente o biocentrismo como ideologia para enfrentar a policrise. A vida é demasiado vasta para defini-la, mas devemos posicionar no centro da consciência esta verdade: <strong>o vivo —tudo aquilo que tem textura, temperatura e duração— é o real.</strong> Embora a experiência encarnada nos persuade de que o mundo e o eu são coisas separadas, não podemos esquecer o primeiro se quisermos avançar para a integração, pois a realidade é sempre superior à ideia do eu. Desde esta perspetiva, torna-se evidente que somos microcosmos do organismo Terra e que, como ela, também estamos doentes. A nossa doença exige ouvir o resto da Natureza, porque é ela que guarda os remédios mais profundos.</p>
+
+<p>Isolar-se, tentando reproduzir o passado em aldeias autossustentáveis, não só é impossível num mundo globalizado, como é sobretudo uma ilusão vã. Como demonstra o ciclo da água e do CO2, não há salvação individual. Os organismos numa floresta estão todos interligados, as lutas estão todas interligadas. Devemos cooperar para continuar, o Neo-ludismo seria aceitar que o capitalismo mutilou a imaginação humana.</p>
+
+<p>Recordemos que somos feitos dos mesmos elementos que as estrelas e a madeira. Que matéria e energia são uma única substância, vibrando em diferentes comprimentos de onda, pois <strong>a energia não se cria nem se destrói, só se transforma.</strong> Considerando isto, podemos ver que embora as ideias existam fora do espaço, nada existe fora do tempo, e por isso, o tempo é superior ao espaço. Se o tempo é infinito, então aquilo que contém —a existência em si— não tem um propósito externo, como não o têm a arte ou o amor, que talvez sejam simples sinônimos. Quem se comove perante a vida tenta expressar esses enigmas, mesmo sabendo que a sua beleza é indizível. E assim, em vez de perguntarmos «porquê?» ou «para quê?», façamos uma pergunta mais íntima e reveladora: <em>como se encarnou o tempo em mim?</em></p>
+
+<p>Vamos elevar a consciência coletiva modificando juntos economia e cultura. As formas como nos amamos, nos alimentamos, nos organizamos, nos expressamos, vamos transformar tudo, se e somente se tivermos a coragem de confiar uns nos outros, para fazer a paz, partilhar recursos e reconectar entre organismos vivos. Neste recomeçar, a matemática —essa gramática secreta da Natureza— volta a oferecer-nos uma ferramenta de integração, uma harmonia pré existente, como na música. <strong>Imaginar e trabalhar juntos para continuar essa divina história da Terra, é o poema coletivo que devolverá a dignidade à nossa espécie.</strong></p>
+
+<p>Devemos transformar a nossa relação com a morte e o nascimento. Assim veremos nas novas gerações, crescidas numa economia circular —de moeda social global—, a compreensão de que o que tem massa decai, mas que <strong>não existe a morte, só transformação.</strong> Não é a morte que deve aterrar-nos, mas a obstinação por prolongar o indivíduo, além disso à custa das gerações futuras e da biodiversidade. Todo corpo, toda posse material, é um instante fugaz no fluxo universal da energia. Hoje, no entanto, o nosso consumo são objetos que negam a sua fugacidade: materiais que decaem tão devagar estão estagnando a corrente. A Terra está a afogar-se em coisas abandonadas; tornamo-nos, sobretudo, produtores de lixo. Pôr o trabalho no primordial e não no desejo é equilibrar o processo, vamos produzir mais devagar e assumir a responsabilidade do livre arbítrio. Consumir é fácil (satisfazer o desejo), criar é difícil (fazer amor). <strong>Ser corajoso então é aceitar a nossa fugacidade e mesmo assim escolher o difícil. Reunamos, pois, a vontade para o amor.</strong></p>
+
+<h2>Segundo princípio: A questão do dinheiro</h2>
+<p>É um facto que o dinheiro é anterior ao capitalismo e surgiu como ferramenta para a cooperação. Compreendê-lo como representação simbólica de energia é chave para entender que <strong>o Bitcoin, que é cunhado matematicamente, através de uma prova de gasto energético —trabalho computacional—, é a solução da humanidade para a arbitrariedade do poder de um banco central,</strong> pois torna mais aberto e justo o jogo do dinheiro. Agora bem, com as leis da termodinâmica em mente e conscientes da finitude do nosso planeta, sabemos que não podemos criar energia do nada. Por isso, não podem existir bitcoins infinitos, como também não pode existir dívida infinita. A ferramenta é coerente com a Natureza.</p>
+
+<p>Diremos que <strong>o Bitcoin é energia social congelada no tempo.</strong> Social, porque é produto do trabalho do computador —símbolo físico do progresso coletivo da humanidade, símbolo da magia, símbolo do poder do fogo—. Ninguém pode declarar-se dono da rede de Bitcoin, como ninguém pode proclamar-se dono do planeta Terra, pois ambos são sistemas entrópicos, organismos vivos que, sendo finitos, requerem compromisso individual para serem cuidados e mantidos em equilíbrio. E é energia congelada no tempo porque o Bitcoin é um bem digital cujo valor e segurança vêm da transformação irreversível de trabalho coletivo e recursos comuns do mundo real, num registro contábil imutável (a cadeia de blocos), que preserva o seu valor através do tempo e não é limitado pelo espaço.</p>
+
+<p>É preciso ver o Bitcoin como a arquitetura financeira para um novo sistema econômico baseado no coletivismo. Na sua essência, são os mineradores e os nós que validam e asseguram a rede. Inclusive, se fosse necessário no futuro, o seu código poderia modificar-se por acordo da maioria —como em toda narrativa coletiva o consenso é a chave—. No entanto, neste tecido também reside a responsabilidade e a liberdade irrevogável do indivíduo que participa. Aí está a confiança que respalda o valor do Bitcoin: poder computacional coletivo e liberdade de escolha. Podemos dizer então que <strong>o Bitcoin é a síntese hegeliana (tese: capitalismo, antítese: comunismo)</strong> pois realiza um concílio filosófico numa ferramenta prática para a revolução. E o que é uma revolução, senão uma nova e melhor forma de cooperação?</p>
+
+<p>Enfatizamos que para resolver a policrise é fundamental atender à injustiça social. Abandonar outras moedas centralizadas (o dólar, o euro, o yuan, etc.) fundadas no extrativismo, na divisão e na exploração, possibilitará uma cooperação internacional sem precedentes. Qualquer testemunha da guerra compreende que não se pode prosperar num território violento. <strong>Para enfrentar a policrise, é imperativo deter o gasto em armas.</strong> O Bitcoin, ao ser descentralizado, de código aberto, fundado no consenso e de contabilidade pública, pode servir como o instrumento para uma economia circular global. Um sistema onde, ao priorizar o todo em detrimento da parte, elimina-se a necessidade de ataque e defesa entre nações. Assim, ele inclui e redistribui a riqueza para todos, como um sistema fechado em busca de equilíbrio térmico. A transparência radical de sua contabilidade e as prioridades de apoio mútuo desmantelarão os negócios ilícitos e o comércio de armas. <strong>Pela primeira vez, a paz mundial surge não como um anseio, mas como uma possibilidade técnica e ética no horizonte.</strong></p>
+
+<p>Para quem teme que os milionários já acumularam demasiado Bitcoin e que não há remédio para o egoísmo humano: Chegado o ponto em que o Bitcoin seja a única moeda aceita pelos trabalhadores, a acumulação de dinheiro torna-se absurda termodinamicamente, é como armazenar eletricidade em baterias gigantes para nunca a usar. Será crucial participar, comercializar bens e serviços sob o escrutínio público da contabilidade. A responsabilidade com a comunidade consistirá, precisamente, em fazer com que a energia circule e dê potência às iniciativas mais funcionais. Aqui está o princípio redutor da desigualdade e inequidade: <strong>o Bitcoin redistribui a energia social</strong> e na medida em que o sistema se for fechando, tenderá naturalmente para a entropia —para o equilíbrio que dissolve os acampamentos estéreis e abona o futuro de todos.</p>
+
+<p>Por último, é crucial recordar que as soluções reais para reconfigurar as nossas formas de viver encontram o seu entrave mais duro no financeiro. Quem já tentou lançar uma iniciativa de permacultura, de adaptação climática ou de atenção social pode testemunhá-lo: o obstáculo principal é sempre encontrar os recursos para materiais e trabalhadores. O Bitcoin, na sua essência, propõe uma emancipação financeira radical. Ao eliminar a necessidade de um intermediário central —um banco, um Estado, uma instituição que conceda ou negue permissão—, desarma o mecanismo fundamental da dominação. Porque toda dominação —de classe, estatal, monetária, de gênero— consolida-se, em última instância, propiciando a coerção mediante o controle do dinheiro. <strong>O Bitcoin possibilita que o oprimido se liberte, não mediante concessões do opressor, mas mediante o apoio mútuo e a ação direta.</strong> Sem pedir autorização, pode uma pessoa acessar e canalizar a energia social que precisa para a sua subsistência e para o seu projeto.</p>
+
+<h2>Agenda política de ação e demandas</h2>
+<p>Sabemos que o planeta está a chegar ao ponto de inflexão. Os cientistas alertam e os habitantes de todo o mundo percebem como o clima é cada vez mais extremo. Está claro que é o momento da revolução; vamos tomar ação agora. <strong>A revolução será tripla ou não será.</strong> Não basta mudar o dinheiro, não basta mudar a energia, não basta mudar a distribuição do capital. Devem mudar-se as três simultaneamente:</p>
+
+<ol>
+<li><strong>A revolução da paz começa com recusar-se na vida diária a alimentar o sistema capitalista;</strong> pois não é possível transformar o mundo reproduzindo a lógica do poder que o organiza. Os trabalhadores com poder aquisitivo devem trocar o seu dinheiro por Bitcoin e usar só este para o comércio. Os trabalhadores sem poder aquisitivo devem exigir Bitcoin como única compensação justa do seu trabalho. Juntos acabaremos com a especulação com Bitcoin porque não se trocam sementes férteis por lixo. Vamos manifestar o nosso cansaço saindo do jogo da banca tradicional e do dinheiro infinito que não é mais do que irresponsabilidade das gerações anteriores.</li>
+
+<li>Igual durante a pandemia da Covid, exigimos que se aborde este assunto como o que é: <strong>uma crise global.</strong> Devem proibir-se os voos comerciais que não tenham fins humanitários e pedimos que se desmantele e reutilize aeronaves, barcos, armas e maquinarias de gasolina para construir uma infraestrutura energética limpa. O objetivo será encontrar utilidade para todo o lixo que deixámos. Já há centenas de iniciativas a esse respeito; devemos destinar-lhes fundos e mão de obra.</li>
+
+<li><strong>Chamamos à desobediência civil,</strong> ninguém pagará as suas dívidas a nenhum banco, nem ninguém pagará mais impostos a um sistema quebrado e corrupto. Discutiu-se durante anos como cobrar impostos aos mais ricos, essa luta acabou, que fiquem os milionários com o seu dinheiro falso que nenhum trabalhador lhes aceitará mais essa mentira. A energia social flui onde se encontra a vontade de poder (o potencial da vida).</li>
+
+<li>Mudamos de moeda para boicotar as instituições e atacar o bolso dos poderosos. Mas é necessário assumir os meios de emissão monetária. <strong>Exigimos aos governos do mundo que usem Bitcoin para o financiamento da transição energética e que estabeleçam uma Renda Básica Universal de Bitcoin</strong> com o excedente de energia produzida, assim também financiaremos os serviços públicos.</li>
+
+<li>Aproveitando o trabalho computacional que sustenta o novo sistema cripto coletivista. <strong>Vamos estabelecer uma jornada de trabalho de quatro dias laborais por três de descanso,</strong> isto é para diminuir a produção, e baixar a oferta de bens; as pessoas terão que reutilizar o que julgavam inútil —estamos desafiando a nossa criatividade.</li>
+
+<li>Exigimos que se reconheçam e protejam os territórios dos povos originários e comunidades tradicionais. Deve-se demarcar e titular terrenos a nome de comunidades e não de indivíduos. <strong>Faremos realidade a reforma agrária</strong> e a levaremos a cabo desde a agroecologia para alcançar segurança nutricional e soberania alimentar sem exploração ou abuso de animais.</li>
+
+<li><strong>Deve parar a exploração de mais jazidas de hidrocarbonetos.</strong> E deve destinar-se o combustível já refinado para a distribuição de alimentos e insumos para a agroecologia. As pessoas deixarão de se preocupar com empregos inúteis e desejos fugazes para preocupar-se com a adaptabilidade climática das suas comunidades.</li>
+
+<li>Construiremos um <strong>feminismo interseccional, antirracista e anticolonial,</strong> para a diversidade étnica, sexual e de género. Ser feminista é uma postura necessária para qualquer pessoa que aspire a viver num mundo mais equitativo, livre e justo para todas as pessoas, incluindo as gerações futuras. É, finalmente, um ato de empatia e de responsabilidade social.</li>
+
+<li>Vamos reformar a educação básica para nos focarmos no <strong>biocentrismo,</strong> que reconhece a Natureza como sujeito de direitos e nos responsabiliza a proteger e conservar a biodiversidade. Recuperaremos o valor dos saberes e práticas ancestrais para demonstrar como a perspetiva do Bem Viver não é uma coisa de pobreza ou luxo, mas de equilíbrio com a Natureza.</li>
+
+<li>Para evitar a concentração de poder, tanto o planeta como o ciberespaço devem ser lugares abertos para todos. <strong>Estabeleceremos o direito à livre circulação dos povos</strong> e acabaremos com a criminalização das pessoas migrantes. <strong>Também faremos do acesso à internet um direito fundamental</strong>, garantindo assim uma governança global e uma democratização do conhecimento humano.</li>
+
+<li>Fomentaremos a reutilização, a reparação, a reciclagem e o ecodesign para maximizar a durabilidade dos produtos e minimizar o seu impacto ambiental. <strong>Uma economia da funcionalidade</strong> impulsionará uma transição da posse para o uso, onde o fornecedor será responsável pelo bem durante todo o seu ciclo de vida e encarregar-se-á da sua manutenção, desmantelamento e reutilização no final da sua vida útil.</li>
+
+<li><strong>Reconectar com a Natureza e aprender com a permacultura reviverá o desejo de imaginar e criar.</strong> Livres do medo do desemprego e com o direito a uma parte da riqueza produzida pelos trabalhadores durante séculos, poremos a energia social no necessário; pelo menos até que a matriz energética seja totalmente limpa e possamos dizer que construímos uma economia circular global.</li>
+</ol>
+
+<p>Em síntese, usaremos o Bitcoin para inicialmente assumir os meios de emissão monetária, descentralizar e descarbonizar a geração e distribuição de energia e posteriormente assumir todos os meios de produção. <strong>Teremos sucesso por meios pacíficos.</strong></p>
+
+<h2>Para os céticos que ainda não estudaram o Bitcoin:</h2>
+<p><strong>O que respalda o Bitcoin?</strong><br>O poder computacional da rede, que oferece enorme segurança criptográfica e no futuro será o poder computacional de toda a humanidade.</p>
+
+<ul>
+<li><strong>"É arriscado devido à volatilidade":</strong> A volatilidade é uma observação relacionada à especulação de preços em outras moedas. O Bitcoin é mais arriscado do que depender do petróleo? Mais arriscado do que a dívida infinita (US$251 trilhões) exportada pelos EUA? Mais arriscado do que continuar desperdiçando recursos e energia em armas (US$2.5 trilhões globalmente)? Mais arriscado do que esperar pela boa vontade dos milionários para redistribuir a riqueza (US$32 trilhões em paraísos fiscais)? O Bitcoin é baseado na ciência da computação e possibilita uma verdadeira cooperação internacional (consenso matemático).</li>
+
+<li><strong>"Gasta muita energia":</strong> Encontram-se facilmente dados e projeções mostrando que o consumo de energia da rede Bitcoin é 28 vezes menor do que o sistema financeiro atual e que ela pode operar hoje até 60 vezes mais eficientemente. O Bitcoin converte energia desperdiçada em riqueza. Se a matriz energética é limpa, o Bitcoin também será.</li>
+
+<li><strong>"Os países mais ricos opor-se-ão":</strong> Os EUA já são o maior minerador de Bitcoin do mundo. Nem a China nem a Rússia conseguem controlar nem parar o crescimento da rede de Bitcoin. Ficou comprovado que, quando a mineração é proibida, o Hash Power simplesmente migra para outro lugar. Com o tempo, todas as nações cooperarão, pois a união é superior ao conflito.</li>
+
+<li><strong>"É necessária muita água para refrigerar os mineradores":</strong> Sendo propriedade coletiva da humanidade, os mineradores podem localizar-se em lugares frios onde a Natureza os refrigera gratuitamente e com o calor que produzem podem-se aquecer estufas ou lares. Também submergir os dispositivos num fluido dielétrico pode proporcionar refrigeração sem depender da água.</li>
+</ul>
+
+<p>É preciso confiar nas capacidades da ciência humana, com investimento livre do interesse do lucro, os investigadores encontrarão maneiras de tornar a matriz energética mais eficiente (energia de fusão e.g.) e de aproveitar materiais que se queriam descartar. Devemos agir agora e ser ousados, pois as pessoas perdem a esperança e a imaginação. A ONU fala de um mapa do caminho, mas sabemos que os nossos antepassados viajaram para o desconhecido muitas vezes sem mapa, apenas com instrumentos para avançar, sem saber o destino, mas com coragem e seguindo a bússola do instinto.</p>
+
+<p><strong>O Bitcoin é uma ferramenta mais; podemos usá-la para a criação de um mundo novo. Abre uma carteira virtual e promove o uso do Bitcoin para ajudar.</strong></p>`
+      },
+      fr: {
+        title: "RÉVOLUTION DE LA PAIX : VERS LE CRYPTO-COLLECTIVISME",
+        quote: "« La vérité fondamentale cachée du monde est qu'il est une chose que nous créons ensemble et que nous pourrions facilement créer autrement. » — David Graeber",
+        content: `<h2>Préambule : Le moment de la convergence</h2>
+<p>L'humanité fait face à une polycrise. Premièrement, une crise environnementale, où la vie de l'organisme Terre, notre mère, est en danger. Une crise monétaire, causée par une monnaie sans garantie, une dette infinie, une inégalité structurelle et une lutte monétaire sans vainqueurs possibles. Une crise énergétique, due à l'addiction aux combustibles fossiles, au gaspillage massif, à la pollution de l'eau et des sols qui nous nourrissent. Une crise du sens : à cause de l'individualisme extrême, il y a une perte de but et un désespoir envers l'avenir. Ce ne sont pas des crises séparées, mais une seule : <strong>le système économique actuel a obscurci la conscience et nous a déconnectés de la Nature</strong> ; c'est un système incompatible avec la survie écologique et la dignité humaine. Nous devons dévoiler l'illusion de la séparation.</p>
+
+<h2>Premier principe : Intégration de la volonté et élévation de la conscience</h2>
+<p>Pour surmonter l'illusion de la séparation, nous utiliserons les quatre principes d'intégration socio-politique : <strong>la réalité est supérieure à l'idée, le tout est supérieur à la partie, l'union est supérieure au conflit, le temps est supérieur à l'espace.</strong></p>
+
+<p>Le biocentrisme est souvent proposé comme idéologie pour affronter la polycrise. La vie est trop vaste pour être définie, mais nous devons placer au centre de la conscience cette vérité : <strong>le vivant — tout ce qui a une texture, une température et une durée — est le réel.</strong> Bien que l'expérience incarnée nous persuade que le monde et le moi sont des choses séparées, nous ne pouvons pas oublier le premier si nous voulons avancer vers l'intégration, car la réalité est toujours supérieure à l'idée du moi. De cette perspective, il devient évident que nous sommes des microcosmes de l'organisme Terre et que, comme elle, nous sommes aussi malades. Notre maladie exige d'écouter le reste de la Nature, car c'est elle qui détient les remèdes les plus profonds.</p>
+
+<p>S'isoler, en essayant de reproduire le passé dans des villages autosuffisants, n'est pas seulement impossible dans un monde globalisé ; c'est surtout une illusion vaine. Comme le démontrent les cycles de l'eau et du CO2, il n'y a pas de salut individuel. Les organismes d'une forêt sont tous interconnectés, les luttes sont toutes interconnectées. Nous devons coopérer pour continuer, le néo-luddisme serait accepter que le capitalisme ait mutilé l'imagination humaine.</p>
+
+<p>Souvenons-nous que nous sommes faits des mêmes éléments que les étoiles et le bois. Que la matière et l'énergie sont une seule substance, vibrant à différentes longueurs d'onde, car <strong>l'énergie ne se crée ni ne se détruit, elle se transforme.</strong> En considérant cela, nous pouvons voir que si les idées existent hors de l'espace, rien n'existe hors du temps, et donc le temps est supérieur à l'espace. Si le temps est infini, alors ce qu'il contient — l'existence elle-même — n'a pas de but externe, comme n'en ont pas l'art ou l'amour, qui en sont peut-être de simples synonymes. Celui qui est ému par la vie tente d'exprimer ces énigmes, tout en sachant que sa beauté est indicible. Et ainsi, au lieu de nous demander « pourquoi ? » ou « pour quoi ? », posons-nous une question plus intime et révélatrice : <em>comment le temps s'est-il incarné en moi ?</em></p>
+
+<p>Nous allons élever la conscience collective en modifiant ensemble économie et culture. Les manières dont nous nous aimons, nous nourrissons, nous organisons, nous exprimons, nous allons tout transformer, si et seulement si nous avons le courage de nous faire confiance les uns les autres, pour faire la paix, partager les ressources et reconnecter les organismes vivants. Dans ce recommencement, les mathématiques — cette grammaire secrète de la Nature — nous offrent à nouveau un outil d'intégration, une harmonie préexistante, comme dans la musique. <strong>Imaginer et travailler ensemble pour continuer cette divine histoire de la Terre, c'est le poème collectif qui rendra sa dignité à notre espèce.</strong></p>
+
+<p>Nous devons transformer notre relation avec la mort et la naissance. Ainsi, nous verrons dans les nouvelles générations, élevées dans une économie circulaire — avec une monnaie sociale globale —, la compréhension que ce qui a une masse se décompose, mais qu'<strong>il n'y a pas de mort, seulement la transformation.</strong> Ce n'est pas la mort qui doit nous effrayer, mais l'entêtement à prolonger l'individu, de surcroît au détriment des générations futures et de la biodiversité. Tout corps, toute possession matérielle, est un instant fugace dans le flux universel de l'énergie. Aujourd'hui, cependant, notre consommation crée des objets qui nient leur fugacité : des matériaux qui se décomposent si lentement qu'ils stagnent le courant. La Terre étouffe sous les choses abandonnées ; nous sommes devenus, surtout, des producteurs de déchets. Mettre le travail dans l'essentiel et non dans le désir, c'est équilibrer le processus ; nous allons produire plus lentement et assumer la responsabilité du libre arbitre. Consommer est facile (satisfaire le désir), créer est difficile (faire l'amour). <strong>Être courageux, c'est alors accepter notre fugacité et malgré tout choisir le difficile. Rassemblons donc la volonté pour l'amour.</strong></p>
+
+<h2>Deuxième principe : La question de l'argent</h2>
+<p>C'est un fait que l'argent est antérieur au capitalisme et est apparu comme un outil de coopération. Le comprendre comme une représentation symbolique de l'énergie est clé pour comprendre que <strong>le Bitcoin, qui est frappé mathématiquement, par une preuve de dépense énergétique — un travail informatique —, est la solution de l'humanité à l'arbitraire du pouvoir d'une banque centrale,</strong> car il rend le jeu de l'argent plus ouvert et plus juste. Maintenant, avec les lois de la thermodynamique en tête et conscients de la finitude de notre planète, nous savons que nous ne pouvons pas créer de l'énergie à partir de rien. C'est pourquoi il ne peut y avoir de bitcoins infinis, pas plus qu'une dette infinie. L'outil est cohérent avec la Nature.</p>
+
+<p>Nous dirons en outre que <strong>le Bitcoin est de l'énergie sociale gelée dans le temps.</strong> Sociale, car il est le produit du travail de l'ordinateur — symbole physique du progrès collectif de l'humanité, symbole de la magie, symbole du pouvoir du feu. Personne ne peut se déclarer propriétaire du réseau Bitcoin, pas plus qu'on ne peut se proclamer propriétaire de la planète Terre, car tous deux sont des systèmes entropiques, des organismes vivants qui, étant finis, exigent un engagement individuel pour être soignés et maintenus en équilibre. Et c'est de l'énergie gelée dans le temps parce que le Bitcoin est un bien numérique dont la valeur et la sécurité viennent de la transformation irréversible du travail collectif et des ressources communes du monde réel, en un registre comptable immuable (la chaîne de blocs), qui préserve sa valeur à travers le temps et n'est pas limité par l'espace.</p>
+
+<p>Il faut voir le Bitcoin comme l'architecture financière pour un nouveau système économique basé sur le collectivisme. Dans son essence, ce sont les mineurs et les nœuds qui valident et sécurisent le réseau. Même, si cela était nécessaire à l'avenir, son code pourrait être modifié par accord de la majorité — comme dans tout récit collectif, le consensus est la clé. Néanmoins, dans cette trame réside aussi la responsabilité et la liberté irrévocable de l'individu qui participe. Voilà la confiance qui garantit la valeur du Bitcoin : la puissance de calcul collective et la liberté de choix. Nous pouvons dire alors que <strong>le Bitcoin est la synthèse hégélienne (thèse : capitalisme, antithèse : communisme)</strong> car il réalise un concile philosophique dans un outil pratique pour la révolution. Et qu'est-ce qu'une révolution, sinon une nouvelle et meilleure forme de coopération ?</p>
+
+<p>Nous soulignons que pour résoudre la polycrise, il est fondamental de s'occuper de l'injustice sociale. Abandonner les autres monnaies centralisées (le dollar, l'euro, le yuan, etc.) fondées sur l'extractivisme, la division et l'exploitation, permettra une coopération internationale sans précédent. Tout témoin de la guerre comprend qu'on ne peut prospérer sur un territoire violent. <strong>Pour affronter la polycrise, il est impératif d'arrêter les dépenses d'armement.</strong> Le Bitcoin, en étant décentralisé, open source, fondé sur le consensus et avec une comptabilité publique, peut servir d'instrument pour une économie circulaire globale. Un système où, la supériorité du tout sur la partie étant primordiale, la nécessité d'attaque et de défense entre nations est éliminée. Ainsi, il inclut et redistribue la richesse pour tous, comme un système fermé qui cherche l'équilibre thermique. La transparence radicale de sa comptabilité et les priorités de l'entraide démantèleront les affaires illicites et le profit lié à l'armement. <strong>Pour la première fois, la paix mondiale apparaît non pas comme un vœu pieux, mais comme une possibilité technique et éthique à l'horizon.</strong></p>
+
+<p>Pour ceux qui craignent que les millionnaires aient déjà accumulé trop de Bitcoin et qu'il n'y ait pas de remède à l'égoïsme humain : Arrivé au point où le Bitcoin sera la seule monnaie acceptée par les travailleurs, l'accumulation d'argent devient absurde thermodynamiquement, c'est comme stocker de l'électricité dans des batteries géantes pour ne jamais l'utiliser. Il sera crucial de participer, d'échanger biens et services sous le regard public de la comptabilité. La responsabilité envers la communauté consistera précisément à faire circuler l'énergie et à donner de la puissance aux initiatives les plus fonctionnelles. Voici le principe réducteur d'inégalité et d'iniquité : <strong>le Bitcoin redistribue l'énergie sociale</strong> et, à mesure que le système se refermera, il tendra naturellement vers l'entropie — vers l'équilibre qui dissout les accaparements stériles et fertilise l'avenir de tous.</p>
+
+<p>Enfin, il est crucial de rappeler que les solutions réelles pour reconfigurer nos manières de vivre trouvent leur obstacle le plus dur dans le financier. Quiconque a tenté de lancer une initiative de permaculture, d'adaptation climatique ou d'attention sociale peut en témoigner : l'obstacle principal est toujours de trouver les ressources pour les matériaux et les travailleurs. Le Bitcoin, dans son essence, propose une émancipation financière radicale. En éliminant le besoin d'un intermédiaire central — une banque, un État, une institution qui accorde ou refuse la permission —, il désarme le mécanisme fondamental de la domination. Car toute domination — de classe, étatique, monétaire, de genre — se consolide, en dernière instance, en permettant la coercition par le contrôle de l'argent. <strong>Le Bitcoin permet à l'opprimé de se libérer, non par des concessions de l'oppresseur, mais par l'entraide et l'action directe.</strong> Sans demander d'autorisation, il peut accéder et canaliser l'énergie sociale dont il a besoin pour sa subsistance et son projet.</p>
+
+<h2>Agenda politique d'action et revendications</h2>
+<p>Nous savons que la planète atteint un point de basculement. Les scientifiques le préviennent et les habitants du monde entier perçoivent que le climat est de plus en plus extrême. Il est clair que c'est le moment de la révolution ; nous allons agir maintenant. <strong>La révolution sera triple ou ne sera pas.</strong> Il ne suffit pas de changer l'argent, il ne suffit pas de changer l'énergie, il ne suffit pas de changer la distribution du capital. Les trois doivent changer simultanément :</p>
+
+<ol>
+<li><strong>La révolution de la paix commence par refuser, dans la vie quotidienne, d'alimenter le système capitaliste ;</strong> car il n'est pas possible de transformer le monde en reproduisant la logique du pouvoir qui l'organise. Les travailleurs ayant un pouvoir d'achat doivent changer leur argent en Bitcoin et n'utiliser que celui-ci pour le commerce. Les travailleurs sans pouvoir d'achat doivent exiger le Bitcoin comme seule compensation juste de leur travail. Ensemble, nous mettrons fin à la spéculation sur le Bitcoin, car on n'échange pas des graines fertiles contre des déchets. Nous manifesterons notre lassitude en sortant du jeu de la banque traditionnelle et de l'argent infini qui n'est rien d'autre que l'irresponsabilité des générations précédentes.</li>
+
+<li>Comme pendant la pandémie de Covid, nous exigeons que cette question soit traitée pour ce qu'elle est : <strong>une crise mondiale.</strong> Les vols commerciaux sans but humanitaire doivent être interdits et nous demandons que les avions, navires, armes et machines à essence soient démantelés et réutilisés pour construire une infrastructure énergétique propre. L'objectif sera de trouver une utilité à tous les déchets que nous avons laissés. Il existe déjà des centaines d'initiatives à ce sujet ; nous devons leur allouer des fonds et de la main-d'œuvre.</li>
+
+<li><strong>Nous appelons à la désobéissance civile,</strong> personne ne paiera ses dettes à aucune banque, et personne ne paiera plus d'impôts à un système cassé et corrompu. On a discuté pendant des années comment taxer les plus riches, ce combat est terminé, que les millionnaires gardent leur argent faux qu'aucun travailleur n'acceptera plus désormais ce mensonge. L'énergie sociale circule là où se trouve la volonté de puissance (le potentiel de la vie).</li>
+
+<li>Nous changeons de monnaie pour boycotter les institutions et attaquer le portefeuille des puissants. Mais il est nécessaire de s'emparer des moyens d'émission monétaire. <strong>Nous exigeons des gouvernements du monde qu'ils utilisent le Bitcoin pour financer la transition énergétique et qu'ils établissent un Revenu Universel de Base en Bitcoin</strong> avec le surplus d'énergie produite, ainsi nous financerons aussi les services publics.</li>
+
+<li>En profitant du travail informatique qui soutient le nouveau système crypto-collectiviste. <strong>Nous allons établir une semaine de travail de quatre jours travaillés pour trois de repos,</strong> afin de ralentir la production et, par conséquent, de diminuer l'offre de biens ; les personnes devront réutiliser ce qu'elles croyaient inutile — nous défions notre créativité.</li>
+
+<li>Nous exigeons que les territoires des peuples autochtones et des communautés traditionnelles soient reconnus et protégés. Les terrains doivent être délimités et titrés au nom des communautés et non des individus. <strong>Nous réaliserons la réforme agraire</strong> et la mènerons depuis l'agroécologie pour atteindre la sécurité nutritionnelle et la souveraineté alimentaire sans exploitation ni maltraitance animale.</li>
+
+<li><strong>L'exploration et l'exploitation de nouveaux gisements d'hydrocarbures doivent cesser.</strong> Et le combustible déjà raffiné doit être destiné à la distribution de nourriture et d'intrants pour l'agroécologie. Les personnes cesseront de s'inquiéter d'emplois inutiles et de désirs fugaces pour s'inquiéter de l'adaptabilité climatique de leurs communautés.</li>
+
+<li>Nous construirons un <strong>féminisme intersectionnel, antiraciste et anticolonial,</strong> pour la diversité ethnique, sexuelle et de genre. Être féministe est une position nécessaire pour quiconque aspire à vivre dans un monde plus équitable, libre et juste pour toutes les personnes, y compris les générations futures. C'est, finalement, un acte d'empathie et de responsabilité sociale.</li>
+
+<li>Nous allons réformer l'éducation de base pour nous concentrer sur le <strong>biocentrisme,</strong> qui reconnaît la Nature comme sujet de droit et nous responsabilise pour protéger et conserver la biodiversité. Nous retrouverons la valeur des savoirs et pratiques ancestraux pour démontrer que la perspective du Buen Vivir n'est pas une question de pauvreté ou de luxe, mais d'équilibre avec la Nature.</li>
+
+<li>Pour éviter la concentration du pouvoir, la planète comme le cyberespace doivent être des lieux ouverts à tous. <strong>Nous établirons le droit à la libre circulation des peuples</strong> et mettrons fin à la criminalisation des personnes migrantes. <strong>Nous ferons aussi de l'accès à Internet un droit fondamental</strong>, garantissant ainsi une gouvernance mondiale et une démocratisation du savoir humain.</li>
+
+<li>Nous encouragerons la réutilisation, la réparation, le recyclage et l'écoconception pour maximiser la durabilité des produits et minimiser leur impact environnemental. <strong>Une économie de la fonctionnalité</strong> stimulera une transition de la possession vers l'usage, où le fournisseur sera responsable du bien durant tout son cycle de vie et se chargera de son entretien, démantèlement et réutilisation en fin de vie.</li>
+
+<li><strong>Se reconnecter à la Nature et apprendre de la permaculture ravivera le désir d'imaginer et de créer.</strong> Libérés de la peur du chômage et avec le droit à une part de la richesse produite par les travailleurs pendant des siècles, nous mettrons l'énergie sociale dans le nécessaire ; au moins jusqu'à ce que la matrice énergétique soit entièrement propre et que nous puissions dire que nous avons construit une économie circulaire globale.</li>
+</ol>
+
+<p>En synthèse, nous utiliserons le Bitcoin pour d'abord nous emparer des moyens d'émission monétaire, décentraliser et décarboniser la production et distribution d'énergie, puis nous emparer de tous les moyens de production. <strong>Nous réussirons par des moyens pacifiques.</strong></p>
+
+<h2>Pour les sceptiques qui n'ont pas encore étudié le Bitcoin :</h2>
+<p><strong>Qu'est-ce qui garantit le Bitcoin ? </strong><br>La puissance de calcul du réseau, qui offre une énorme sécurité cryptographique et sera à l'avenir la puissance de calcul de toute l'humanité.</p>
+
+<ul>
+<li><strong>« C'est risqué à cause de la volatilité » :</strong> La volatilité est une observation liée à la spéculation sur le prix du Bitcoin en d'autres monnaies. Le Bitcoin est-il plus risqué que de dépendre du pétrole ? Plus risqué que la dette infinie (251 billions de dollars au niveau mondial) des monnaies fiduciaires ? Plus risqué que de continuer à perdre des ressources et de l'énergie dans les armes (2,5 billions de dollars au niveau mondial) ? Plus risqué que d'attendre la bonne volonté des millionnaires pour la redistribution de la richesse (32 billions de dollars dans les paradis fiscaux) ? Le Bitcoin est basé sur l'informatique et permet la vraie coopération internationale (consensus mathématique).</li>
+
+<li><strong>« Il consomme beaucoup d'énergie » :</strong> On trouve facilement des données et projections montrant que la consommation d'énergie du réseau Bitcoin est 28 fois inférieure à celle du système financier actuel et pourrait fonctionner jusqu'à 60 fois plus efficacement. Le Bitcoin transforme l'énergie gaspillée en richesse. Si la matrice énergétique est propre, le Bitcoin l'est aussi.</li>
+
+<li><strong>« Les pays les plus riches s'y opposeront » :</strong> Les États-Unis sont déjà le plus grand mineur de Bitcoin du monde. Ni la Chine ni la Russie ne parviennent à contrôler la croissance du réseau Bitcoin. Il est prouvé qu'en cas d'interdiction du minage, la puissance de calcul (Hash Power) se déplace simplement ailleurs. Le moment venu, toutes les nations entreront en coopération car l'union est supérieure au conflit.</li>
+
+<li><strong>« Il faut beaucoup d'eau pour refroidir les mineurs » :</strong> Étant propriété collective de l'humanité, les mineurs peuvent être situés dans des endroits froids où la Nature les refroidit gratuitement et avec la chaleur qu'ils produisent, on peut chauffer des serres ou des logements. Submerger les appareils dans un fluide diélectrique peut aussi fournir un refroidissement sans dépendre de l'eau.</li>
+</ul>
+
+<p>Il faut faire confiance aux capacités de la science humaine ; avec un investissement libre de l'intérêt lucratif, les chercheurs trouveront des moyens de rendre la matrice énergétique plus efficace (énergie de fusion, par exemple) et d'utiliser des matériaux que l'on voulait jeter. Nous devons agir maintenant et être audacieux, car les gens perdent l'espoir et l'imagination. L'ONU parle d'une feuille de route, mais nous savons que nos ancêtres ont voyagé vers l'inconnu de nombreuses fois sans carte, à peine avec des instruments pour avancer, sans connaître la destination, mais avec courage et en suivant la boussole de l'instinct.</p>
+
+<p><strong>Le Bitcoin est un outil de plus ; nous pouvons l'utiliser pour la création d'un monde nouveau. Ouvrez un portefeuille virtuel et encouragez l'utilisation du Bitcoin pour aider.</strong></p>`
+      }
+    };
+    const texts = {
+      es: { title: "Baúl Común de la Humanidad", subtitle: "Propiedad colectiva - Responsabilidad compartida", receive: "Recibir", donate: "Donar", vision: "Visión", energyStandard: "Patrón Energético", receiveTitle: "Recibe 10,000 Sats", firstTime: "¿Primera vez con Bitcoin?", firstTimeDesc: "Solo tienes que elegir una app y venir aquí a experimentar", wallets: "Recomendamos: Wallet of Satoshi, Phoenix o Muun", finite: "Bitcoin es finito como los recursos del planeta Tierra. 100.000.000 sats = 1 BTC", address: "Tu Lightning Address", addressEx: "Ej: nombre@walletofsatoshi.com", requirement: "Requisito: Comprometerse a usar Bitcoin y no cambiarlo por otras monedas. Uno no cambia semillas fértiles por basura.", ready: "¡Tu renta está lista!", claim: "Reclamar mi Renta", limit: "Puedes reclamar una vez cada 21 días", donateTitle: "Dona al Fondo", why: "Tu donación ayuda a más personas a experimentar Bitcoin, recuerda que acumular traba el juego.", law: "\"Si dos sistemas están en equilibrio térmico con un tercero, están en equilibrio térmico entre sí.\" — Ley Cero de la Termodinámica", lawNote: "Así como la energía fluye hacia el equilibrio, Bitcoin debe fluir a quienes lo necesitan.", amount: "Cantidad (sats)", min: "Mínimo: 20,000 sats", confirm: "Generar Invoice", success: "¡Éxito! 10,000 sats enviados", waitDays: "Debes esperar {days} días más para reclamar", error: "Error: ", copyInvoice: "Escanea el QR o copia el invoice:", fund: "El Baúl", users: "Usuarios", hashrate: "Hashrate (seguridad BTC)", debt: "Deuda Global (proyección Fiat)", reserved: "Reservado para operaciones", chest: "El Baúl de la Humanidad", chestDesc: "Máximo 1 BTC. Menos acumulación. Más flujo.", full: "¡Baúl lleno!", fillIt: "Ayuda a llenarlo", copied: "¡Copiado!", methodAddress: "Tengo Lightning Address", methodInvoice: "Tengo Invoice", invoiceLabel: "Pega tu invoice de 10,000 sats", invoiceEx: "lnbc1u1p...", invoiceHelp: "Genera un invoice de exactamente 10,000 sats en tu wallet (Phoenix, Muun, etc.) y pégalo aquí.", shareTitle: "¡Comparte el fondo con tus conocidos para crear un sistema de apoyo mutuo!", shareMsg: "¡Bitcoin es para todos! Recibe un poco para experimentarlo", linkCopied: "¡Enlace copiado!", donateSuccess: "La energía social fluye. ¡Tus hermanos agradecen tu solidaridad!", back: "← Volver" },
+      en: { title: "Humanity's Common Chest", subtitle: "Collective ownership - Shared responsibility", receive: "Receive", donate: "Donate", vision: "Vision", energyStandard: "Energy Standard", receiveTitle: "Receive 10,000 Sats", firstTime: "First time with Bitcoin?", firstTimeDesc: "You just need to choose an app and come here to experiment", wallets: "We recommend: Wallet of Satoshi, Phoenix or Muun", finite: "Bitcoin is finite like the resources of planet Earth. 100,000,000 sats = 1 BTC", address: "Your Lightning Address", addressEx: "Ex: name@walletofsatoshi.com", requirement: "Requirement: Commit to using Bitcoin and never exchange it for other currencies. One does not trade fertile seeds for garbage.", ready: "Your income is ready!", claim: "Claim my Income", limit: "You can claim once every 21 days", donateTitle: "Donate to Fund", why: "Your donation helps more people experience Bitcoin, remember that hoarding breaks the game.", law: "\"If two systems are in thermal equilibrium with a third, they are in thermal equilibrium with each other.\" — Zeroth Law of Thermodynamics", lawNote: "Just as energy flows toward equilibrium, Bitcoin must flow to those who need it.", amount: "Amount (sats)", min: "Minimum: 20,000 sats", confirm: "Generate Invoice", success: "Success! 10,000 sats sent", waitDays: "You must wait {days} more days to claim", error: "Error: ", copyInvoice: "Scan QR or copy invoice:", fund: "The Chest", users: "Users", hashrate: "Hashrate (BTC security)", debt: "Global Debt (Fiat projection)", reserved: "Reserved for operations", chest: "Humanity's Chest", chestDesc: "Maximum 1 BTC. Less hoarding. More flow.", full: "Chest full!", fillIt: "Help fill it", copied: "Copied!", methodAddress: "I have Lightning Address", methodInvoice: "I have Invoice", invoiceLabel: "Paste your 10,000 sats invoice", invoiceEx: "lnbc1u1p...", invoiceHelp: "Generate an invoice for exactly 10,000 sats in your wallet (Phoenix, Muun, etc.) and paste it here.", shareTitle: "Share the fund with your friends to create a mutual aid system!", shareMsg: "Bitcoin is for everyone! Get some to experience it", linkCopied: "Link copied!", donateSuccess: "Social energy flows. Your brothers thank your solidarity!", back: "← Back" },
+      pt: { title: "Baú Comum da Humanidade", subtitle: "Propriedade coletiva - Responsabilidade compartilhada", receive: "Receber", donate: "Doar", vision: "Visão", energyStandard: "Padrão Energético", receiveTitle: "Receba 10.000 Sats", firstTime: "Primeira vez com Bitcoin?", firstTimeDesc: "Você só precisa escolher um app e vir aqui experimentar", wallets: "Recomendamos: Wallet of Satoshi, Phoenix ou Muun", finite: "Bitcoin é finito como os recursos do planeta Terra. 100.000.000 sats = 1 BTC", address: "Seu Lightning Address", addressEx: "Ex: nome@walletofsatoshi.com", requirement: "Requisito: Comprometer-se a usar Bitcoin e nunca trocá-lo por outras moedas. Não se troca sementes férteis por lixo.", ready: "Sua renda está pronta!", claim: "Reclamar minha Renda", limit: "Você pode reclamar uma vez a cada 21 dias", donateTitle: "Doe ao Fundo", why: "Sua doação ajuda mais pessoas a experimentar Bitcoin, lembre-se que acumular trava o jogo.", law: "\"Se dois sistemas estão em equilíbrio térmico com um terceiro, estão em equilíbrio térmico entre si.\" — Lei Zero da Termodinâmica", lawNote: "Assim como a energia flui para o equilíbrio, o Bitcoin deve fluir para quem precisa.", amount: "Quantidade (sats)", min: "Mínimo: 20.000 sats", confirm: "Gerar Invoice", success: "Sucesso! 10.000 sats enviados", waitDays: "Você deve esperar mais {days} dias para reclamar", error: "Erro: ", copyInvoice: "Escaneie o QR ou copie o invoice:", fund: "O Baú", users: "Usuários", hashrate: "Hashrate (segurança BTC)", debt: "Dívida Global (projeção Fiat)", reserved: "Reservado para operações", chest: "O Baú da Humanidade", chestDesc: "Máximo 1 BTC. Menos acumulação. Mais fluxo.", full: "Baú cheio!", fillIt: "Ajude a enchê-lo", copied: "Copiado!", methodAddress: "Tenho Lightning Address", methodInvoice: "Tenho Invoice", invoiceLabel: "Cole seu invoice de 10.000 sats", invoiceEx: "lnbc1u1p...", invoiceHelp: "Gere um invoice de exatamente 10.000 sats na sua wallet (Phoenix, Muun, etc.) e cole aqui.", shareTitle: "Compartilhe o fundo com seus conhecidos para criar um sistema de apoio mútuo!", shareMsg: "Bitcoin é para todos! Receba um pouco para experimentar", linkCopied: "Link copiado!", donateSuccess: "A energia social flui. Seus irmãos agradecem sua solidariedade!", back: "← Voltar" },
+fr: { title: "Coffre Commun de l'Humanité", subtitle: "Propriété collective - Responsabilité partagée", receive: "Recevoir", donate: "Donner", vision: "Vision", energyStandard: "Standard Énergétique", receiveTitle: "Recevez 10 000 Sats", firstTime: "Première fois avec Bitcoin?", firstTimeDesc: "Il vous suffit de choisir une app et de venir ici pour expérimenter", wallets: "Nous recommandons: Wallet of Satoshi, Phoenix ou Muun", finite: "Bitcoin est fini comme les ressources de la planète Terre. 100 000 000 sats = 1 BTC", address: "Votre Lightning Address", addressEx: "Ex: nom@walletofsatoshi.com", requirement: "Condition: S'engager à utiliser Bitcoin et ne jamais l'échanger contre d'autres monnaies. On n'échange pas des graines fertiles contre des déchets.", ready: "Votre revenu est prêt!", claim: "Réclamer mon Revenu", limit: "Vous pouvez réclamer une fois tous les 21 jours", donateTitle: "Donner au Fonds", why: "Votre don aide plus de personnes à découvrir Bitcoin, rappelez-vous qu'accumuler bloque le jeu.", law: "Si deux systèmes sont en équilibre thermique avec un troisième, ils sont en équilibre thermique entre eux. — Loi Zéro de la Thermodynamique", lawNote: "Tout comme l'énergie s'écoule vers l'équilibre, le Bitcoin doit couler vers ceux qui en ont besoin.", amount: "Montant (sats)", min: "Minimum: 20 000 sats", confirm: "Générer Invoice", success: "Succès! 10 000 sats envoyés", waitDays: "Vous devez attendre encore {days} jours pour réclamer", error: "Erreur: ", copyInvoice: "Scannez le QR ou copiez l'invoice:", fund: "Le Coffre", users: "Utilisateurs", hashrate: "Hashrate (sécurité BTC)", debt: "Dette Mondiale (projection Fiat)", reserved: "Réservé aux opérations", chest: "Le Coffre de l'Humanité", chestDesc: "Maximum 1 BTC. Moins d'accumulation. Plus de flux.", full: "Coffre plein!", fillIt: "Aidez à le remplir", copied: "Copié!", methodAddress: "J'ai une Lightning Address", methodInvoice: "J'ai un Invoice", invoiceLabel: "Collez votre invoice de 10.000 sats", invoiceEx: "lnbc1u1p...", invoiceHelp: "Générez un invoice de exactement 10 000 sats dans votre wallet (Phoenix, Muun, etc.) et collez-le ici.", shareTitle: "Partagez le fonds avec vos connaissances pour créer un système d'entraide!", shareMsg: "Bitcoin est pour tout le monde! Recevez-en un peu pour l'expérimenter", linkCopied: "Lien copié!", donateSuccess: "L'énergie sociale coule. Vos frères vous remercient pour votre solidarité!", back: "← Retour" }
+};
+let lang='es',tab='receive',claimMethod='invoice',stats={total_users:0,total_distributed:0,balance:0,reserved_for_ops:0,max_fund:100000000,fund_percentage:0},message=null,loading=false,invoice=null,showShare=false,showDonateSuccess=false,checkingPayment=false,currentPaymentHash=null,waitMessage=null,emailStatus=null;
+let hashrate=994000000000000,globalDebt=-251000000000000;
+const API='/api';
+let turnstileToken = null;
+let turnstileWidgetId = null;
+
+function onTurnstileVerified(token) {
+  turnstileToken = token;
+}
+function onTurnstileExpired() {
+  turnstileToken = null;
+}
+function renderTurnstileWidget() {
+  // Renderizar widget en el contenedor si existe y Turnstile está cargado
+  setTimeout(function() {
+    var container = document.getElementById('turnstile-container');
+    if (container && window.turnstile) {
+      container.innerHTML = '';
+      turnstileToken = null;
+      turnstileWidgetId = turnstile.render('#turnstile-container', {
+        sitekey: '0x4AAAAAACe2ROLsVd-xkXUk',
+        theme: 'dark',
+        callback: onTurnstileVerified,
+        'expired-callback': onTurnstileExpired
+      });
+    }
+  }, 200);
+}
+function resetTurnstile() {
+  turnstileToken = null;
+  if (window.turnstile && turnstileWidgetId !== null) {
+    try { turnstile.reset(turnstileWidgetId); } catch(e) {}
+  }
+}
+async function loadStats(){try{const r=await fetch(API+'/stats');stats=await r.json();render();}catch(e){}}
+async function loadHashrate(){try{const r=await fetch('https://blockchain.info/q/hashrate');const h=await r.text();hashrate=parseInt(h);}catch(e){}}
+function animateCounters(){hashrate+=Math.floor(Math.random()*1000000000);globalDebt-=Math.floor(Math.random()*100000);updateCounters();}
+function updateCounters(){const hEl=document.getElementById('hashrateCounter');const dEl=document.getElementById('debtCounter');if(hEl)hEl.textContent=(hashrate/1000000000000).toFixed(2)+' EH/s';if(dEl)dEl.textContent='-$'+(Math.abs(globalDebt)/1000000000000).toFixed(2)+' T';}
+function checkInput(){const t=texts[lang];const readyBox=document.getElementById('readyBox');let filled=false;if(claimMethod==='address'){const addr=document.getElementById('wallet');if(addr)filled=addr.value.length>3;}else{const inv=document.getElementById('invoiceInput');if(inv)filled=inv.value.length>10;}if(readyBox){if(filled){readyBox.innerHTML='<div class="bg-sky-900/40 border-2 border-sky-400 rounded-lg p-4 mb-4 text-center"><p class="text-white font-bold text-lg">'+t.ready+'</p><p class="text-emerald-200 text-xl">'+dropIcon+' 10,000 sats</p></div>';}else{readyBox.innerHTML='';}}}
+function shareWhatsApp(){const t=texts[lang];window.open('https://wa.me/?text='+encodeURIComponent(t.shareMsg+' '+SHARE_URL),'_blank');}
+function shareTelegram(){const t=texts[lang];window.open('https://t.me/share/url?url='+encodeURIComponent(SHARE_URL)+'&text='+encodeURIComponent(t.shareMsg),'_blank');}
+function shareTwitter(){const t=texts[lang];window.open('https://twitter.com/intent/tweet?text='+encodeURIComponent(t.shareMsg+' '+SHARE_URL),'_blank');}
+function shareFacebook(){window.open('https://www.facebook.com/sharer/sharer.php?u='+encodeURIComponent(SHARE_URL),'_blank');}
+function shareInstagram(){const t=texts[lang];navigator.clipboard.writeText(t.shareMsg+' '+SHARE_URL);alert('Texto copiado. Pégalo en Instagram.');}
+function shareTikTok(){const t=texts[lang];navigator.clipboard.writeText(t.shareMsg+' '+SHARE_URL);alert('Texto copiado. Pégalo en TikTok.');}
+function copyLink(){const t=texts[lang];navigator.clipboard.writeText(SHARE_URL);alert(t.linkCopied);}
+function shareVisionWhatsApp(){const t=texts[lang];window.open('https://wa.me/?text='+encodeURIComponent(t.shareMsg+' https://takepower.world/#vision'),'_blank');}
+function shareVisionTelegram(){const t=texts[lang];window.open('https://t.me/share/url?url='+encodeURIComponent('https://takepower.world/#vision')+'&text='+encodeURIComponent(t.shareMsg),'_blank');}
+function shareVisionTwitter(){const t=texts[lang];window.open('https://twitter.com/intent/tweet?text='+encodeURIComponent(t.shareMsg+' https://takepower.world/#vision'),'_blank');}
+function copyVisionLink(){const t=texts[lang];navigator.clipboard.writeText('https://takepower.world/#vision');alert(t.linkCopied);}
+async function checkPaymentStatus(){if(!currentPaymentHash||!checkingPayment)return;try{const r=await fetch(API+'/payment/'+currentPaymentHash);const d=await r.json();if(d.paid){checkingPayment=false;showDonateSuccess=true;invoice=null;currentPaymentHash=null;loadStats();render();}}catch(e){}}
+async function claim(){if(!turnstileToken){message={type:'error',text:'Esperando verificación. Si no aparece el widget, recarga la página.'};render();return;}const method=claimMethod;let body={};if(method==='address'){const addr=document.getElementById('wallet').value;if(!addr)return;body={lightning_address:addr,turnstile_token:turnstileToken};}else{const inv=document.getElementById('invoiceInput').value;if(!inv)return;body={invoice:inv,turnstile_token:turnstileToken};}loading=true;message=null;showShare=false;waitMessage=null;render();try{const r=await fetch(API+'/claim',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(body)});const d=await r.json();if(d.success){message={type:'success',text:texts.success};showShare=true;loadStats();}else if(d.days_remaining){waitMessage=texts[lang].waitDays.replace('{days}',d.days_remaining);}else{message={type:'error',text:texts.error+d.error};}}catch(e){message={type:'error',text:texts.error+e.message};}loading=false;resetTurnstile();render();}
+async function donate(){if(!turnstileToken){message={type:'error',text:'Esperando verificación. Si no aparece el widget, recarga la página.'};render();return;}const amount=parseInt(document.getElementById('amount').value);if(!amount||amount<10000)return;loading=true;message=null;showDonateSuccess=false;render();try{const r=await fetch(API+'/donate',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({amount:amount,turnstile_token:turnstileToken})});const d=await r.json();if(d.payment_request){invoice=d.payment_request;currentPaymentHash=d.payment_hash;checkingPayment=true;loading=false;resetTurnstile();render();setTimeout(generateQR,100);const checkInterval=setInterval(async()=>{if(!checkingPayment){clearInterval(checkInterval);return;}await checkPaymentStatus();},3000);}else{message={type:'error',text:texts.error+d.error};loading=false;resetTurnstile();render();}}catch(e){message={type:'error',text:texts.error+e.message};loading=false;resetTurnstile();render();}}
+function generateQR(){if(invoice){const container=document.getElementById('qrcode');if(container){container.innerHTML='';new QRCode(container,{text:invoice,width:200,height:200});}}}
+function copyInvoice(){const el=document.createElement('textarea');el.value=invoice;document.body.appendChild(el);el.select();document.execCommand('copy');document.body.removeChild(el);alert(texts[lang].copied);}
+function setLang(l){lang=l;render();if(invoice)setTimeout(generateQR,100);}
+function setTab(t){tab=t;message=null;invoice=null;showShare=false;showDonateSuccess=false;checkingPayment=false;waitMessage=null;emailStatus=null;render();}
+function setClaimMethod(m){claimMethod=m;message=null;waitMessage=null;render();}
+const plantIcon='<svg class="w-5 h-5 inline" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M12 22c-1-3-3-5-3-10 0-4 1.5-7 3-9 1.5 2 3 5 3 9 0 5-2 7-3 10z"/><path d="M12 22v-8"/><path d="M9 14c-2-1-3-2-4-4"/><path d="M15 14c2-1 3-2 4-4"/></svg>';
+const dropIcon='<svg class="w-5 h-5 inline" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2c0 0-6 7-6 12a6 6 0 1 0 12 0c0-5-6-12-6-12z"/></svg>';
+const chestIcon='<svg class="w-8 h-8" viewBox="0 0 32 32" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="2" y="12" width="28" height="16" rx="2"/><path d="M2 18h28"/><rect x="4" y="4" width="24" height="8" rx="1"/><path d="M14 18v6h4v-6"/><circle cx="16" cy="22" r="1.5" fill="currentColor"/></svg>';
+const copyIcon='<svg class="w-4 h-4 inline" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>';
+const compassIcon='<svg class="w-4 h-4 inline mr-1" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polygon points="16.24 7.76 14.12 14.12 7.76 16.24 9.88 9.88 16.24 7.76"/></svg>';
+function getShareBox(){const t=texts[lang];return '<div class="bg-amber-900/30 border-2 border-amber-500 rounded-lg p-4 mt-4 text-center"><p class="text-amber-100 font-bold mb-3">'+t.shareTitle+'</p><div class="flex flex-wrap justify-center gap-2"><button onclick="shareWhatsApp()" class="bg-[#25D366] text-white px-3 py-2 rounded-lg text-sm font-medium hover:opacity-80">WhatsApp</button><button onclick="shareTelegram()" class="bg-[#0088cc] text-white px-3 py-2 rounded-lg text-sm font-medium hover:opacity-80">Telegram</button><button onclick="shareTwitter()" class="bg-[#1DA1F2] text-white px-3 py-2 rounded-lg text-sm font-medium hover:opacity-80">Twitter</button><button onclick="shareFacebook()" class="bg-[#4267B2] text-white px-3 py-2 rounded-lg text-sm font-medium hover:opacity-80">Facebook</button><button onclick="shareInstagram()" class="bg-gradient-to-r from-[#833AB4] via-[#FD1D1D] to-[#F77737] text-white px-3 py-2 rounded-lg text-sm font-medium hover:opacity-80">Instagram</button><button onclick="shareTikTok()" class="bg-[#000000] text-white px-3 py-2 rounded-lg text-sm font-medium hover:opacity-80">TikTok</button><button onclick="copyLink()" class="bg-emerald-600 text-white px-3 py-2 rounded-lg text-sm font-medium hover:opacity-80">'+copyIcon+' Copiar</button></div></div>';}
+function getDonateSuccessBox(){const t=texts[lang];return '<div class="bg-sky-900/40 border-2 border-sky-400 rounded-lg p-4 mt-4 text-center"><p class="text-white font-bold text-lg">'+dropIcon+' '+t.donateSuccess+'</p></div>';}
+function getWaitBox(){return '<div class="bg-sky-900/40 border-2 border-sky-400 rounded-lg p-4 mt-4 text-center"><p class="text-sky-200 font-bold">'+waitMessage+'</p></div>';}
+function getVisionTab(){
+const t=texts[lang];
+const m=manifesto[lang];
+return '<div class="min-h-screen bg-stone-50 -m-4 p-4 md:p-8" style="font-family: Lora, serif;"><div class="max-w-3xl mx-auto"><div class="flex justify-between items-center mb-8"><button onclick="setTab(\'receive\')" class="text-stone-500 hover:text-stone-800 text-sm">'+t.back+'</button><div class="flex gap-2"><button onclick="setLang(\'es\')" class="px-3 py-1 rounded text-sm '+(lang==='es'?'bg-stone-800 text-white':'bg-stone-200 text-stone-700')+'">ES</button><button onclick="setLang(\'pt\')" class="px-3 py-1 rounded text-sm '+(lang==='pt'?'bg-stone-800 text-white':'bg-stone-200 text-stone-700')+'">BR</button><button onclick="setLang(\'fr\')" class="px-3 py-1 rounded text-sm '+(lang==='fr'?'bg-stone-800 text-white':'bg-stone-200 text-stone-700')+'">FR</button><button onclick="setLang(\'en\')" class="px-3 py-1 rounded text-sm '+(lang==='en'?'bg-stone-800 text-white':'bg-stone-200 text-stone-700')+'">EN</button></div></div><article class="prose prose-stone prose-lg max-w-none"><h1 class="text-3xl md:text-4xl font-bold text-stone-900 text-center mb-6" style="font-family: Lora, serif;">'+m.title+'</h1><blockquote class="text-lg italic text-stone-600 border-l-4 border-stone-300 pl-4 mb-8">'+m.quote+'</blockquote><div class="text-stone-800 leading-relaxed" style="font-family: Lora, serif;">'+m.content+'</div><div class="flex flex-wrap justify-center gap-2 mt-8 pt-8 border-t border-stone-300"><button onclick="shareVisionWhatsApp()" class="bg-[#25D366] text-white px-4 py-2 rounded-lg text-sm font-medium hover:opacity-80">WhatsApp</button><button onclick="shareVisionTelegram()" class="bg-[#0088cc] text-white px-4 py-2 rounded-lg text-sm font-medium hover:opacity-80">Telegram</button><button onclick="shareVisionTwitter()" class="bg-[#1DA1F2] text-white px-4 py-2 rounded-lg text-sm font-medium hover:opacity-80">Twitter</button><button onclick="copyVisionLink()" class="bg-stone-700 text-white px-4 py-2 rounded-lg text-sm font-medium hover:opacity-80">Copiar Link</button></div></article></div></div>';
+}
+function render(){const t=texts[lang];if(tab==='vision'){document.body.style.background='#fafaf9';document.getElementById('app').innerHTML=getVisionTab();return;}document.body.style.background='#071510';const pct=stats.fund_percentage||0;const balanceBTC=(stats.balance/100000000).toFixed(4);const reservedSats=stats.reserved_for_ops||0;const claimMethodBtns='<div class="flex gap-2 mb-4"><button onclick="setClaimMethod(\'invoice\')" class="flex-1 py-2 rounded-lg text-sm font-medium '+(claimMethod==='invoice'?'bg-emerald-600 text-white':'bg-[#0d2620] text-emerald-200 border border-emerald-700')+'">'+t.methodInvoice+'</button><button onclick="setClaimMethod(\'address\')" class="flex-1 py-2 rounded-lg text-sm font-medium '+(claimMethod==='address'?'bg-emerald-600 text-white':'bg-[#0d2620] text-emerald-200 border border-emerald-700')+'">'+t.methodAddress+'</button></div>';const claimInput=claimMethod==='address'?'<div class="mb-4"><label class="block text-white font-medium mb-2">'+t.address+'</label><input type="text" id="wallet" oninput="checkInput()" placeholder="'+t.addressEx+'" class="w-full px-4 py-3 bg-white border-2 border-emerald-700 rounded-lg text-gray-900 placeholder-gray-400 focus:border-emerald-500 focus:outline-none"/></div>':'<div class="mb-4"><label class="block text-white font-medium mb-2">'+t.invoiceLabel+'</label><textarea id="invoiceInput" oninput="checkInput()" placeholder="'+t.invoiceEx+'" class="w-full px-4 py-3 bg-white border-2 border-emerald-700 rounded-lg text-gray-900 placeholder-gray-400 focus:border-emerald-500 focus:outline-none h-24 text-sm"></textarea><p class="text-emerald-200 text-xs mt-1">'+t.invoiceHelp+'</p></div>';document.getElementById('app').innerHTML='<div class="pt-14"><div class="bg-gradient-to-r from-[#0d2620] to-[#15403a] text-white rounded-2xl p-6 mb-6 text-center"><h1 class="text-2xl font-bold mb-2">'+t.title+'</h1><p class="text-emerald-200 mb-6">'+t.subtitle+'</p><div class="bg-black/40 rounded-xl p-4 mb-4"><div class="flex items-center justify-center gap-2 mb-2">'+chestIcon+'<span class="font-bold text-lg">'+t.chest+'</span></div><p class="text-emerald-200 text-xs mb-3">'+t.chestDesc+'</p><div class="bg-black/40 rounded-full h-6 overflow-hidden mb-2"><div class="bg-gradient-to-r from-amber-500 to-amber-300 h-full transition-all duration-500" style="width:'+pct+'%"></div></div><div class="flex justify-between text-sm text-emerald-200"><span>'+balanceBTC+' BTC</span><span>'+pct+'%</span><span>1 BTC</span></div><p class="text-emerald-300 text-xs mt-2">'+(pct>=100?t.full:t.fillIt)+'</p></div><div class="grid grid-cols-2 gap-2 mb-2"><div class="bg-black/40 rounded-lg p-3"><div class="text-lg font-bold text-emerald-300">'+stats.total_users+'</div><div class="text-xs text-emerald-200">'+t.users+'</div></div><div class="bg-black/40 rounded-lg p-3"><div class="text-lg font-bold text-emerald-300">'+reservedSats+'</div><div class="text-xs text-emerald-200">'+t.reserved+' (sats)</div></div></div><div class="grid grid-cols-2 gap-2"><div class="bg-black/40 rounded-lg p-3"><div class="text-lg font-bold text-emerald-300" id="hashrateCounter">cargando...</div><div class="text-xs text-emerald-200">'+t.hashrate+'</div></div><div class="bg-black/40 rounded-lg p-3"><div class="text-lg font-bold text-amber-300" id="debtCounter">cargando...</div><div class="text-xs text-emerald-200">'+t.debt+'</div></div></div><div class="text-center my-3"><a href="https://mempool.space/tx/52ed766422728e6e73b1b096ed938ba9e35e185ee1080e1c775a3671a3d4bfb7" target="_blank" rel="noopener" class="text-sky-400/60 hover:text-sky-300 text-xs">'+(auditLabels[lang]||auditLabels.es)+' ↗</a></div></div><div class="flex gap-2 mb-6"><button onclick="setTab(\'receive\')" class="flex-1 py-3 rounded-xl font-semibold '+(tab==='receive'?'bg-emerald-600 text-white':'bg-[#0d2620] text-emerald-200 border border-emerald-700')+'">₿ '+t.receive+'</button><button onclick="setTab(\'donate\')" class="flex-1 py-3 rounded-xl font-semibold '+(tab==='donate'?'bg-emerald-600 text-white':'bg-[#0d2620] text-emerald-200 border border-emerald-700')+'">♡ '+t.donate+'</button></div></div>'+(message?'<div class="p-4 rounded mb-4 '+(message.type==='success'?'bg-emerald-900/40 border-l-4 border-emerald-400 text-emerald-100':'bg-amber-900/40 border-l-4 border-amber-400 text-amber-100')+'">'+message.text+'</div>':'')+(tab==='receive'?'<div class="bg-[#0d2620] rounded-2xl p-6 shadow-lg border-2 border-emerald-700"><h2 class="text-xl font-bold text-white mb-4">₿ '+t.receiveTitle+'</h2><div class="bg-sky-900/40 border-l-4 border-sky-400 p-4 rounded mb-4"><p class="font-semibold text-white">'+t.firstTime+'</p><p class="text-sm text-sky-200">'+t.firstTimeDesc+'</p><p class="text-sm text-sky-200 mt-2">'+t.wallets+'</p><p class="text-xs text-sky-200 mt-2 italic">'+t.finite+'</p></div>'+claimMethodBtns+claimInput+'<div class="bg-amber-900/30 border-2 border-amber-500 rounded-lg p-4 mb-4"><p class="text-amber-100 text-sm">'+plantIcon+' '+t.requirement+'</p></div><div id="readyBox"></div><div id="turnstile-container" class="flex justify-center mb-4"></div><button onclick="claim()" class="w-full bg-gradient-to-r from-emerald-600 to-emerald-500 text-white py-4 rounded-xl font-bold text-lg hover:from-emerald-700 hover:to-emerald-600">'+(loading?'...':t.claim)+'</button><p class="text-center text-emerald-200 text-sm mt-4">'+t.limit+'</p>'+(waitMessage?getWaitBox():'')+(showShare?getShareBox():'')+'</div>':'<div class="bg-[#0d2620] rounded-2xl p-6 shadow-lg border-2 border-emerald-700"><h2 class="text-xl font-bold text-white mb-4">♡ '+t.donateTitle+'</h2><div class="bg-sky-900/40 border-l-4 border-sky-400 p-4 rounded mb-4"><p class="text-white">'+t.why+'</p></div><div class="bg-amber-900/30 border-l-4 border-amber-500 rounded-r-lg p-4 mb-4"><p class="text-amber-100 italic text-sm">'+t.law+'</p><p class="text-amber-200 text-xs mt-2">'+t.lawNote+'</p></div><div class="mb-4"><label class="block text-white font-medium mb-2">'+t.amount+'</label><input type="number" id="amount" placeholder="20000" min="20000" class="w-full px-4 py-3 bg-white border-2 border-emerald-700 rounded-lg text-gray-900 focus:border-emerald-500 focus:outline-none text-center text-xl font-bold"/><p class="text-emerald-200 text-xs text-center mt-1">'+t.min+'</p></div>'+(invoice?'<div class="bg-black/40 rounded-xl p-4 mb-4 text-center"><p class="text-sm text-white mb-3">'+t.copyInvoice+'</p><div id="qrcode" class="flex justify-center mb-3 bg-white p-2 rounded-lg w-fit mx-auto"></div><button onclick="copyInvoice()" class="bg-amber-500 text-black px-4 py-2 rounded-lg text-sm font-medium hover:bg-amber-400 mb-2">'+copyIcon+' Copiar Invoice</button><details class="mt-2"><summary class="text-xs text-emerald-200 cursor-pointer">Ver invoice completo</summary><textarea readonly class="w-full h-16 p-2 text-xs border border-emerald-700 rounded bg-[#0d2620] text-emerald-100 mt-2">'+invoice+'</textarea></details></div>':'')+'<div id="turnstile-container" class="flex justify-center mb-4"></div><button onclick="donate()" class="w-full bg-gradient-to-r from-emerald-600 to-emerald-500 text-white py-4 rounded-xl font-bold text-lg hover:from-emerald-700 hover:to-emerald-600">'+(loading?'...':t.confirm)+'</button>'+(showDonateSuccess?getDonateSuccessBox():'')+'</div>');updateCounters();renderTurnstileWidget();}
+const privacyLabels = {es:'Política de privacidad',en:'Privacy policy',pt:'Política de privacidade',fr:'Politique de confidentialité'};
+const auditLabels = {es:'🔍 Auditar en mempool.space',en:'🔍 Audit on mempool.space',pt:'🔍 Auditar em mempool.space',fr:'🔍 Auditer sur mempool.space'};
+const licenseLabels = {es:'Este contenido es de dominio público. Cópialo, tradúcelo, mejóralo.',en:'This content is public domain. Copy it, translate it, improve it.',pt:'Este conteúdo é de domínio público. Copie, traduza, melhore.',fr:'Ce contenu est dans le domaine public. Copiez-le, traduisez-le, améliorez-le.'};
+const origRender = render;
+render = function() {
+  origRender();
+  if (tab !== 'vision') {
+    const footer = document.createElement('div');
+    footer.className = 'text-center py-8 space-y-3';
+    footer.innerHTML = '<div class="text-emerald-400/30 text-xs">' + (licenseLabels[lang] || licenseLabels.es) + ' · <a href="https://creativecommons.org/publicdomain/zero/1.0/" target="_blank" rel="noopener" class="hover:text-emerald-300">CC0 1.0</a></div>' +
+      '<div class="mt-2"><a href="/privacy/" class="text-emerald-400/50 hover:text-emerald-300 text-xs">' + (privacyLabels[lang] || privacyLabels.es) + '</a></div>';
+    document.getElementById('app').appendChild(footer);
+  }
+};
+loadStats();loadHashrate();if(window.location.hash==='#vision'){tab='vision';}render();window.addEventListener('hashchange',function(){if(window.location.hash==='#vision'){setTab('vision');}});setInterval(loadStats,30000);setInterval(loadHashrate,60000);setInterval(animateCounters,100);
+
+// Hero translations
+const heroTexts = {
+  es: {
+    title: 'Si la vida te emociona,<br><span class="text-amber-500">toma el poder</span><br>y súmate al cambio de narrativa',
+    subtitle: 'El Baúl Común de la Humanidad es propiedad colectiva.<br>Bitcoin redistribuido para todos.',
+    contract: 'Por un Contrato Social versión s.XXI',
+    sats: 'cada 21 días, sin condiciones',
+    btnClaim: '₿ Reclamar Ahora',
+    btnManifesto: '⚡ Patrón Energético',
+    footer: 'Código abierto. Sin fronteras. Sin políticos.',
+    navVision: 'Visión',
+    navEnergy: 'Patrón Energético',
+    navTactic: 'Táctica'
+  },
+  en: {
+    title: 'If life excites you,<br><span class="text-amber-500">take the power</span><br>and join the narrative shift',
+    subtitle: 'The Common Chest of Humanity is collective property.<br>Bitcoin redistributed for everyone.',
+    contract: 'For a Social Contract version 21st century',
+    sats: 'every 21 days, no conditions',
+    btnClaim: '₿ Claim Now',
+    btnManifesto: '⚡ Energy Standard',
+    footer: 'Open source. No borders. No politicians.',
+    navVision: 'Vision',
+    navEnergy: 'Energy Standard',
+    navTactic: 'Tactic'
+  },
+  pt: {
+    title: 'Se a vida te emociona,<br><span class="text-amber-500">tome o poder</span><br>e junte-se à mudança de narrativa',
+    subtitle: 'O Baú Comum da Humanidade é propriedade coletiva.<br>Bitcoin redistribuído para todos.',
+    contract: 'Por um Contrato Social versão século XXI',
+    sats: 'a cada 21 dias, sem condições',
+    btnClaim: '₿ Reivindicar Agora',
+    btnManifesto: '⚡ Padrão Energético',
+    footer: 'Código aberto. Sem fronteiras. Sem políticos.',
+    navVision: 'Visão',
+    navEnergy: 'Padrão Energético',
+    navTactic: 'Tática'
+  },
+  fr: {
+    title: 'Si la vie t\'enthousiasme,<br><span class="text-amber-500">prends le pouvoir</span><br>et rejoins le changement de récit',
+    subtitle: 'Le Coffre Commun de l\'humanité est une propriété collective.<br>Bitcoin redistribué pour tous.',
+    contract: 'Pour un Contrat Social version XXIe siècle',
+    sats: 'tous les 21 jours, sans conditions',
+    btnClaim: '₿ Réclamer Maintenant',
+    btnManifesto: '⚡ Standard Énergétique',
+    footer: 'Open source. Sans frontières. Sans politiciens.',
+    navVision: 'Vision',
+    navEnergy: 'Standard Énergétique',
+    navTactic: 'Tactique'
+  }
+};
+
+function renderHero() {
+  const h = heroTexts[lang];
+  document.getElementById('hero-title').innerHTML = h.title;
+  document.getElementById('hero-subtitle').innerHTML = h.subtitle;
+  document.getElementById('hero-contract').textContent = h.contract;
+  document.getElementById('hero-sats').textContent = h.sats;
+  document.getElementById('hero-btn-claim').textContent = h.btnClaim;
+  document.getElementById('hero-btn-manifesto').textContent = h.btnManifesto;
+  document.getElementById('hero-footer').textContent = h.footer;
+  document.getElementById('nav-vision').textContent = h.navVision;
+  document.getElementById('nav-energy').textContent = h.navEnergy;
+  document.getElementById('nav-tactic').textContent = h.navTactic;
+  
+  document.querySelectorAll('.lang-btn').forEach(btn => {
+    if (btn.dataset.lang === lang) {
+      btn.classList.add('bg-emerald-600', 'text-white');
+      btn.classList.remove('bg-emerald-900/50', 'text-emerald-200');
+    } else {
+      btn.classList.remove('bg-emerald-600', 'text-white');
+      btn.classList.add('bg-emerald-900/50', 'text-emerald-200');
+    }
+  });
+}
+
+let heroHidden = false;
+let scrollLocked = false;
+
+function hideHero() {
+  if (heroHidden || scrollLocked) return;
+  scrollLocked = true;
+  heroHidden = true;
+  document.getElementById('hero-section').classList.add('hidden');
+  document.getElementById('hero-spacer').classList.add('collapsed');
+  setTimeout(function() { scrollLocked = false; }, 600);
+}
+
+function showHero() {
+  if (!heroHidden || scrollLocked) return;
+  scrollLocked = true;
+  heroHidden = false;
+  document.getElementById('hero-section').classList.remove('hidden');
+  document.getElementById('hero-spacer').classList.remove('collapsed');
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+  setTimeout(function() { scrollLocked = false; }, 600);
+}
+
+// Scroll: solo para re-mostrar el hero al volver arriba del todo
+window.addEventListener('scroll', function() {
+  if (window.scrollY <= 5 && heroHidden && !scrollLocked) {
+    showHero();
+  }
+}, { passive: true });
+
+// Wheel: ocultar hero al hacer scroll down
+window.addEventListener('wheel', function(e) {
+  if (!heroHidden && e.deltaY > 30) {
+    hideHero();
+  }
+}, { passive: true });
+
+// Touch: swipe para ocultar hero
+let touchStartY = 0;
+window.addEventListener('touchstart', function(e) {
+  touchStartY = e.touches[0].clientY;
+}, { passive: true });
+
+window.addEventListener('touchend', function(e) {
+  var diff = touchStartY - e.changedTouches[0].clientY;
+  if (!heroHidden && diff > 60) {
+    hideHero();
+  }
+}, { passive: true });
+
+// Override setLang to also update hero
+const originalSetLang = setLang;
+setLang = function(l) {
+  originalSetLang(l);
+  renderHero();
+};
+
+renderHero();
+
+// Toroid animation
+const canvas = document.getElementById('toroidCanvas');
+const ctx = canvas.getContext('2d');
+
+function resizeCanvas() {
+  canvas.width = window.innerWidth;
+  canvas.height = window.innerHeight;
+}
+resizeCanvas();
+window.addEventListener('resize', resizeCanvas);
+
+const R = 200, r = 160;
+let flowOffset = 0;
+const tiltX = Math.PI / 2;
+const colors = [
+  { h: 150, s: 70, l: 45 },
+  { h: 160, s: 60, l: 55 },
+  { h: 170, s: 50, l: 65 }
+];
+
+function drawToroid() {
+  const width = canvas.width;
+  const height = canvas.height;
+  const cx = width / 2;
+  const cy = height / 2;
+  
+  ctx.clearRect(0, 0, width, height);
+  
+  const cosX = Math.cos(tiltX);
+  const sinX = Math.sin(tiltX);
+  
+  const lines = [];
+  const numMeridians = 48;
+  const numPoints = 64;
+  
+  for (let i = 0; i < numMeridians; i++) {
+    const phi = (i / numMeridians) * Math.PI * 2;
+    const linePoints = [];
+    
+    for (let j = 0; j <= numPoints; j++) {
+      const theta = (j / numPoints) * Math.PI * 2;
+      
+      let x = (R + r * Math.cos(theta)) * Math.cos(phi);
+      let y = (R + r * Math.cos(theta)) * Math.sin(phi);
+      let z = r * Math.sin(theta);
+      
+      const x2 = x;
+      const y2 = y * cosX - z * sinX;
+      const z2 = y * sinX + z * cosX;
+      
+      const scale = 600 / (600 + z2);
+      const px = cx + x2 * scale;
+      const py = cy + y2 * scale;
+      
+      linePoints.push({ x: px, y: py, z: z2, theta });
+    }
+    
+    const avgZ = linePoints.reduce((sum, p) => sum + p.z, 0) / linePoints.length;
+    const colorIndex = i % 3;
+    lines.push({ points: linePoints, avgZ, colorIndex });
+  }
+  
+  lines.sort((a, b) => a.avgZ - b.avgZ);
+  
+  lines.forEach(line => {
+    const depthFactor = (line.avgZ + R + r) / (2 * (R + r));
+    const color = colors[line.colorIndex];
+    
+    const dashLength = 8;
+    const gapLength = 12;
+    const dashOffset = (flowOffset * 50) % (dashLength + gapLength);
+    ctx.setLineDash([dashLength, gapLength]);
+    ctx.lineDashOffset = -dashOffset;
+    
+    for (let i = 1; i < line.points.length; i++) {
+      const p0 = line.points[i - 1];
+      const p1 = line.points[i];
+      
+      const avgY = (p0.y + p1.y) / 2;
+      const distFromCenter = Math.abs(avgY - cy);
+      
+      const tubeProximity = Math.max(0, distFromCenter - (R - r * 0.3)) / (r * 0.8);
+      const glowIntensity = Math.min(1, tubeProximity);
+      
+      const baseAlpha = 0.1 + depthFactor * 0.4;
+      const glowAlpha = baseAlpha + glowIntensity * 0.5;
+      const baseWidth = 0.5 + depthFactor * 1;
+      const glowWidth = baseWidth + glowIntensity * 2;
+      const lightness = color.l + glowIntensity * 25;
+      
+      ctx.beginPath();
+      ctx.moveTo(p0.x, p0.y);
+      ctx.lineTo(p1.x, p1.y);
+      
+      if (glowIntensity > 0.2) {
+        ctx.shadowColor = 'hsla(' + color.h + ', ' + color.s + '%, 80%, ' + (glowIntensity * 0.8) + ')';
+        ctx.shadowBlur = 10 + glowIntensity * 15;
+      } else {
+        ctx.shadowBlur = 0;
+      }
+      
+      ctx.strokeStyle = 'hsla(' + color.h + ', ' + color.s + '%, ' + lightness + '%, ' + glowAlpha + ')';
+      ctx.lineWidth = glowWidth;
+      ctx.stroke();
+    }
+    
+    ctx.shadowBlur = 0;
+  });
+  
+  ctx.setLineDash([]);
+  flowOffset -= 0.02;
+  
+  requestAnimationFrame(drawToroid);
+}
+
+drawToroid();
+</script>
+  <style>
+    .prose h2 { font-size: 1.5rem; font-weight: 700; margin-top: 2rem; margin-bottom: 1rem; color: #1c1917; font-family: Lora, serif; }
+    .prose p { margin-bottom: 1rem; text-align: justify; }
+    .prose ol { list-style-type: decimal; padding-left: 1.5rem; margin-bottom: 1rem; }
+    .prose ul { list-style-type: disc; padding-left: 1.5rem; margin-bottom: 1rem; }
+    .prose li { margin-bottom: 0.75rem; }
+    .prose strong { font-weight: 700; }
+    .prose em { font-style: italic; }
+    .prose blockquote { font-style: italic; }
+  </style>
+</body>
+</html>
+

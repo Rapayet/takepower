@@ -1,0 +1,1532 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Energy Standard | Take Power</title>
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>₿</text></svg>">
+  <script src="https://cdn.tailwindcss.com"></script>
+  <style>
+    :root { --accent:#f7931a; --bg:#071510; --bg2:#0d2620; --text:#e0e0e0; --text2:#9ca3af; --green:#10b981; --red:#ef4444; }
+    * { margin:0; padding:0; box-sizing:border-box; }
+    body { font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif; background:var(--bg); color:var(--text); line-height:1.6; }
+    
+    /* Quitar spinners de inputs numéricos */
+    input[type=number]::-webkit-inner-spin-button,
+    input[type=number]::-webkit-outer-spin-button { -webkit-appearance:none; margin:0; }
+    input[type=number] { -moz-appearance:textfield; }
+    
+    .panel { display:none; }
+    .panel.active { display:block; }
+    
+    .product:hover { border-color:var(--accent) !important; }
+    .cat-btn:hover { border-color:#555; color:var(--text); }
+    .cat-btn.active { border-color:var(--green); color:var(--green); }
+    
+    .vote-btn:hover:not(:disabled) { background:rgba(255,255,255,0.05); border-color:#666; }
+    .vote-btn:disabled { opacity:0.4; cursor:default; }
+    
+    /* Barra de progreso */
+    #progress-bar {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 0%;
+      height: 3px;
+      background: linear-gradient(90deg, #f7931a, #10b981);
+      z-index: 9999;
+      transition: width 0.1s ease-out;
+    }
+  </style>
+  <script defer src="https://cloud.umami.is/script.js" data-website-id="58faea89-51ba-408c-863e-591a576e203e"></script>
+  <script src="https://challenges.cloudflare.com/turnstile/v0/api.js?render=explicit" async defer></script>
+  <script>
+  (function() {
+    var ua = navigator.userAgent || navigator.vendor || '';
+    var isWebView = /Instagram|FBAN|FBAV|FB_IAB|TikTok|Musical|BytedanceWebview|Snapchat|Line\//i.test(ua);
+    if (isWebView) {
+      var url = window.location.href;
+      if (/android/i.test(ua)) {
+        window.location.href = 'intent://' + url.replace(/https?:\/\//, '') + '#Intent;scheme=https;package=com.android.chrome;end';
+      } else {
+        document.addEventListener('DOMContentLoaded', function() {
+          var d = document.createElement('div');
+          d.style.cssText = 'position:fixed;top:0;left:0;right:0;z-index:99999;background:#f59e0b;color:#000;text-align:center;padding:12px 16px;font-weight:bold;font-size:14px;';
+          d.innerHTML = '<div>\u26a0\ufe0f Estás en el navegador de Instagram</div><div style="font-size:13px;font-weight:normal;margin:6px 0">Toca los 3 puntos <b>⋯</b> arriba a la derecha → <b>Abrir en Safari</b></div><button onclick="navigator.clipboard.writeText(window.location.href);this.textContent=\'\u2705 Copiado\'" style="background:#000;color:#fff;border:none;padding:6px 16px;border-radius:6px;font-size:13px;font-weight:bold;cursor:pointer">\ud83d\udccb Copiar enlace</button>';
+          document.body.prepend(d);
+        });
+      }
+    }
+  })();
+  </script>
+
+  <script>
+  // Clean tracking params from URL
+  (function() {
+    if (window.location.search) {
+      var url = new URL(window.location);
+      ['utm_source','utm_medium','utm_content','utm_campaign','utm_term','fbclid','igshid','ref','src'].forEach(function(p) { url.searchParams.delete(p); });
+      if (url.search === '') window.history.replaceState({}, '', url.pathname + url.hash);
+      else window.history.replaceState({}, '', url.pathname + url.search + url.hash);
+    }
+  })();
+  </script>
+</head>
+<body class="min-h-screen">
+  <div id="progress-bar"></div>
+  <div id="app"></div>
+
+  <script>
+    // ========== TRADUCCIONES ==========
+    const texts = {
+      es: {
+        title: "Patrón Energético",
+        subtitle: "Precios justos en sats basados en energía real",
+        fund: "Baúl", vision: "Visión", bitcoin: "₿ Bitcoin", tactic: "Táctica",
+        tabCatalog: "📦 Catálogo",
+        tabCalculate: "🧮 Calculadora",
+        tabHow: "❓ ¿Cómo funciona?",
+        catalogTitle: "Productos con energía incorporada",
+        catalogDisclaimerTitle: "Precios referenciales",
+        catalogDisclaimer: "Mientras la energía no se cotice directamente en Bitcoin, los valores de MJ son estimaciones comunitarias basadas en la tecnología de producción actual. La comunidad los vota y actualiza.",
+        allCategories: "Todas",
+        searchPlaceholder: "Buscar producto...",
+        noProducts: "No hay productos",
+        catCultivo: "🌱 Cultivo", catFood: "🍳 Alimentos", catClothing: "👕 Ropa",
+        catCrafts: "🎨 Artesanías", catMaterials: "🧱 Materiales", catHome: "🏠 Hogar",
+        catVehicles: "🚲 Vehículos", catElectronics: "📱 Electrónicos", catServices: "👤 Trabajo",
+        // Calculadora
+        calcTitle: "Calcular precio de tu producto",
+        calcDesc: "Responde las preguntas usando las tablas de referencia. El precio se calcula en tiempo real.",
+        calcS0: "¿Qué produces?", calcS0h: "Selecciona tu tipo de producto para empezar",
+        calcS1: "¿Qué insumos usas?", calcS2: "¿Usas agua?",
+        calcS3: "¿Qué energía directa usas?", calcS3h: "Electricidad, gas, leña, carbón, sol... por lote",
+        calcS4: "Tiempo de producción",
+        calcGrow: "🌱 Tiempo de crecimiento", calcGrowH: "La naturaleza trabaja con energía solar. Más tiempo = más energía acumulada.",
+        calcTools: "🔧 Herramientas (selecciona todas las que usas)",
+        calcLabor: "👤 Tu trabajo", calcLaborH: "Horas de tu trabajo",
+        calcToolH: "Horas usando herramientas",
+        calcExpert: "Nivel de experticia — más años = más tiempo acumulado en cada hora:",
+        calcS5: "Transporte", calcS5h: "Distancia solo de ida — la vuelta se calcula automáticamente",
+        calcS6: "¿Cuántas unidades salen de este lote?",
+        addInput: "+ Agregar insumo", addSource: "+ Agregar fuente",
+        refTable: "📋 Tabla de referencia",
+        days: "días", sunH: "h sol/día", hours: "horas", units: "unidades", km: "km",
+        ltDay: "lt/día", ltTotal: "litros",
+        waterMult: "Se multiplicará × los días de crecimiento",
+        solarEst: "Estimación: ~0.06 MJ/m²/hora aprovechable por la planta",
+        costLabel: "Esto cuesta", margin: "Tu ganancia", sellPrice: "Precio de venta", atCost: "0% (al costo)",
+        fillQ: "Completa las preguntas para ver el resultado",
+        sugQ: "📦 ¿Agregar este producto al catálogo?",
+        sugPH: "Nombre del producto (ej: Lechuga orgánica)",
+        sugBtn: "Agregar al catálogo",
+        sugOk: "✓ Producto agregado al catálogo",
+        sugErrName: "Nombre: mínimo 3 caracteres",
+        sugErrEnergy: "Energía debe ser positiva",
+        bkMat: "Insumos", bkWater: "Agua", bkEnergy: "Energía", bkTools: "Herramientas",
+        bkLabor: "Trabajo", bkTransport: "Transporte", bkNatural: "Crecimiento",
+        // Expert levels
+        appr: "Aprendiz", comp: "Competente", exprt: "Experto", mstr: "Maestro",
+        // Cómo funciona
+        whyTitle: "¿Por qué basar precios en energía?",
+        problemTitle: "💵 El problema del dólar",
+        problemText1: "El precio de las cosas en dólares cambia constantemente por inflación, manipulación y especulación.",
+        problemText2: "La tecnología de producción mejoró y un café que costaba $1 hace 20 años hoy cuesta $5. ¿Qué cambió en la producción?",
+        problemText3: "Cambió el dólar. La medida de valor no refleja el costo energético real.",
+        energyTitle: "⚡ ¿Qué es la energía incorporada?",
+        energyText1: "Es la suma total de energía necesaria para que un producto exista: materias primas, transporte, manufactura, procesamiento y distribución.",
+        energyText2: "La energía incorporada no es una constante — es una medición que cambia con la tecnología.",
+        energyText3: "Si mañana se inventa un método de tostado que consume la mitad de energía, el café costará menos en sats. Y eso es una virtud: el precio baja porque refleja eficiencia real, no manipulación monetaria.",
+        energyText4: "Por eso los valores del catálogo son estimaciones comunitarias basadas en la tecnología actual. La comunidad los actualiza cuando la realidad cambia.",
+        btcTitle: "₿ Bitcoin como puente",
+        btcText1: "Cada sat representa energía real gastada en minería (proof-of-work). Conectamos la energía del producto con la energía de los sats.",
+        btcText2: "Sin pasar por el dólar.",
+        formulaTitle: "📐 La fórmula — desglose en vivo",
+        formulaMain: "Fórmula principal",
+        formulaEq: "Precio (sats) = Energía Incorporada (MJ) × Tasa (sats/MJ)",
+        formulaWhere: "¿De dónde sale la Tasa?",
+        formulaWhereText: "Cada valor tiene una fuente verificable. Nada está puesto a dedo:",
+        fS1: "Hashrate de la red", fS1d: "Dato público de mempool.space, verificable por cualquiera en tiempo real",
+        fS2: "Eficiencia promedio mineros", fS2d: "Promedio de ASICs actuales. Es la única variable estimada: no sabemos exactamente qué equipos minan en el mundo",
+        fS3: "Potencia total de la red", fS4: "Energía consumida por hora",
+        fS5: "Sats emitidos por hora", fS5d: "dato inmutable del protocolo Bitcoin",
+        fS6: "Tasa resultante",
+        srcLive: "en vivo", srcEst: "estimación", srcCalc: "calculado", srcProto: "protocolo", srcResult: "resultado",
+        examplesTitle: "Ejemplos",
+        exCoffee: "Café (0.5 MJ)", exShirt: "Camiseta (32 MJ)", exPhone: "Smartphone (1000 MJ)",
+        votesTitle: "👥 Sistema de votos",
+        votesSubtitle: "Sin cuentas, sin administradores",
+        votesText1: "Cualquier persona puede calcular precios y agregarlos al catálogo.",
+        votesText2: "La comunidad vota y tú decides si confías en un precio.",
+        votesText3: "Productos con 77% de votos negativos son eliminados.",
+        // Trabajo humano
+        hwTitle: "👤 Sobre el trabajo humano",
+        hwIntro: "Bitcoin es energía congelada en el tiempo. Es decir: el valor es energía gastada en el tiempo — trabajo. Cada sat existe porque alguien gastó tiempo y energía irreversible en prueba de trabajo. Tu hora de trabajo funciona igual: es tiempo irreversible de tu vida que no se puede copiar, falsificar ni inflar.",
+        hwRBU: "La Renta Básica Universal es el cimiento",
+        hwRBU1: "Sin RBU, el trabajo es coerción. Trabajas para no morirte de hambre, no porque elijas hacerlo. Y cuando alguien necesita trabajar para sobrevivir, acepta cualquier precio. El empleador lo sabe. El resultado es que el salario justo nunca se alcanza porque el trabajador no puede decir \"no\".",
+        hwRBU2: "Con RBU, la supervivencia está cubierta. El trabajo se convierte en un intercambio voluntario entre iguales. El obrero puede rechazar una oferta injusta sin consecuencias fatales. Un precio negociado bajo amenaza de hambre no es un precio justo: es extorsión.",
+        hwRBU3: "Además, la RBU cambia hacia dónde fluye el dinero. En el sistema fiat, el dinero nuevo que imprimen los bancos centrales llega primero a los bancos y las grandes corporaciones. En una economía Bitcoin con RBU, los sats llegan directamente a las personas.",
+        hwFloor: "El piso: el costo real de tu hora",
+        hwFloor1: "Con la supervivencia cubierta, el precio base del trabajo refleja una sola cosa: la energía real acumulada en esa hora. Tus años de formación, práctica y aprendizaje se comprimen y optimizan el proceso de transmutación energética — el trabajo que haces produce valor más eficientemente.",
+        hwFloor2: "Un aprendiz (0-2 años): 25 MJ/h. Un maestro (10+ años): 40 MJ/h. No es jerarquía — es el mismo principio del vino añejado: más tiempo invertido, más valor acumulado.",
+        hwFloor3: "Este piso no se negocia hacia abajo. Igual que no vendes una silla por debajo de la energía de la madera, no vendes tu hora por debajo de la energía de tu formación.",
+        hwSD: "Oferta, demanda y transparencia",
+        hwSD1: "Sobre el piso, la realidad actúa. Durante la peste, los empleados de supermercado se volvieron esenciales y escasos — el valor real de su hora subió. Un obrero de construcción en un pueblo en crecimiento cobra más porque lo necesitan y hay pocos. Un cardiólogo en ese mismo pueblo quizá tiene poco trabajo, pero su piso de maestro le garantiza dignidad sin necesidad de cobrar de más a sus pacientes.",
+        hwSD2: "Estas fuerzas son legítimas. La diferencia con el sistema fiat es que el Patrón Energético las hace visibles. Hoy, el empleado del supermercado no sabe cuánto valor real genera. El patrón le paga lo mínimo posible porque toda la información está oculta.",
+        hwSD3: "Con precios públicos en energía, cualquiera puede ver: \"este trabajo tiene un costo base de 25 MJ/h, en este mercado se paga a 45 MJ/h por escasez.\" La diferencia es transparente, negociable, y nadie puede esconderla detrás de inflación o manipulación.",
+        // Servicios (catálogo)
+        svcBase: "Base: 25 MJ/hora",
+        svcBaseT: "30,000 MJ/año (consumo mínimo digno) ÷ 1,200 horas de trabajo/año = 25 MJ/hora.",
+        svcBaseT2: "Este sistema presupone una Renta Básica Universal — la supervivencia está cubierta, el trabajo es voluntario. El multiplicador por experticia refleja los años de formación acumulados en cada hora.",
+        h1: "1 hora", day6: "Jornada (6h)", wk: "Semana", mo: "Mes",
+        svcFoot: "Semana = 4 días × 6h. Mes = 4 semanas.",
+        footerQuote: "\"Bitcoin es energía congelada en el tiempo\""
+      },
+      en: {
+        title: "Energy Standard",
+        subtitle: "Fair prices in sats based on real energy",
+        fund: "Chest", vision: "Vision", bitcoin: "₿ Bitcoin", tactic: "Tactic",
+        tabCatalog: "📦 Catalog",
+        tabCalculate: "🧮 Calculator",
+        tabHow: "❓ How it works?",
+        catalogTitle: "Products with embodied energy",
+        catalogDisclaimerTitle: "Referential prices",
+        catalogDisclaimer: "As long as energy is not directly priced in Bitcoin, MJ values are community estimates based on current production technology. The community votes and updates them.",
+        allCategories: "All",
+        searchPlaceholder: "Search product...",
+        noProducts: "No products found",
+        catCultivo: "🌱 Crops", catFood: "🍳 Food", catClothing: "👕 Clothing",
+        catCrafts: "🎨 Crafts", catMaterials: "🧱 Materials", catHome: "🏠 Home",
+        catVehicles: "🚲 Vehicles", catElectronics: "📱 Electronics", catServices: "👤 Work",
+        calcTitle: "Calculate your product price",
+        calcDesc: "Answer the questions using the reference tables. Price is calculated in real time.",
+        calcS0: "What do you produce?", calcS0h: "Select your product type to start",
+        calcS1: "What inputs do you use?", calcS2: "Do you use water?",
+        calcS3: "What direct energy do you use?", calcS3h: "Electricity, gas, firewood, coal, sun... per batch",
+        calcS4: "Production time",
+        calcGrow: "🌱 Growth time", calcGrowH: "Nature works with solar energy. More time = more accumulated energy.",
+        calcTools: "🔧 Tools (select all you use)",
+        calcLabor: "👤 Your work", calcLaborH: "Hours of your work",
+        calcToolH: "Hours using tools",
+        calcExpert: "Expertise level — more years = more accumulated time per hour:",
+        calcS5: "Transport", calcS5h: "One-way distance — return calculated automatically",
+        calcS6: "How many units from this batch?",
+        addInput: "+ Add input", addSource: "+ Add source",
+        refTable: "📋 Reference table",
+        days: "days", sunH: "h sun/day", hours: "hours", units: "units", km: "km",
+        ltDay: "lt/day", ltTotal: "liters",
+        waterMult: "Will be multiplied × growth days",
+        solarEst: "Estimate: ~0.06 MJ/m²/hour usable by the plant",
+        costLabel: "This costs", margin: "Your profit", sellPrice: "Selling price", atCost: "0% (at cost)",
+        fillQ: "Complete the questions to see the result",
+        sugQ: "📦 Add this product to the catalog?",
+        sugPH: "Product name (e.g. Organic lettuce)",
+        sugBtn: "Add to catalog",
+        sugOk: "✓ Product added to catalog",
+        sugErrName: "Name: minimum 3 characters",
+        sugErrEnergy: "Energy must be positive",
+        bkMat: "Inputs", bkWater: "Water", bkEnergy: "Energy", bkTools: "Tools",
+        bkLabor: "Work", bkTransport: "Transport", bkNatural: "Growth",
+        appr: "Apprentice", comp: "Competent", exprt: "Expert", mstr: "Master",
+        whyTitle: "Why base prices on energy?",
+        problemTitle: "💵 The dollar problem",
+        problemText1: "Dollar prices change constantly due to inflation, manipulation, and speculation.",
+        problemText2: "Production technology improved and a coffee that cost $1 twenty years ago now costs $5. What changed in production?",
+        problemText3: "The dollar changed. The measure of value does not reflect the real energy cost.",
+        energyTitle: "⚡ What is embodied energy?",
+        energyText1: "It is the total energy needed for a product to exist: raw materials, transport, manufacturing, processing, and distribution.",
+        energyText2: "Embodied energy is not a constant — it is a measurement that changes with technology.",
+        energyText3: "If tomorrow a roasting method is invented that uses half the energy, coffee will cost fewer sats. And that is a virtue: the price drops because it reflects real efficiency, not monetary manipulation.",
+        energyText4: "That is why catalog values are community estimates based on current technology. The community updates them when reality changes.",
+        btcTitle: "₿ Bitcoin as a bridge",
+        btcText1: "Each sat represents real energy spent on mining (proof-of-work). We connect product energy with sat energy.",
+        btcText2: "Without going through the dollar.",
+        formulaTitle: "📐 The formula — live breakdown",
+        formulaMain: "Main formula",
+        formulaEq: "Price (sats) = Embodied Energy (MJ) × Rate (sats/MJ)",
+        formulaWhere: "Where does the Rate come from?",
+        formulaWhereText: "Every value has a verifiable source. Nothing is made up:",
+        fS1: "Network hashrate", fS1d: "Public data from mempool.space, verifiable by anyone in real time",
+        fS2: "Average miner efficiency", fS2d: "Current ASIC average. The only estimated variable: we don't know exactly which equipment mines worldwide",
+        fS3: "Total network power", fS4: "Energy consumed per hour",
+        fS5: "Sats issued per hour", fS5d: "immutable Bitcoin protocol data",
+        fS6: "Resulting rate",
+        srcLive: "live", srcEst: "estimate", srcCalc: "calculated", srcProto: "protocol", srcResult: "result",
+        examplesTitle: "Examples",
+        exCoffee: "Coffee (0.5 MJ)", exShirt: "T-shirt (32 MJ)", exPhone: "Smartphone (1000 MJ)",
+        votesTitle: "👥 Voting system",
+        votesSubtitle: "No accounts, no administrators",
+        votesText1: "Anyone can calculate prices and add them to the catalog.",
+        votesText2: "The community votes and you decide if you trust a price.",
+        votesText3: "Products with 77% negative votes are removed.",
+        hwTitle: "👤 About human work",
+        hwIntro: "Bitcoin is energy frozen in time. That is: value is energy spent over time — work. Each sat exists because someone spent irreversible time and energy on proof of work. Your work hour functions the same: it is irreversible time from your life that cannot be copied, faked, or inflated.",
+        hwRBU: "Universal Basic Income is the foundation",
+        hwRBU1: "Without UBI, work is coercion. You work to not starve, not because you choose to. And when someone needs to work to survive, they accept any price. The employer knows this. The result is that fair wages are never reached because the worker cannot say \"no\".",
+        hwRBU2: "With UBI, survival is covered. Work becomes a voluntary exchange between equals. The worker can reject an unfair offer without fatal consequences. A price negotiated under threat of hunger is not a fair price: it is extortion.",
+        hwRBU3: "Furthermore, UBI changes where money flows. In the fiat system, new money printed by central banks reaches banks and large corporations first. In a Bitcoin economy with UBI, sats reach people directly.",
+        hwFloor: "The floor: the real cost of your hour",
+        hwFloor1: "With survival covered, the base price of work reflects one thing: the real energy accumulated in that hour. Your years of training, practice, and learning compress and optimize the process of energy transmutation — the work you do produces value more efficiently.",
+        hwFloor2: "An apprentice (0-2 years): 25 MJ/h. A master (10+ years): 40 MJ/h. It is not hierarchy — it is the same principle as aged wine: more time invested, more value accumulated.",
+        hwFloor3: "This floor is non-negotiable downward. Just as you do not sell a chair below the energy of the wood, you do not sell your hour below the energy of your training.",
+        hwSD: "Supply, demand, and transparency",
+        hwSD1: "Above the floor, reality acts. During the plague, supermarket employees became essential and scarce — the real value of their hour rose. A construction worker in a growing town charges more because they are needed and few. A cardiologist in that same town may have little work, but their master floor guarantees dignity without needing to overcharge patients.",
+        hwSD2: "These forces are legitimate. The difference with the fiat system is that the Energy Standard makes them visible. Today, the supermarket employee does not know how much real value they generate. The employer pays the minimum possible because all information is hidden.",
+        hwSD3: "With public energy prices, anyone can see: \"this work has a base cost of 25 MJ/h, in this market it pays 45 MJ/h due to scarcity.\" The difference is transparent, negotiable, and no one can hide it behind inflation or manipulation.",
+        svcBase: "Base: 25 MJ/hour",
+        svcBaseT: "30,000 MJ/year (minimum dignified consumption) ÷ 1,200 work hours/year = 25 MJ/hour.",
+        svcBaseT2: "This system assumes a Universal Basic Income — survival is covered, work is voluntary. The expertise multiplier reflects years of training accumulated in each hour.",
+        h1: "1 hour", day6: "Workday (6h)", wk: "Week", mo: "Month",
+        svcFoot: "Week = 4 days × 6h. Month = 4 weeks.",
+        footerQuote: "\"Bitcoin is energy frozen in time\""
+      },
+      br: {
+        title: "Padrão Energético",
+        subtitle: "Preços justos em sats baseados em energia real",
+        fund: "Baú", vision: "Visão", bitcoin: "₿ Bitcoin", tactic: "Tática",
+        tabCatalog: "📦 Catálogo",
+        tabCalculate: "🧮 Calculadora",
+        tabHow: "❓ Como funciona?",
+        catalogTitle: "Produtos com energia incorporada",
+        catalogDisclaimerTitle: "Preços referenciais",
+        catalogDisclaimer: "Enquanto a energia não for cotada diretamente em Bitcoin, os valores de MJ são estimativas comunitárias baseadas na tecnologia de produção atual. A comunidade vota e atualiza.",
+        allCategories: "Todos",
+        searchPlaceholder: "Buscar produto...",
+        noProducts: "Nenhum produto encontrado",
+        catCultivo: "🌱 Cultivo", catFood: "🍳 Alimentos", catClothing: "👕 Roupa",
+        catCrafts: "🎨 Artesanato", catMaterials: "🧱 Materiais", catHome: "🏠 Casa",
+        catVehicles: "🚲 Veículos", catElectronics: "📱 Eletrônicos", catServices: "👤 Trabalho",
+        calcTitle: "Calcular preço do seu produto",
+        calcDesc: "Responda as perguntas usando as tabelas de referência. O preço é calculado em tempo real.",
+        calcS0: "O que você produz?", calcS0h: "Selecione o tipo de produto para começar",
+        calcS1: "Que insumos você usa?", calcS2: "Usa água?",
+        calcS3: "Que energia direta você usa?", calcS3h: "Eletricidade, gás, lenha, carvão, sol... por lote",
+        calcS4: "Tempo de produção",
+        calcGrow: "🌱 Tempo de crescimento", calcGrowH: "A natureza trabalha com energia solar. Mais tempo = mais energia acumulada.",
+        calcTools: "🔧 Ferramentas (selecione todas que usa)",
+        calcLabor: "👤 Seu trabalho", calcLaborH: "Horas do seu trabalho",
+        calcToolH: "Horas usando ferramentas",
+        calcExpert: "Nível de expertise — mais anos = mais tempo acumulado em cada hora:",
+        calcS5: "Transporte", calcS5h: "Distância só de ida — volta calculada automaticamente",
+        calcS6: "Quantas unidades saem deste lote?",
+        addInput: "+ Adicionar insumo", addSource: "+ Adicionar fonte",
+        refTable: "📋 Tabela de referência",
+        days: "dias", sunH: "h sol/dia", hours: "horas", units: "unidades", km: "km",
+        ltDay: "lt/dia", ltTotal: "litros",
+        waterMult: "Será multiplicado × os dias de crescimento",
+        solarEst: "Estimativa: ~0.06 MJ/m²/hora aproveitável pela planta",
+        costLabel: "Isto custa", margin: "Sua margem", sellPrice: "Preço de venda", atCost: "0% (ao custo)",
+        fillQ: "Complete as perguntas para ver o resultado",
+        sugQ: "📦 Adicionar este produto ao catálogo?",
+        sugPH: "Nome do produto (ex: Alface orgânica)",
+        sugBtn: "Adicionar ao catálogo",
+        sugOk: "✓ Produto adicionado ao catálogo",
+        sugErrName: "Nome: mínimo 3 caracteres",
+        sugErrEnergy: "Energia deve ser positiva",
+        bkMat: "Insumos", bkWater: "Água", bkEnergy: "Energia", bkTools: "Ferramentas",
+        bkLabor: "Trabalho", bkTransport: "Transporte", bkNatural: "Crescimento",
+        appr: "Aprendiz", comp: "Competente", exprt: "Especialista", mstr: "Mestre",
+        whyTitle: "Por que basear preços em energia?",
+        problemTitle: "💵 O problema do dólar",
+        problemText1: "O preço das coisas em dólares muda constantemente por inflação, manipulação e especulação.",
+        problemText2: "A tecnologia de produção melhorou e um café que custava $1 há 20 anos hoje custa $5. O que mudou na produção?",
+        problemText3: "Mudou o dólar. A medida de valor não reflete o custo energético real.",
+        energyTitle: "⚡ O que é energia incorporada?",
+        energyText1: "É a soma total de energia necessária para que um produto exista: matérias-primas, transporte, manufatura, processamento e distribuição.",
+        energyText2: "A energia incorporada não é uma constante — é uma medição que muda com a tecnologia.",
+        energyText3: "Se amanhã se inventar um método de torrefação que consome metade da energia, o café custará menos em sats. E isso é uma virtude: o preço cai porque reflete eficiência real, não manipulação monetária.",
+        energyText4: "Por isso os valores do catálogo são estimativas comunitárias baseadas na tecnologia atual. A comunidade os atualiza quando a realidade muda.",
+        btcTitle: "₿ Bitcoin como ponte",
+        btcText1: "Cada sat representa energia real gasta em mineração (proof-of-work). Conectamos a energia do produto com a energia dos sats.",
+        btcText2: "Sem passar pelo dólar.",
+        formulaTitle: "📐 A fórmula — detalhe ao vivo",
+        formulaMain: "Fórmula principal",
+        formulaEq: "Preço (sats) = Energia Incorporada (MJ) × Taxa (sats/MJ)",
+        formulaWhere: "De onde vem a Taxa?",
+        formulaWhereText: "Cada valor tem uma fonte verificável. Nada foi inventado:",
+        fS1: "Hashrate da rede", fS1d: "Dado público de mempool.space, verificável por qualquer pessoa em tempo real",
+        fS2: "Eficiência média dos mineradores", fS2d: "Média dos ASICs atuais. É a única variável estimada: não sabemos exatamente quais equipamentos mineram no mundo",
+        fS3: "Potência total da rede", fS4: "Energia consumida por hora",
+        fS5: "Sats emitidos por hora", fS5d: "dado imutável do protocolo Bitcoin",
+        fS6: "Taxa resultante",
+        srcLive: "ao vivo", srcEst: "estimativa", srcCalc: "calculado", srcProto: "protocolo", srcResult: "resultado",
+        examplesTitle: "Exemplos",
+        exCoffee: "Café (0.5 MJ)", exShirt: "Camiseta (32 MJ)", exPhone: "Smartphone (1000 MJ)",
+        votesTitle: "👥 Sistema de votos",
+        votesSubtitle: "Sem contas, sem administradores",
+        votesText1: "Qualquer pessoa pode calcular preços e adicioná-los ao catálogo.",
+        votesText2: "A comunidade vota e você decide se confia em um preço.",
+        votesText3: "Produtos com 77% de votos negativos são removidos.",
+        hwTitle: "👤 Sobre o trabalho humano",
+        hwIntro: "Bitcoin é energia congelada no tempo. Ou seja: o valor é energia gasta no tempo — trabalho. Cada sat existe porque alguém gastou tempo e energia irreversíveis em prova de trabalho. Sua hora de trabalho funciona igual: é tempo irreversível da sua vida que não pode ser copiado, falsificado ou inflado.",
+        hwRBU: "A Renda Básica Universal é o alicerce",
+        hwRBU1: "Sem RBU, o trabalho é coerção. Você trabalha para não morrer de fome, não porque escolhe. E quando alguém precisa trabalhar para sobreviver, aceita qualquer preço. O empregador sabe disso. O resultado é que o salário justo nunca é alcançado porque o trabalhador não pode dizer \"não\".",
+        hwRBU2: "Com RBU, a sobrevivência está coberta. O trabalho se torna uma troca voluntária entre iguais. O trabalhador pode rejeitar uma oferta injusta sem consequências fatais. Um preço negociado sob ameaça de fome não é um preço justo: é extorsão.",
+        hwRBU3: "Além disso, a RBU muda para onde o dinheiro flui. No sistema fiat, o dinheiro novo impresso pelos bancos centrais chega primeiro aos bancos e grandes corporações. Em uma economia Bitcoin com RBU, os sats chegam diretamente às pessoas.",
+        hwFloor: "O piso: o custo real da sua hora",
+        hwFloor1: "Com a sobrevivência coberta, o preço base do trabalho reflete uma única coisa: a energia real acumulada nessa hora. Seus anos de formação, prática e aprendizagem se comprimem e otimizam o processo de transmutação energética — o trabalho que você faz produz valor mais eficientemente.",
+        hwFloor2: "Um aprendiz (0-2 anos): 25 MJ/h. Um mestre (10+ anos): 40 MJ/h. Não é hierarquia — é o mesmo princípio do vinho envelhecido: mais tempo investido, mais valor acumulado.",
+        hwFloor3: "Este piso não se negocia para baixo. Assim como não se vende uma cadeira abaixo da energia da madeira, não se vende sua hora abaixo da energia da sua formação.",
+        hwSD: "Oferta, demanda e transparência",
+        hwSD1: "Acima do piso, a realidade atua. Durante a peste, os funcionários de supermercado se tornaram essenciais e escassos — o valor real da sua hora subiu. Um operário de construção em um povoado em crescimento cobra mais porque é necessário e há poucos. Um cardiologista nesse mesmo povoado talvez tenha pouco trabalho, mas seu piso de mestre garante dignidade sem precisar cobrar demais dos pacientes.",
+        hwSD2: "Essas forças são legítimas. A diferença com o sistema fiat é que o Padrão Energético as torna visíveis. Hoje, o funcionário do supermercado não sabe quanto valor real gera. O patrão paga o mínimo possível porque toda a informação está oculta.",
+        hwSD3: "Com preços públicos em energia, qualquer pessoa pode ver: \"este trabalho tem um custo base de 25 MJ/h, neste mercado se paga 45 MJ/h por escassez.\" A diferença é transparente, negociável, e ninguém pode escondê-la atrás de inflação ou manipulação.",
+        svcBase: "Base: 25 MJ/hora",
+        svcBaseT: "30.000 MJ/ano (consumo mínimo digno) ÷ 1.200 horas de trabalho/ano = 25 MJ/hora.",
+        svcBaseT2: "Este sistema pressupõe uma Renda Básica Universal — a sobrevivência está coberta, o trabalho é voluntário. O multiplicador por expertise reflete os anos de formação acumulados em cada hora.",
+        h1: "1 hora", day6: "Jornada (6h)", wk: "Semana", mo: "Mês",
+        svcFoot: "Semana = 4 dias × 6h. Mês = 4 semanas.",
+        footerQuote: "\"Bitcoin é energia congelada no tempo\""
+      },
+      fr: {
+        title: "Standard Énergétique",
+        subtitle: "Prix justes en sats basés sur l'énergie réelle",
+        fund: "Coffre", vision: "Vision", bitcoin: "₿ Bitcoin", tactic: "Tactique",
+        tabCatalog: "📦 Catalogue",
+        tabCalculate: "🧮 Calculatrice",
+        tabHow: "❓ Comment ça marche?",
+        catalogTitle: "Produits avec énergie incorporée",
+        catalogDisclaimerTitle: "Prix référentiels",
+        catalogDisclaimer: "Tant que l'énergie n'est pas cotée directement en Bitcoin, les valeurs MJ sont des estimations communautaires basées sur la technologie de production actuelle. La communauté vote et met à jour.",
+        allCategories: "Tous",
+        searchPlaceholder: "Chercher produit...",
+        noProducts: "Aucun produit trouvé",
+        catCultivo: "🌱 Culture", catFood: "🍳 Alimentation", catClothing: "👕 Vêtements",
+        catCrafts: "🎨 Artisanat", catMaterials: "🧱 Matériaux", catHome: "🏠 Maison",
+        catVehicles: "🚲 Véhicules", catElectronics: "📱 Électronique", catServices: "👤 Travail",
+        calcTitle: "Calculer le prix de votre produit",
+        calcDesc: "Répondez aux questions en utilisant les tables de référence. Le prix est calculé en temps réel.",
+        calcS0: "Que produisez-vous?", calcS0h: "Sélectionnez votre type de produit pour commencer",
+        calcS1: "Quels intrants utilisez-vous?", calcS2: "Utilisez-vous de l'eau?",
+        calcS3: "Quelle énergie directe utilisez-vous?", calcS3h: "Électricité, gaz, bois, charbon, soleil... par lot",
+        calcS4: "Temps de production",
+        calcGrow: "🌱 Temps de croissance", calcGrowH: "La nature travaille avec l'énergie solaire. Plus de temps = plus d'énergie accumulée.",
+        calcTools: "🔧 Outils (sélectionnez tous ceux utilisés)",
+        calcLabor: "👤 Votre travail", calcLaborH: "Heures de votre travail",
+        calcToolH: "Heures d'utilisation d'outils",
+        calcExpert: "Niveau d'expertise — plus d'années = plus de temps accumulé par heure:",
+        calcS5: "Transport", calcS5h: "Distance aller simple — retour calculé automatiquement",
+        calcS6: "Combien d'unités de ce lot?",
+        addInput: "+ Ajouter intrant", addSource: "+ Ajouter source",
+        refTable: "📋 Table de référence",
+        days: "jours", sunH: "h soleil/jour", hours: "heures", units: "unités", km: "km",
+        ltDay: "lt/jour", ltTotal: "litres",
+        waterMult: "Sera multiplié × les jours de croissance",
+        solarEst: "Estimation: ~0.06 MJ/m²/heure utilisable par la plante",
+        costLabel: "Cela coûte", margin: "Votre marge", sellPrice: "Prix de vente", atCost: "0% (au coût)",
+        fillQ: "Complétez les questions pour voir le résultat",
+        sugQ: "📦 Ajouter ce produit au catalogue?",
+        sugPH: "Nom du produit (ex: Laitue biologique)",
+        sugBtn: "Ajouter au catalogue",
+        sugOk: "✓ Produit ajouté au catalogue",
+        sugErrName: "Nom: minimum 3 caractères",
+        sugErrEnergy: "L'énergie doit être positive",
+        bkMat: "Intrants", bkWater: "Eau", bkEnergy: "Énergie", bkTools: "Outils",
+        bkLabor: "Travail", bkTransport: "Transport", bkNatural: "Croissance",
+        appr: "Apprenti", comp: "Compétent", exprt: "Expert", mstr: "Maître",
+        whyTitle: "Pourquoi baser les prix sur l'énergie?",
+        problemTitle: "💵 Le problème du dollar",
+        problemText1: "Les prix en dollars changent constamment en raison de l'inflation, de la manipulation et de la spéculation.",
+        problemText2: "La technologie de production s'est améliorée et un café qui coûtait 1$ il y a 20 ans coûte aujourd'hui 5$. Qu'est-ce qui a changé dans la production?",
+        problemText3: "Le dollar a changé. La mesure de valeur ne reflète pas le coût énergétique réel.",
+        energyTitle: "⚡ Qu'est-ce que l'énergie incorporée?",
+        energyText1: "C'est l'énergie totale nécessaire à l'existence d'un produit: matières premières, transport, fabrication, transformation et distribution.",
+        energyText2: "L'énergie incorporée n'est pas une constante — c'est une mesure qui change avec la technologie.",
+        energyText3: "Si demain on invente une méthode de torréfaction qui consomme moitié moins d'énergie, le café coûtera moins de sats. Et c'est une vertu: le prix baisse parce qu'il reflète l'efficacité réelle, pas la manipulation monétaire.",
+        energyText4: "C'est pourquoi les valeurs du catalogue sont des estimations communautaires basées sur la technologie actuelle. La communauté les met à jour quand la réalité change.",
+        btcTitle: "₿ Bitcoin comme pont",
+        btcText1: "Chaque sat représente de l'énergie réelle dépensée en minage (proof-of-work). Nous connectons l'énergie du produit avec l'énergie des sats.",
+        btcText2: "Sans passer par le dollar.",
+        formulaTitle: "📐 La formule — détail en direct",
+        formulaMain: "Formule principale",
+        formulaEq: "Prix (sats) = Énergie Incorporée (MJ) × Taux (sats/MJ)",
+        formulaWhere: "D'où vient le Taux?",
+        formulaWhereText: "Chaque valeur a une source vérifiable. Rien n'est inventé:",
+        fS1: "Hashrate du réseau", fS1d: "Donnée publique de mempool.space, vérifiable par tous en temps réel",
+        fS2: "Efficacité moyenne des mineurs", fS2d: "Moyenne des ASICs actuels. C'est la seule variable estimée: nous ne savons pas exactement quels équipements minent dans le monde",
+        fS3: "Puissance totale du réseau", fS4: "Énergie consommée par heure",
+        fS5: "Sats émis par heure", fS5d: "donnée immuable du protocole Bitcoin",
+        fS6: "Taux résultant",
+        srcLive: "en direct", srcEst: "estimation", srcCalc: "calculé", srcProto: "protocole", srcResult: "résultat",
+        examplesTitle: "Exemples",
+        exCoffee: "Café (0.5 MJ)", exShirt: "T-shirt (32 MJ)", exPhone: "Smartphone (1000 MJ)",
+        votesTitle: "👥 Système de votes",
+        votesSubtitle: "Sans comptes, sans administrateurs",
+        votesText1: "N'importe qui peut calculer des prix et les ajouter au catalogue.",
+        votesText2: "La communauté vote et vous décidez si vous faites confiance à un prix.",
+        votesText3: "Les produits avec 77% de votes négatifs sont supprimés.",
+        hwTitle: "👤 À propos du travail humain",
+        hwIntro: "Bitcoin est de l'énergie gelée dans le temps. C'est-à-dire: la valeur est de l'énergie dépensée dans le temps — le travail. Chaque sat existe parce que quelqu'un a dépensé du temps et de l'énergie irréversibles en preuve de travail. Votre heure de travail fonctionne de la même façon: c'est du temps irréversible de votre vie qui ne peut être copié, falsifié ou gonflé.",
+        hwRBU: "Le Revenu de Base Universel est le fondement",
+        hwRBU1: "Sans RBU, le travail est de la coercition. Vous travaillez pour ne pas mourir de faim, pas parce que vous le choisissez. Et quand quelqu'un doit travailler pour survivre, il accepte n'importe quel prix. L'employeur le sait. Le résultat est que le salaire juste n'est jamais atteint parce que le travailleur ne peut pas dire « non ».",
+        hwRBU2: "Avec le RBU, la survie est couverte. Le travail devient un échange volontaire entre égaux. L'ouvrier peut rejeter une offre injuste sans conséquences fatales. Un prix négocié sous la menace de la faim n'est pas un prix juste: c'est de l'extorsion.",
+        hwRBU3: "De plus, le RBU change où l'argent circule. Dans le système fiat, l'argent nouveau imprimé par les banques centrales arrive d'abord aux banques et grandes entreprises. Dans une économie Bitcoin avec RBU, les sats arrivent directement aux personnes.",
+        hwFloor: "Le plancher: le coût réel de votre heure",
+        hwFloor1: "Avec la survie couverte, le prix de base du travail reflète une seule chose: l'énergie réelle accumulée dans cette heure. Vos années de formation, pratique et apprentissage se compriment et optimisent le processus de transmutation énergétique — le travail que vous faites produit de la valeur plus efficacement.",
+        hwFloor2: "Un apprenti (0-2 ans): 25 MJ/h. Un maître (10+ ans): 40 MJ/h. Ce n'est pas de la hiérarchie — c'est le même principe que le vin vieilli: plus de temps investi, plus de valeur accumulée.",
+        hwFloor3: "Ce plancher ne se négocie pas à la baisse. Tout comme on ne vend pas une chaise en dessous de l'énergie du bois, on ne vend pas son heure en dessous de l'énergie de sa formation.",
+        hwSD: "Offre, demande et transparence",
+        hwSD1: "Au-dessus du plancher, la réalité agit. Pendant la peste, les employés de supermarché sont devenus essentiels et rares — la valeur réelle de leur heure a augmenté. Un ouvrier du bâtiment dans un village en croissance facture plus parce qu'on a besoin de lui et qu'il y en a peu. Un cardiologue dans ce même village a peut-être peu de travail, mais son plancher de maître lui garantit la dignité sans avoir à surfacturer ses patients.",
+        hwSD2: "Ces forces sont légitimes. La différence avec le système fiat est que le Standard Énergétique les rend visibles. Aujourd'hui, l'employé du supermarché ne sait pas combien de valeur réelle il génère. L'employeur paie le minimum possible parce que toute l'information est cachée.",
+        hwSD3: "Avec des prix publics en énergie, n'importe qui peut voir: « ce travail a un coût de base de 25 MJ/h, dans ce marché on paie 45 MJ/h pour cause de rareté. » La différence est transparente, négociable, et personne ne peut la cacher derrière l'inflation ou la manipulation.",
+        svcBase: "Base: 25 MJ/heure",
+        svcBaseT: "30 000 MJ/an (consommation minimale digne) ÷ 1 200 heures de travail/an = 25 MJ/heure.",
+        svcBaseT2: "Ce système présuppose un Revenu de Base Universel — la survie est couverte, le travail est volontaire. Le multiplicateur par expertise reflète les années de formation accumulées dans chaque heure.",
+        h1: "1 heure", day6: "Journée (6h)", wk: "Semaine", mo: "Mois",
+        svcFoot: "Semaine = 4 jours × 6h. Mois = 4 semaines.",
+        footerQuote: "\"Le Bitcoin est de l'énergie gelée dans le temps\""
+      }
+    };
+
+    // ========== PRODUCTOS POR IDIOMA ==========
+    const productsBase = {
+      cultivo: [
+        {es:"Semillas de tomate (sobre)",en:"Tomato seeds (packet)",br:"Sementes de tomate",fr:"Graines de tomate",mj:0.3},
+        {es:"Semillas de maíz (kg)",en:"Corn seeds (kg)",br:"Sementes de milho (kg)",fr:"Graines de maïs (kg)",mj:3},
+        {es:"Lechuga (unidad)",en:"Lettuce (unit)",br:"Alface (unidade)",fr:"Laitue (unité)",mj:1.2},
+        {es:"Tomate (kg)",en:"Tomato (kg)",br:"Tomate (kg)",fr:"Tomate (kg)",mj:2.5},
+        {es:"Zanahoria (kg)",en:"Carrot (kg)",br:"Cenoura (kg)",fr:"Carotte (kg)",mj:1.8},
+        {es:"Cebolla (kg)",en:"Onion (kg)",br:"Cebola (kg)",fr:"Oignon (kg)",mj:1.5},
+        {es:"Papa (kg)",en:"Potato (kg)",br:"Batata (kg)",fr:"Pomme de terre (kg)",mj:2},
+        {es:"Maíz (kg)",en:"Corn (kg)",br:"Milho (kg)",fr:"Maïs (kg)",mj:3},
+        {es:"Plátano (kg)",en:"Plantain (kg)",br:"Banana (kg)",fr:"Banane plantain (kg)",mj:1},
+        {es:"Mango (kg)",en:"Mango (kg)",br:"Manga (kg)",fr:"Mangue (kg)",mj:2.5},
+        {es:"Arroz (kg)",en:"Rice (kg)",br:"Arroz (kg)",fr:"Riz (kg)",mj:4.5},
+        {es:"Lentejas (kg)",en:"Lentils (kg)",br:"Lentilhas (kg)",fr:"Lentilles (kg)",mj:4},
+        {es:"Frijoles (kg)",en:"Beans (kg)",br:"Feijão (kg)",fr:"Haricots (kg)",mj:3.5},
+        {es:"Cacao en grano (kg)",en:"Cacao beans (kg)",br:"Cacau em grão (kg)",fr:"Cacao en grains (kg)",mj:8},
+        {es:"Yuca (kg)",en:"Cassava (kg)",br:"Mandioca (kg)",fr:"Manioc (kg)",mj:1.5},
+        {es:"Caña de azúcar (kg)",en:"Sugarcane (kg)",br:"Cana-de-açúcar (kg)",fr:"Canne à sucre (kg)",mj:2},
+        {es:"Açaí (kg)",en:"Açaí (kg)",br:"Açaí (kg)",fr:"Açaí (kg)",mj:3.5}
+      ],
+      alimentos: [
+        {es:"Café (1 taza)",en:"Coffee (1 cup)",br:"Café (1 xícara)",fr:"Café (1 tasse)",mj:0.5},
+        {es:"Arepa",en:"Arepa",br:"Arepa",fr:"Arepa",mj:1.5},
+        {es:"Pan (1 unidad)",en:"Bread (1 loaf)",br:"Pão (1 unidade)",fr:"Pain (1 unité)",mj:2.5},
+        {es:"Tapioca (kg)",en:"Tapioca (kg)",br:"Tapioca (kg)",fr:"Tapioca (kg)",mj:4},
+        {es:"Farinha de yuca (kg)",en:"Cassava flour (kg)",br:"Farinha de mandioca (kg)",fr:"Farine de manioc (kg)",mj:5},
+        {es:"Tofu (kg)",en:"Tofu (kg)",br:"Tofu (kg)",fr:"Tofu (kg)",mj:6},
+        {es:"Chocolate (tableta)",en:"Chocolate (bar)",br:"Chocolate (tablete)",fr:"Chocolat (tablette)",mj:8},
+        {es:"Cerveza (lata)",en:"Beer (can)",br:"Cerveja (lata)",fr:"Bière (canette)",mj:3.2},
+        {es:"Açaí batido (lt)",en:"Açaí smoothie (lt)",br:"Açaí batido (lt)",fr:"Açaí mixé (lt)",mj:6},
+        {es:"Pizza mediana",en:"Medium pizza",br:"Pizza média",fr:"Pizza moyenne",mj:15},
+        {es:"Mantequilla (kg)",en:"Butter (kg)",br:"Manteiga (kg)",fr:"Beurre (kg)",mj:30},
+        {es:"Huevos (12)",en:"Eggs (12)",br:"Ovos (12)",fr:"Œufs (12)",mj:15},
+        {es:"Leche (litro)",en:"Milk (liter)",br:"Leite (litro)",fr:"Lait (litre)",mj:10},
+        {es:"Queso (kg)",en:"Cheese (kg)",br:"Queijo (kg)",fr:"Fromage (kg)",mj:50},
+        {es:"Pollo (kg)",en:"Chicken (kg)",br:"Frango (kg)",fr:"Poulet (kg)",mj:40},
+        {es:"Carne cerdo (kg)",en:"Pork (kg)",br:"Carne de porco (kg)",fr:"Porc (kg)",mj:80},
+        {es:"Hamburguesa",en:"Hamburger",br:"Hambúrguer",fr:"Hamburger",mj:25},
+        {es:"Carne res (kg)",en:"Beef (kg)",br:"Carne bovina (kg)",fr:"Bœuf (kg)",mj:150}
+      ],
+      ropa: [
+        {es:"Camiseta cáñamo",en:"Hemp t-shirt",br:"Camiseta cânhamo",fr:"T-shirt chanvre",mj:12},
+        {es:"Camisa lino",en:"Linen shirt",br:"Camisa linho",fr:"Chemise lin",mj:18},
+        {es:"Camiseta algodón",en:"Cotton t-shirt",br:"Camiseta algodão",fr:"T-shirt coton",mj:32},
+        {es:"Camiseta poliéster",en:"Polyester t-shirt",br:"Camiseta poliéster",fr:"T-shirt polyester",mj:40},
+        {es:"Suéter lana",en:"Wool sweater",br:"Suéter lã",fr:"Pull laine",mj:48},
+        {es:"Jeans algodón",en:"Cotton jeans",br:"Jeans algodão",fr:"Jeans coton",mj:68},
+        {es:"Zapatos cuero",en:"Leather shoes",br:"Sapatos couro",fr:"Chaussures cuir",mj:85},
+        {es:"Chaqueta sintética",en:"Synthetic jacket",br:"Jaqueta sintética",fr:"Veste synthétique",mj:95}
+      ],
+      artesanias: [
+        {es:"Collar reciclable",en:"Recyclable necklace",br:"Colar reciclável",fr:"Collier recyclable",mj:1},
+        {es:"Collar de plumas",en:"Feather necklace",br:"Colar de penas",fr:"Collier de plumes",mj:2},
+        {es:"Juguete de madera",en:"Wooden toy",br:"Brinquedo de madeira",fr:"Jouet en bois",mj:5},
+        {es:"Cerámica artesanal",en:"Handmade ceramics",br:"Cerâmica artesanal",fr:"Céramique artisanale",mj:15},
+        {es:"Juguete de plástico",en:"Plastic toy",br:"Brinquedo de plástico",fr:"Jouet en plastique",mj:18},
+        {es:"Collar de oro",en:"Gold necklace",br:"Colar de ouro",fr:"Collier en or",mj:500}
+      ],
+      materiales: [
+        {es:"Bambú (1 kg)",en:"Bamboo (1 kg)",br:"Bambu (1 kg)",fr:"Bambou (1 kg)",mj:4},
+        {es:"Cáñamo (1 kg)",en:"Hemp (1 kg)",br:"Cânhamo (1 kg)",fr:"Chanvre (1 kg)",mj:5},
+        {es:"Madera (1 kg)",en:"Wood (1 kg)",br:"Madeira (1 kg)",fr:"Bois (1 kg)",mj:10},
+        {es:"Vidrio (1 kg)",en:"Glass (1 kg)",br:"Vidro (1 kg)",fr:"Verre (1 kg)",mj:15},
+        {es:"Acero (1 kg)",en:"Steel (1 kg)",br:"Aço (1 kg)",fr:"Acier (1 kg)",mj:32},
+        {es:"Cobre (1 kg)",en:"Copper (1 kg)",br:"Cobre (1 kg)",fr:"Cuivre (1 kg)",mj:70},
+        {es:"Plástico PET (1 kg)",en:"PET Plastic (1 kg)",br:"Plástico PET (1 kg)",fr:"Plastique PET (1 kg)",mj:84},
+        {es:"Aluminio (1 kg)",en:"Aluminum (1 kg)",br:"Alumínio (1 kg)",fr:"Aluminium (1 kg)",mj:155}
+      ],
+      hogar: [
+        {es:"Olla acero",en:"Steel pot",br:"Panela aço",fr:"Casserole acier",mj:85},
+        {es:"Tapete lana (2 m²)",en:"Wool rug (2 m²)",br:"Tapete lã (2 m²)",fr:"Tapis laine (2 m²)",mj:120},
+        {es:"Silla madera",en:"Wooden chair",br:"Cadeira madeira",fr:"Chaise bois",mj:120},
+        {es:"Tapete poliéster (2 m²)",en:"Polyester rug (2 m²)",br:"Tapete poliéster (2 m²)",fr:"Tapis polyester (2 m²)",mj:200},
+        {es:"Comedor madera (4p)",en:"Wooden dining set (4p)",br:"Mesa jantar madeira (4p)",fr:"Table bois (4p)",mj:300},
+        {es:"Colchón",en:"Mattress",br:"Colchão",fr:"Matelas",mj:450},
+        {es:"Comedor vidrio (4p)",en:"Glass dining set (4p)",br:"Mesa jantar vidro (4p)",fr:"Table verre (4p)",mj:450},
+        {es:"Comedor plástico (4p)",en:"Plastic dining set (4p)",br:"Mesa jantar plástico (4p)",fr:"Table plastique (4p)",mj:500}
+      ],
+      vehiculos: [
+        {es:"Bicicleta bambú/cáñamo",en:"Bamboo/hemp bicycle",br:"Bicicleta bambu/cânhamo",fr:"Vélo bambou/chanvre",mj:250},
+        {es:"Bicicleta acero",en:"Steel bicycle",br:"Bicicleta aço",fr:"Vélo acier",mj:600},
+        {es:"Bicicleta aluminio",en:"Aluminum bicycle",br:"Bicicleta alumínio",fr:"Vélo aluminium",mj:900},
+        {es:"Bicicleta fibra carbono",en:"Carbon fiber bicycle",br:"Bicicleta fibra carbono",fr:"Vélo fibre de carbone",mj:1500},
+        {es:"Carro gasolina",en:"Gasoline car",br:"Carro gasolina",fr:"Voiture essence",mj:90000},
+        {es:"Carro híbrido",en:"Hybrid car",br:"Carro híbrido",fr:"Voiture hybride",mj:100000},
+        {es:"Carro eléctrico",en:"Electric car",br:"Carro elétrico",fr:"Voiture électrique",mj:120000}
+      ],
+      electronicos: [
+        {es:"Auriculares BT",en:"BT Headphones",br:"Fones BT",fr:"Écouteurs BT",mj:120},
+        {es:"Smartphone",en:"Smartphone",br:"Smartphone",fr:"Smartphone",mj:1000},
+        {es:"Tablet",en:"Tablet",br:"Tablet",fr:"Tablette",mj:1200},
+        {es:"Laptop",en:"Laptop",br:"Laptop",fr:"Laptop",mj:2800}
+      ]
+    };
+
+    // Categorías traducidas
+    const catNames = {
+      cultivo:      {es:"🌱 Cultivo",en:"🌱 Crops",br:"🌱 Cultivo",fr:"🌱 Culture"},
+      alimentos:    {es:"🍳 Alimentos",en:"🍳 Food",br:"🍳 Alimentos",fr:"🍳 Alimentation"},
+      ropa:         {es:"👕 Ropa",en:"👕 Clothing",br:"👕 Roupa",fr:"👕 Vêtements"},
+      artesanias:   {es:"🎨 Artesanías",en:"🎨 Crafts",br:"🎨 Artesanato",fr:"🎨 Artisanat"},
+      materiales:   {es:"🧱 Materiales",en:"🧱 Materials",br:"🧱 Materiais",fr:"🧱 Matériaux"},
+      hogar:        {es:"🏠 Hogar",en:"🏠 Home",br:"🏠 Casa",fr:"🏠 Maison"},
+      vehiculos:    {es:"🚲 Vehículos",en:"🚲 Vehicles",br:"🚲 Veículos",fr:"🚲 Véhicules"},
+      electronicos: {es:"📱 Electrónicos",en:"📱 Electronics",br:"📱 Eletrônicos",fr:"📱 Électronique"}
+    };
+
+    function getCatName(k) { return catNames[k]?.[lang] || catNames[k]?.es || k; }
+    function getProductName(p) { return p[lang] || p.es || p.nombre || ''; }
+
+    // Generar productsData compatible con estructura original
+    function buildProductsData() {
+      const data = {};
+      for (const [cat, items] of Object.entries(productsBase)) {
+        data[cat] = {
+          nombre: getCatName(cat),
+          items: items.map(p => ({ nombre: getProductName(p), mj: p.mj, desc: '' }))
+        };
+      }
+      return data;
+    }
+
+    // ========== ESTADO ==========
+    let lang = localStorage.getItem('energyLang') || 'es';
+    let tab = 'catalog';
+    let catActual = 'todas';
+    let todos = [];
+    let comunidad = [];
+    let misVotos = {};
+    
+    // ========== TURNSTILE ==========
+    let turnstileToken = null;
+    let turnstileWidgetId = null;
+    function onTurnstileSuccess(token) { turnstileToken = token; }
+    function onTurnstileExpired() { turnstileToken = null; }
+    function renderTurnstileWidget() {
+      const container = document.getElementById('turnstile-energy');
+      if (container && window.turnstile) {
+        container.innerHTML = '';
+        turnstileToken = null;
+        turnstileWidgetId = turnstile.render('#turnstile-energy', {
+          sitekey: '0x4AAAAAACe2ROLsVd-xkXUk',
+          callback: onTurnstileSuccess,
+          'expired-callback': onTurnstileExpired,
+          theme: 'dark'
+        });
+      } else if (container && !window.turnstile) {
+        // Script not loaded yet, retry
+        setTimeout(renderTurnstileWidget, 1000);
+      }
+    }
+    function resetTurnstile() {
+      turnstileToken = null;
+      if (window.turnstile && turnstileWidgetId !== null) {
+        try { turnstile.reset(turnstileWidgetId); } catch(e) {}
+      }
+    }
+    
+    // ========== ÍCONOS SVG ==========
+    const iconThumbUp = `<svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 9V5a3 3 0 0 0-3-3l-4 9v11h11.28a2 2 0 0 0 2-1.7l1.38-9a2 2 0 0 0-2-2.3zM7 22H4a2 2 0 0 1-2-2v-7a2 2 0 0 1 2-2h3"/></svg>`;
+    const iconThumbDown = `<svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M10 15v4a3 3 0 0 0 3 3l4-9V2H5.72a2 2 0 0 0-2 1.7l-1.38 9a2 2 0 0 0 2 2.3zm7-13h2.67A2.31 2.31 0 0 1 22 4v7a2.31 2.31 0 0 1-2.33 2H17"/></svg>`;
+    const iconCopy = `<svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>`;
+
+    // ========== SISTEMA DE VOTOS CON API ==========
+    let votosPredefinidos = {};
+    
+    async function loadCommunityProducts(skipRender) {
+      try {
+        const [productsRes, votesRes, predefinedVotesRes] = await Promise.all([
+          fetch('/api/energy/products'), fetch('/api/energy/my-votes'), fetch('/api/energy/predefined-votes')
+        ]);
+        const pData = await productsRes.json();
+        const vData = await votesRes.json();
+        const pvData = await predefinedVotesRes.json();
+        comunidad = (pData.products || []).map(p => ({
+          id: p.id, nombre: p.nombre, cat: p.categoria, mj: p.mj,
+          desc: p.descripcion, votosUp: p.votes_up, votosDown: p.votes_down, fromAPI: true
+        }));
+        misVotos = vData.votes || {};
+        votosPredefinidos = pvData.votes || {};
+        buildTodos();
+        if (!skipRender) render();
+      } catch (e) { console.error('Error cargando productos:', e); }
+    }
+    
+    async function voteProduct(id, cat, v, event, isPredefined = false) {
+      if (event) event.stopPropagation();
+      if (misVotos[id]) return;
+      try {
+        const res = await fetch('/api/energy/vote', {
+          method: 'POST', headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ product_id: id, vote: v, is_predefined: isPredefined, categoria: cat })
+        });
+        const data = await res.json();
+        if (data.success) {
+          misVotos[id] = v;
+          if (isPredefined) { votosPredefinidos[id] = { up: data.votes_up, down: data.votes_down }; }
+          else {
+            const prod = comunidad.find(p => p.id === id);
+            if (prod) { prod.votosUp = data.votes_up; prod.votosDown = data.votes_down; }
+            if (data.eliminated) { comunidad = comunidad.filter(p => p.id !== id); }
+          }
+          buildTodos(); render();
+        }
+      } catch (e) { console.error('Error votando:', e); }
+    }
+    
+    function getProductId(nombre, mj) {
+      return `${nombre}_${mj}`.replace(/[^a-zA-Z0-9]/g, '_').toLowerCase();
+    }
+    
+    function copyProductPrice(sats, event) {
+      if (event) event.stopPropagation();
+      navigator.clipboard.writeText(sats.toString());
+    }
+
+    // ========== DATOS DE RED BITCOIN ==========
+    const EFICIENCIA_J_TH = 28;
+    const REWARD_BTC = 3.125;
+    const SATS_POR_BTC = 100000000;
+    const BLOQUES_POR_HORA = 6;
+    
+    let networkData = {
+      hashrate_ehs: 850, potencia_gw: 23.8,
+      tasa_sats_mj: 156, tasa_sats_kwh: 562,
+      loading: true, lastUpdate: null
+    };
+
+    function calcularTasa(hashrate_ehs) {
+      const hashrate_ths = hashrate_ehs * 1000000;
+      const potencia_w = hashrate_ths * EFICIENCIA_J_TH;
+      const potencia_gw = potencia_w / 1000000000;
+      const energia_mj_hora = (potencia_w * 3600) / 1000000;
+      const sats_hora = REWARD_BTC * SATS_POR_BTC * BLOQUES_POR_HORA;
+      const tasa_sats_mj = sats_hora / energia_mj_hora;
+      const tasa_sats_kwh = tasa_sats_mj * 3.6;
+      return { hashrate_ehs, potencia_gw: potencia_gw.toFixed(1), tasa_sats_mj: Math.round(tasa_sats_mj), tasa_sats_kwh: Math.round(tasa_sats_kwh) };
+    }
+
+    async function fetchNetworkData() {
+      try {
+        const response = await fetch('https://mempool.space/api/v1/mining/hashrate/3d');
+        const data = await response.json();
+        if (data.currentHashrate) {
+          const hashrate_ehs = data.currentHashrate / 1e18;
+          networkData = { ...calcularTasa(hashrate_ehs), loading: false, lastUpdate: new Date() };
+        }
+      } catch (error) {
+        networkData = { ...calcularTasa(850), loading: false, lastUpdate: null };
+      }
+      initProducts();
+      if (tab !== 'calc') render();
+    }
+
+    let TASA = 156;
+    function updateTASA() { TASA = networkData.tasa_sats_mj; }
+
+    // ========== FUNCIONES ==========
+    function setLang(l) { lang = l; localStorage.setItem('energyLang', l); turnstileWidgetId = null; initProducts(); render(); }
+    function setTab(t) { tab = t; turnstileWidgetId = null; render(); }
+
+    function buildTodos() {
+      todos = [];
+      updateTASA();
+      const prods = buildProductsData();
+      for (const [k,v] of Object.entries(prods)) {
+        for (const p of v.items) {
+          const id = getProductId(p.nombre, p.mj);
+          const voteData = votosPredefinidos[id] || { up: 0, down: 0 };
+          todos.push({
+            ...p, id, cat: k, catNombre: v.nombre,
+            sats: Math.round(p.mj * TASA),
+            votosUp: voteData.up || 0, votosDown: voteData.down || 0,
+            voted: !!misVotos[id], fromCommunity: false, isPredefined: true
+          });
+        }
+      }
+      for (const p of comunidad) {
+        todos.push({
+          ...p, cat: p.cat || 'alimentos',
+          catNombre: getCatName(p.cat) || '👥',
+          sats: Math.round(p.mj * TASA),
+          votosUp: p.votosUp || 0, votosDown: p.votosDown || 0,
+          voted: !!misVotos[p.id], fromCommunity: true, isPredefined: false
+        });
+      }
+    }
+    
+    function initProducts() { buildTodos(); }
+
+    function filterProducts() {
+      const search = document.getElementById('search-input')?.value?.toLowerCase() || '';
+      let filtered = catActual === 'todas' ? todos : todos.filter(p => p.cat === catActual);
+      if (search.length >= 2) {
+        filtered = filtered.filter(p => p.nombre.toLowerCase().includes(search) || (p.desc||'').toLowerCase().includes(search));
+      }
+      return filtered;
+    }
+
+    function selectProduct(mj) { tab = 'calc'; render(); }
+
+    async function submitSuggestion() {
+      const t = texts[lang] || texts.es;
+      const msg = document.getElementById('sug-msg');
+      const btn = document.querySelector('#suggest-area button[onclick="submitSuggestion()"]');
+      const nombre = document.getElementById('sug-name')?.value?.trim() || '';
+      const mj = parseFloat(document.getElementById('sug-mj')?.value) || 0;
+      const cat = calcState.cat || 'alimentos';
+      function showMsg(cls, text) { if (msg) { msg.className = 'mt-3 p-3 rounded-lg text-sm ' + cls; msg.innerHTML = text; msg.scrollIntoView({behavior:'smooth',block:'nearest'}); } }
+      if (!nombre || nombre.length < 3) { showMsg('bg-red-900/40 text-red-300', t.sugErrName); return; }
+      if (!mj || mj <= 0) { showMsg('bg-red-900/40 text-red-300', t.sugErrEnergy); return; }
+      if (btn) { btn.disabled = true; btn.textContent = '⏳...'; }
+      showMsg('bg-sky-900/40 text-sky-300', lang==='en'?'Sending...':'Enviando...');
+      try {
+        const res = await fetch('/api/energy/products', {
+          method: 'POST', headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ nombre, categoria: cat, mj, descripcion: 'Calc: ' + mj + ' MJ', turnstile_token: turnstileToken || '' })
+        });
+        const data = await res.json();
+        if (data.success) {
+          showMsg('bg-emerald-900/60 border border-emerald-500 text-emerald-200 font-medium p-4', '✅ <strong>' + nombre + '</strong> — ' + t.sugOk);
+          document.getElementById('sug-name').value = '';
+          resetTurnstile(); turnstileWidgetId = null;
+          setTimeout(renderTurnstileWidget, 500);
+          loadCommunityProducts(true);
+        } else {
+          showMsg('bg-red-900/40 text-red-300', '❌ ' + (data.error || 'Error'));
+          resetTurnstile(); turnstileWidgetId = null;
+          setTimeout(renderTurnstileWidget, 500);
+        }
+      } catch (e) {
+        showMsg('bg-red-900/40 text-red-300', '❌ Error: ' + e.message);
+      }
+      if (btn) { btn.disabled = false; btn.textContent = t.sugBtn; }
+    }
+
+    // ========== CALCULADORA: ESTADO Y TABLAS ==========
+    const calcState = { cat: null, mats: [{idx:0,qty:''}], waterType:0, waterQty:'',
+      energyRows:[{idx:0,qty:''}], tools:[false,false,false,false], toolHours:'',
+      naturalDays:'', naturalArea:'', naturalSunH:'',
+      laborHours:'', expertIdx:0, transportIdx:0, transportKm:'',
+      units:'1', margin:0 };
+
+    function rn(item) { return item.n[lang] || item.n.es; }
+
+    const REF_MAT = {
+      cultivo:[
+        {n:{es:'Semillas (sobre)',en:'Seeds (packet)',br:'Sementes (envelope)',fr:'Graines (sachet)'},mj:0.3,u:'u'},
+        {n:{es:'Semillas de grano',en:'Grain seeds',br:'Sementes de grão',fr:'Graines céréales'},mj:3,u:'kg'},
+        {n:{es:'Compost',en:'Compost',br:'Composto',fr:'Compost'},mj:0.5,u:'kg'},
+        {n:{es:'Fertilizante químico',en:'Chemical fertilizer',br:'Fertilizante químico',fr:'Engrais chimique'},mj:35,u:'kg'},
+        {n:{es:'Pesticida',en:'Pesticide',br:'Pesticida',fr:'Pesticide'},mj:250,u:'lt'},
+        {n:{es:'⊕ Otro (MJ directo)',en:'⊕ Other (direct MJ)',br:'⊕ Outro (MJ direto)',fr:'⊕ Autre (MJ direct)'},mj:1,u:'MJ'}
+      ],
+      alimentos:[
+        {n:{es:'Harina',en:'Flour',br:'Farinha',fr:'Farine'},mj:5,u:'kg'},
+        {n:{es:'Azúcar',en:'Sugar',br:'Açúcar',fr:'Sucre'},mj:7,u:'kg'},
+        {n:{es:'Cacao',en:'Cacao',br:'Cacau',fr:'Cacao'},mj:8,u:'kg'},
+        {n:{es:'Aceite',en:'Oil',br:'Óleo',fr:'Huile'},mj:12,u:'lt'},
+        {n:{es:'Huevos',en:'Eggs',br:'Ovos',fr:'Œufs'},mj:1.25,u:'u'},
+        {n:{es:'Leche',en:'Milk',br:'Leite',fr:'Lait'},mj:10,u:'lt'},
+        {n:{es:'Mantequilla',en:'Butter',br:'Manteiga',fr:'Beurre'},mj:30,u:'kg'},
+        {n:{es:'Queso',en:'Cheese',br:'Queijo',fr:'Fromage'},mj:50,u:'kg'},
+        {n:{es:'Pollo',en:'Chicken',br:'Frango',fr:'Poulet'},mj:40,u:'kg'},
+        {n:{es:'Cerdo',en:'Pork',br:'Porco',fr:'Porc'},mj:80,u:'kg'},
+        {n:{es:'Res',en:'Beef',br:'Bovino',fr:'Bœuf'},mj:150,u:'kg'},
+        {n:{es:'⊕ Otro (MJ directo)',en:'⊕ Other (direct MJ)',br:'⊕ Outro (MJ direto)',fr:'⊕ Autre (MJ direct)'},mj:1,u:'MJ'}
+      ],
+      ropa:[
+        {n:{es:'Cáñamo',en:'Hemp',br:'Cânhamo',fr:'Chanvre'},mj:15,u:'kg'},
+        {n:{es:'Lino',en:'Linen',br:'Linho',fr:'Lin'},mj:10,u:'kg'},
+        {n:{es:'Lana',en:'Wool',br:'Lã',fr:'Laine'},mj:30,u:'kg'},
+        {n:{es:'Algodón',en:'Cotton',br:'Algodão',fr:'Coton'},mj:50,u:'kg'},
+        {n:{es:'Cuero',en:'Leather',br:'Couro',fr:'Cuir'},mj:65,u:'kg'},
+        {n:{es:'Poliéster',en:'Polyester',br:'Poliéster',fr:'Polyester'},mj:90,u:'kg'},
+        {n:{es:'Tinte natural',en:'Natural dye',br:'Tinta natural',fr:'Teinture naturelle'},mj:3,u:'lt'},
+        {n:{es:'Tinte sintético',en:'Synthetic dye',br:'Tinta sintética',fr:'Teinture synthétique'},mj:20,u:'lt'},
+        {n:{es:'⊕ Otro (MJ directo)',en:'⊕ Other (direct MJ)',br:'⊕ Outro (MJ direto)',fr:'⊕ Autre (MJ direct)'},mj:1,u:'MJ'}
+      ],
+      artesanias:[
+        {n:{es:'Reciclado',en:'Recycled',br:'Reciclado',fr:'Recyclé'},mj:0.5,u:'kg'},
+        {n:{es:'Arcilla',en:'Clay',br:'Argila',fr:'Argile'},mj:3,u:'kg'},
+        {n:{es:'Bambú',en:'Bamboo',br:'Bambu',fr:'Bambou'},mj:4,u:'kg'},
+        {n:{es:'Madera',en:'Wood',br:'Madeira',fr:'Bois'},mj:10,u:'kg'},
+        {n:{es:'Vidrio',en:'Glass',br:'Vidro',fr:'Verre'},mj:15,u:'kg'},
+        {n:{es:'Plástico',en:'Plastic',br:'Plástico',fr:'Plastique'},mj:84,u:'kg'},
+        {n:{es:'Pintura',en:'Paint',br:'Tinta',fr:'Peinture'},mj:25,u:'lt'},
+        {n:{es:'Oro',en:'Gold',br:'Ouro',fr:'Or'},mj:150000,u:'kg'},
+        {n:{es:'⊕ Otro (MJ directo)',en:'⊕ Other (direct MJ)',br:'⊕ Outro (MJ direto)',fr:'⊕ Autre (MJ direct)'},mj:1,u:'MJ'}
+      ],
+      materiales:[
+        {n:{es:'Bambú',en:'Bamboo',br:'Bambu',fr:'Bambou'},mj:4,u:'kg'},
+        {n:{es:'Cáñamo',en:'Hemp',br:'Cânhamo',fr:'Chanvre'},mj:5,u:'kg'},
+        {n:{es:'Cemento',en:'Cement',br:'Cimento',fr:'Ciment'},mj:5,u:'kg'},
+        {n:{es:'Madera',en:'Wood',br:'Madeira',fr:'Bois'},mj:10,u:'kg'},
+        {n:{es:'Vidrio',en:'Glass',br:'Vidro',fr:'Verre'},mj:15,u:'kg'},
+        {n:{es:'Acero',en:'Steel',br:'Aço',fr:'Acier'},mj:32,u:'kg'},
+        {n:{es:'Cobre',en:'Copper',br:'Cobre',fr:'Cuivre'},mj:70,u:'kg'},
+        {n:{es:'PET',en:'PET',br:'PET',fr:'PET'},mj:84,u:'kg'},
+        {n:{es:'Aluminio',en:'Aluminum',br:'Alumínio',fr:'Aluminium'},mj:155,u:'kg'},
+        {n:{es:'⊕ Otro (MJ directo)',en:'⊕ Other (direct MJ)',br:'⊕ Outro (MJ direto)',fr:'⊕ Autre (MJ direct)'},mj:1,u:'MJ'}
+      ],
+      hogar:[
+        {n:{es:'Madera',en:'Wood',br:'Madeira',fr:'Bois'},mj:10,u:'kg'},
+        {n:{es:'Lana',en:'Wool',br:'Lã',fr:'Laine'},mj:30,u:'kg'},
+        {n:{es:'Acero',en:'Steel',br:'Aço',fr:'Acier'},mj:32,u:'kg'},
+        {n:{es:'Tela',en:'Fabric',br:'Tecido',fr:'Tissu'},mj:45,u:'kg'},
+        {n:{es:'Espuma',en:'Foam',br:'Espuma',fr:'Mousse'},mj:80,u:'kg'},
+        {n:{es:'Poliéster',en:'Polyester',br:'Poliéster',fr:'Polyester'},mj:90,u:'kg'},
+        {n:{es:'Plástico',en:'Plastic',br:'Plástico',fr:'Plastique'},mj:84,u:'kg'},
+        {n:{es:'Barniz',en:'Varnish',br:'Verniz',fr:'Vernis'},mj:40,u:'lt'},
+        {n:{es:'⊕ Otro (MJ directo)',en:'⊕ Other (direct MJ)',br:'⊕ Outro (MJ direto)',fr:'⊕ Autre (MJ direct)'},mj:1,u:'MJ'}
+      ],
+      vehiculos:[
+        {n:{es:'Bambú/cáñamo',en:'Bamboo/hemp',br:'Bambu/cânhamo',fr:'Bambou/chanvre'},mj:15,u:'kg'},
+        {n:{es:'Acero',en:'Steel',br:'Aço',fr:'Acier'},mj:32,u:'kg'},
+        {n:{es:'Aluminio',en:'Aluminum',br:'Alumínio',fr:'Aluminium'},mj:155,u:'kg'},
+        {n:{es:'Fibra carbono',en:'Carbon fiber',br:'Fibra carbono',fr:'Fibre de carbone'},mj:300,u:'kg'},
+        {n:{es:'Caucho',en:'Rubber',br:'Borracha',fr:'Caoutchouc'},mj:45,u:'kg'},
+        {n:{es:'Batería EV',en:'EV Battery',br:'Bateria EV',fr:'Batterie VE'},mj:150,u:'kg'},
+        {n:{es:'Motor eléctrico',en:'Electric motor',br:'Motor elétrico',fr:'Moteur électrique'},mj:500,u:'u'},
+        {n:{es:'Motor combustión',en:'Combustion engine',br:'Motor combustão',fr:'Moteur combustion'},mj:800,u:'u'},
+        {n:{es:'⊕ Otro (MJ directo)',en:'⊕ Other (direct MJ)',br:'⊕ Outro (MJ direto)',fr:'⊕ Autre (MJ direct)'},mj:1,u:'MJ'}
+      ],
+      electronicos:[
+        {n:{es:'PCB/circuito',en:'PCB/circuit',br:'PCB/circuito',fr:'PCB/circuit'},mj:200,u:'u'},
+        {n:{es:'Batería Li-ion',en:'Li-ion battery',br:'Bateria Li-ion',fr:'Batterie Li-ion'},mj:150,u:'u'},
+        {n:{es:'Pantalla LCD',en:'LCD screen',br:'Tela LCD',fr:'Écran LCD'},mj:300,u:'u'},
+        {n:{es:'Carcasa plástica',en:'Plastic case',br:'Carcaça plástica',fr:'Boîtier plastique'},mj:84,u:'kg'},
+        {n:{es:'Chip/procesador',en:'Chip/processor',br:'Chip/processador',fr:'Puce/processeur'},mj:500,u:'u'},
+        {n:{es:'⊕ Otro (MJ directo)',en:'⊕ Other (direct MJ)',br:'⊕ Outro (MJ direto)',fr:'⊕ Autre (MJ direct)'},mj:1,u:'MJ'}
+      ]
+    };
+    const REF_WATER = [
+      {n:{es:'Lluvia/río/pozo',en:'Rain/river/well',br:'Chuva/rio/poço',fr:'Pluie/rivière/puits'},mj:0},
+      {n:{es:'Grifo/canilla',en:'Tap water',br:'Torneira',fr:'Robinet'},mj:0.01},
+      {n:{es:'Embotellada',en:'Bottled',br:'Engarrafada',fr:'En bouteille'},mj:2},
+      {n:{es:'Calentada',en:'Heated',br:'Aquecida',fr:'Chauffée'},mj:0.3}
+    ];
+    const REF_ENERGY = [
+      {n:{es:'Electricidad',en:'Electricity',br:'Eletricidade',fr:'Électricité'},mj:3.6,u:'kWh'},
+      {n:{es:'Leña',en:'Firewood',br:'Lenha',fr:'Bois de chauffage'},mj:16,u:'kg'},
+      {n:{es:'Carbón',en:'Coal',br:'Carvão',fr:'Charbon'},mj:29,u:'kg'},
+      {n:{es:'Gas (cocción)',en:'Gas (cooking)',br:'Gás (cocção)',fr:'Gaz (cuisson)'},mj:8,u:'h'},
+      {n:{es:'Gasolina',en:'Gasoline',br:'Gasolina',fr:'Essence'},mj:34,u:'lt'}
+    ];
+    const REF_TOOLS = [
+      {n:{es:'Manual',en:'Hand tools',br:'Manual',fr:'Manuel'},mj:0.3},
+      {n:{es:'Animal',en:'Animal',br:'Animal',fr:'Animal'},mj:2},
+      {n:{es:'Eléctrica',en:'Electric',br:'Elétrica',fr:'Électrique'},mj:2},
+      {n:{es:'Motor',en:'Engine',br:'Motor',fr:'Moteur'},mj:15}
+    ];
+    const REF_TRANSPORT = [
+      {n:{es:'A pie/bici',en:'Walking/bike',br:'A pé/bici',fr:'À pied/vélo'},mj:0},
+      {n:{es:'Moto',en:'Motorcycle',br:'Moto',fr:'Moto'},mj:1.5},
+      {n:{es:'Carro',en:'Car',br:'Carro',fr:'Voiture'},mj:3},
+      {n:{es:'Camión',en:'Truck',br:'Caminhão',fr:'Camion'},mj:5},
+      {n:{es:'Tren',en:'Train',br:'Trem',fr:'Train'},mj:0.5}
+    ];
+
+    function getCalcMJ() {
+      if (!calcState.cat) return {total:0};
+      const mats = REF_MAT[calcState.cat]||[];
+      let matMJ=0; calcState.mats.forEach(m=>{const r=mats[m.idx];if(r) matMJ+=r.mj*(parseFloat(m.qty)||0);});
+      const isCult = calcState.cat==='cultivo';
+      const waterMJ = (parseFloat(calcState.waterQty)||0)*REF_WATER[calcState.waterType].mj*(isCult?(parseFloat(calcState.naturalDays)||1):1);
+      let energyMJ=0; calcState.energyRows.forEach(e=>{const r=REF_ENERGY[e.idx];if(r) energyMJ+=r.mj*(parseFloat(e.qty)||0);});
+      let toolMJ=0; calcState.tools.forEach((s,i)=>{if(s) toolMJ+=REF_TOOLS[i].mj;}); toolMJ*=(parseFloat(calcState.toolHours)||0);
+      const expMJ=[25,30,35,40][calcState.expertIdx];
+      const laborMJ=(parseFloat(calcState.laborHours)||0)*expMJ;
+      const natD=parseFloat(calcState.naturalDays)||0,natA=parseFloat(calcState.naturalArea)||0,natS=parseFloat(calcState.naturalSunH)||0;
+      const naturalMJ=isCult?natD*natA*natS*0.06:0;
+      const transportMJ=REF_TRANSPORT[calcState.transportIdx].mj*(parseFloat(calcState.transportKm)||0)*2;
+      const total=matMJ+waterMJ+energyMJ+toolMJ+laborMJ+naturalMJ+transportMJ;
+      return {total,materials:matMJ,water:waterMJ,energy:energyMJ,tools:toolMJ,labor:laborMJ,natural:naturalMJ,transport:transportMJ};
+    }
+
+    function setCalcCat(c) { calcState.cat=c; calcState.mats=[{idx:0,qty:''}]; calcState.energyRows=[{idx:0,qty:''}]; calcState.tools=[false,false,false,false]; calcState.toolHours=''; calcState.naturalDays=''; calcState.naturalArea=''; calcState.naturalSunH=''; calcState.laborHours=''; calcState.expertIdx=0; calcState.transportIdx=0; calcState.transportKm=''; calcState.units='1'; calcState.margin=0; turnstileWidgetId=null; render(); }
+    function addMatRow() { syncCalcState(); calcState.mats.push({idx:0,qty:''}); render(); }
+    function rmMatRow(i) { syncCalcState(); calcState.mats.splice(i,1); render(); }
+    function addEnergyRow() { syncCalcState(); calcState.energyRows.push({idx:0,qty:''}); render(); }
+    function rmEnergyRow(i) { syncCalcState(); calcState.energyRows.splice(i,1); render(); }
+    function toggleTool(i) { const el=document.querySelector(`.tool-pill[data-i="${i}"]`); if(el){if(el.classList.contains('selected')){el.classList.remove('selected','border-emerald-500','text-emerald-400');el.classList.add('border-gray-600','text-gray-400');}else{el.classList.remove('border-gray-600','text-gray-400');el.classList.add('selected','border-emerald-500','text-emerald-400');}calcState.tools[i]=el.classList.contains('selected');} recalc(); }
+    function selPill(el,cls,key) { document.querySelectorAll('.'+cls).forEach(b=>{b.classList.remove('selected','border-emerald-500','text-emerald-400');b.classList.add('border-gray-600','text-gray-400');}); el.classList.remove('border-gray-600','text-gray-400'); el.classList.add('selected','border-emerald-500','text-emerald-400'); calcState[key]=parseInt(el.dataset.i); recalc(); }
+
+    function syncCalcState() {
+      document.querySelectorAll('.mat-row').forEach((row,i)=>{
+        if(!calcState.mats[i]) calcState.mats[i]={idx:0,qty:''};
+        calcState.mats[i].idx=parseInt(row.querySelector('.mat-sel')?.value||'0');
+        calcState.mats[i].qty=row.querySelector('.mat-qty')?.value||'';
+      });
+      calcState.waterType=parseInt(document.querySelector('.water-pill.selected')?.dataset?.i||'0');
+      calcState.waterQty=document.getElementById('c-water')?.value||'';
+      document.querySelectorAll('.energy-row').forEach((row,i)=>{
+        if(!calcState.energyRows[i]) calcState.energyRows[i]={idx:0,qty:''};
+        calcState.energyRows[i].idx=parseInt(row.querySelector('.en-sel')?.value||'0');
+        calcState.energyRows[i].qty=row.querySelector('.en-qty')?.value||'';
+      });
+      calcState.tools.forEach((_,i)=>{calcState.tools[i]=!!document.querySelector(`.tool-pill[data-i="${i}"].selected`);});
+      calcState.toolHours=document.getElementById('c-toolh')?.value||'';
+      calcState.naturalDays=document.getElementById('c-natd')?.value||'';
+      calcState.naturalArea=document.getElementById('c-nata')?.value||'';
+      calcState.naturalSunH=document.getElementById('c-nats')?.value||'';
+      calcState.laborHours=document.getElementById('c-labh')?.value||'';
+      calcState.expertIdx=parseInt(document.querySelector('.expert-pill.selected')?.dataset?.i||'0');
+      calcState.transportIdx=parseInt(document.querySelector('.trans-pill.selected')?.dataset?.i||'0');
+      calcState.transportKm=document.getElementById('c-trk')?.value||'';
+      calcState.units=document.getElementById('c-units')?.value||'1';
+    }
+
+    function recalc() {
+      syncCalcState();
+      const d=getCalcMJ();
+      const mats=REF_MAT[calcState.cat]||[];
+      function updMJ(el, v, suffix) {
+        if (!el) return;
+        if (v > 0) {
+          const display = v >= 1 ? v.toFixed(1) : v >= 0.01 ? v.toFixed(2) : v.toFixed(3);
+          el.textContent = '= ' + display + ' MJ' + (suffix||'');
+          el.style.cssText = 'color:#10b981;font-weight:700;font-size:12px;font-family:ui-monospace,monospace;background:rgba(16,185,129,0.1);padding:2px 6px;border-radius:4px;';
+        } else {
+          el.textContent = '';
+          el.style.cssText = 'color:#4b5563;font-size:11px;font-family:ui-monospace,monospace;';
+        }
+      }
+      calcState.mats.forEach((m,i)=>{const r=mats[m.idx];const v=r?r.mj*(parseFloat(m.qty)||0):0;updMJ(document.getElementById(`mmj${i}`),v);});
+      // Update material placeholders
+      document.querySelectorAll('.mat-row').forEach((row,i)=>{const sel=row.querySelector('.mat-sel');const qty=row.querySelector('.mat-qty');if(sel&&qty){const r=mats[parseInt(sel.value)];if(r) qty.placeholder=r.u;}});
+      updMJ(document.getElementById('wmj'), d.water);
+      document.querySelectorAll('.energy-row').forEach((row,i)=>{const el=row.querySelector('.enmj');const e=calcState.energyRows[i];const r=REF_ENERGY[e?.idx||0];const v=r?r.mj*(parseFloat(e?.qty)||0):0;updMJ(el,v);
+        // Update energy placeholders
+        const qty=row.querySelector('.en-qty');if(qty&&r) qty.placeholder=r.u;
+      });
+      updMJ(document.getElementById('nmj'), d.natural);
+      updMJ(document.getElementById('tmj'), d.tools);
+      updMJ(document.getElementById('lmj'), d.labor);
+      updMJ(document.getElementById('trmj'), d.transport, d.transport>0?' (↔)':'');
+      renderCalcResult(d);
+    }
+
+    function renderCalcResult(d) {
+      const area=document.getElementById('calc-result-area'); if(!area) return;
+      const t=texts[lang]||texts.es;
+      const units=Math.max(1,parseFloat(calcState.units)||1);
+      const mjU=d.total/units; const base=Math.round(mjU*TASA);
+      if(d.total<=0){
+        area.innerHTML=`<p class="text-gray-500 text-center py-6">${t.fillQ}</p>`;
+        const ma=document.getElementById('calc-margin-area'); if(ma) ma.style.display='none';
+        const sa=document.getElementById('suggest-area'); if(sa) sa.style.display='none';
+        return;
+      }
+      const colors={materials:'#f59e0b',water:'#38bdf8',energy:'#ef4444',tools:'#8b5cf6',labor:'#10b981',transport:'#f97316',natural:'#84cc16'};
+      const lbKeys={materials:'bkMat',water:'bkWater',energy:'bkEnergy',tools:'bkTools',labor:'bkLabor',transport:'bkTransport',natural:'bkNatural'};
+      const parts=Object.entries(d).filter(([k,v])=>k!=='total'&&v>0);
+      area.innerHTML=`
+        <div class="bg-gradient-to-br from-sky-900/50 to-sky-800/30 border-2 border-sky-400 rounded-xl p-6 text-center mt-4">
+          <div class="text-gray-400 mb-1">${t.costLabel}${units>1?' <span class="text-emerald-300">(× 1 '+(lang==='en'?'unit':lang==='fr'?'unité':lang==='br'?'unidade':'unidad')+')</span>':''}</div>
+          <div class="text-4xl font-bold text-sky-300">${base.toLocaleString()}</div>
+          <div class="text-sky-200 text-lg">sats</div>
+          <div class="text-gray-400 text-sm mt-2">${mjU.toFixed(1)} MJ × ${TASA} sats/MJ${units>1?' · '+units+' '+t.units:''}</div>
+          <div class="flex h-3 rounded-full overflow-hidden mt-4">${parts.map(([k,v])=>`<div style="width:${(v/d.total*100).toFixed(1)}%;background:${colors[k]}" title="${t[lbKeys[k]]}"></div>`).join('')}</div>
+          <div class="flex flex-wrap gap-3 mt-2 justify-center">${parts.map(([k,v])=>`<span class="text-xs text-gray-400 flex items-center gap-1"><span class="w-2 h-2 rounded-full inline-block" style="background:${colors[k]}"></span>${t[lbKeys[k]]} ${(v/units).toFixed(1)} MJ (${Math.round(v/d.total*100)}%)</span>`).join('')}</div>
+        </div>`;
+      // Show and update margin area (don't rebuild it)
+      const ma=document.getElementById('calc-margin-area');
+      if(ma) {
+        ma.style.display='block';
+        ma.setAttribute('data-base', base);
+      }
+      updateMarginDisplay();
+      // Show suggest area
+      const sugArea=document.getElementById('suggest-area');
+      if(sugArea) { sugArea.style.display='block'; }
+      const sugMJ=document.getElementById('sug-mj');
+      if(sugMJ) { sugMJ.value=mjU.toFixed(1); }
+      if(turnstileWidgetId===null) setTimeout(renderTurnstileWidget, 300);
+    }
+
+    function updateMarginDisplay() {
+      const ma=document.getElementById('calc-margin-area'); if(!ma) return;
+      const base=parseInt(ma.getAttribute('data-base'))||0;
+      const margin=calcState.margin;
+      const final_p=Math.round(base*(1+margin/100));
+      const pctEl=document.getElementById('margin-pct');
+      const priceEl=document.getElementById('margin-price');
+      if(pctEl) pctEl.textContent=margin+'%';
+      if(priceEl) priceEl.textContent=final_p.toLocaleString()+' sats';
+    }
+
+    function onMarginChange(val) {
+      calcState.margin=parseInt(val);
+      updateMarginDisplay();
+    }
+
+    // ========== RENDER ==========
+    function render() {
+      const t = texts[lang] || texts.es;
+      const prods = buildProductsData();
+      
+      const langBtns = ['es','br','fr','en'].map(l => 
+        `<button onclick="setLang('${l}')" class="px-3 py-1 rounded text-sm ${lang===l ? 'bg-emerald-600 text-white' : 'bg-[#0d2620] text-emerald-200 hover:bg-emerald-700'}">${l.toUpperCase()}</button>`
+      ).join('');
+
+      const tabBtns = [
+        {id:'catalog', label:t.tabCatalog},
+        {id:'calc', label:t.tabCalculate},
+        {id:'how', label:t.tabHow}
+      ].map(tb => 
+        `<button onclick="setTab('${tb.id}')" class="px-4 py-2 rounded-lg text-sm font-medium transition ${tab===tb.id ? 'bg-emerald-600 text-white' : 'bg-[#0d2620] text-emerald-200 border border-emerald-800 hover:border-emerald-600'}">${tb.label}</button>`
+      ).join('');
+
+      const catBtns = `<button onclick="setCat('todas')" class="cat-btn px-3 py-1.5 rounded text-sm border ${catActual==='todas' ? 'border-emerald-500 text-emerald-400' : 'border-gray-600 text-gray-400'}">${t.allCategories}</button>` +
+        Object.entries(prods).map(([k,v]) => 
+          `<button onclick="setCat('${k}')" class="cat-btn px-3 py-1.5 rounded text-sm border ${catActual===k ? 'border-emerald-500 text-emerald-400' : 'border-gray-600 text-gray-400'}">${v.nombre}</button>`
+        ).join('') +
+        `<button onclick="setCat('servicios')" class="cat-btn px-3 py-1.5 rounded text-sm border ${catActual==='servicios' ? 'border-emerald-500 text-emerald-400' : 'border-gray-600 text-gray-400'}">${t.catServices}</button>`;
+
+      const filtered = filterProducts();
+      const productsGrid = filtered.length ? filtered.map(p => {
+        const totalVotos = (p.votosUp || 0) + (p.votosDown || 0);
+        const pctDown = totalVotos > 0 ? Math.round((p.votosDown || 0) / totalVotos * 100) : 0;
+        const showWarning = pctDown >= 50;
+        const communityBadge = p.fromCommunity ? '<span class="ml-2 text-xs bg-purple-900/50 text-purple-300 px-2 py-0.5 rounded">👥</span>' : '';
+        return `
+        <div class="product bg-[#071510] rounded-lg p-4 border border-transparent hover:border-amber-500 transition">
+          <div class="flex justify-between items-start">
+            <div class="font-medium text-white cursor-pointer flex-1" onclick="selectProduct(${p.mj})">${p.nombre}${communityBadge}</div>
+            <button onclick="copyProductPrice(${p.sats}, event)" class="text-gray-500 hover:text-amber-400 p-1">${iconCopy}</button>
+          </div>
+          <div class="text-gray-400 text-sm">${p.mj} MJ · ${(p.mj/3.6).toFixed(2)} kWh</div>
+          <div class="text-emerald-400 font-bold text-xl mt-2">${p.sats.toLocaleString()} sats</div>
+          <div class="flex items-center gap-2 mt-3 pt-3 border-t border-gray-800">
+            <button onclick="voteProduct('${p.id}', '${p.cat}', 1, event, ${p.isPredefined || false})" class="vote-btn flex items-center gap-1 px-2 py-1 rounded text-sm ${p.voted ? 'text-gray-600' : 'text-gray-400 hover:text-emerald-400'}" ${p.voted ? 'disabled' : ''}>${iconThumbUp} <span>${p.votosUp || 0}</span></button>
+            <button onclick="voteProduct('${p.id}', '${p.cat}', -1, event, ${p.isPredefined || false})" class="vote-btn flex items-center gap-1 px-2 py-1 rounded text-sm ${p.voted ? 'text-gray-600' : 'text-gray-400 hover:text-red-400'}" ${p.voted ? 'disabled' : ''}>${iconThumbDown} <span>${p.votosDown || 0}</span></button>
+            ${showWarning ? `<span class="text-red-400 text-xs ml-auto">${pctDown}% ⚠️</span>` : ''}
+          </div>
+        </div>`;
+      }).join('') : `<p class="text-gray-400 col-span-full">${t.noProducts}</p>`;
+
+      // Services table
+      const T = networkData.tasa_sats_mj;
+      const servicesPanel = `
+        <div class="bg-[#0d2620] rounded-2xl p-6 border border-emerald-800">
+          <h2 class="text-lg font-bold text-white mb-4">${t.catServices}</h2>
+          <div class="flex flex-wrap gap-2 mb-4">${catBtns}</div>
+          <div class="bg-[#071510] border-l-4 border-emerald-500 p-4 rounded-r-lg mb-4">
+            <h3 class="text-emerald-400 font-medium mb-2">${t.svcBase}</h3>
+            <p class="text-gray-400 text-sm">${t.svcBaseT}</p>
+            <p class="text-gray-400 text-sm mt-2">${t.svcBaseT2}</p>
+          </div>
+          <div class="bg-[#071510] border-l-4 border-emerald-500 p-4 rounded-r-lg">
+            <table class="w-full text-sm text-gray-400 mt-2">
+              <thead><tr class="text-emerald-400 text-left"><th class="pb-2"></th><th class="pb-2">MJ/h</th><th class="pb-2">${t.h1}</th><th class="pb-2">${t.day6}</th><th class="pb-2">${t.wk}</th><th class="pb-2">${t.mo}</th></tr></thead>
+              <tbody>
+                <tr><td class="py-1 text-white">${t.appr} <span class="text-gray-500">(0-2)</span></td><td>25</td><td><strong class="text-emerald-400">${(25*T).toLocaleString()}</strong></td><td><strong class="text-emerald-400">${(150*T).toLocaleString()}</strong></td><td><strong class="text-emerald-400">${(600*T).toLocaleString()}</strong></td><td><strong class="text-emerald-400">${(2400*T).toLocaleString()}</strong></td></tr>
+                <tr><td class="py-1 text-white">${t.comp} <span class="text-gray-500">(3-5)</span></td><td>30</td><td><strong class="text-emerald-400">${(30*T).toLocaleString()}</strong></td><td><strong class="text-emerald-400">${(180*T).toLocaleString()}</strong></td><td><strong class="text-emerald-400">${(720*T).toLocaleString()}</strong></td><td><strong class="text-emerald-400">${(2880*T).toLocaleString()}</strong></td></tr>
+                <tr><td class="py-1 text-white">${t.exprt} <span class="text-gray-500">(6-10)</span></td><td>35</td><td><strong class="text-emerald-400">${(35*T).toLocaleString()}</strong></td><td><strong class="text-emerald-400">${(210*T).toLocaleString()}</strong></td><td><strong class="text-emerald-400">${(840*T).toLocaleString()}</strong></td><td><strong class="text-emerald-400">${(3360*T).toLocaleString()}</strong></td></tr>
+                <tr><td class="py-1 text-white">${t.mstr} <span class="text-gray-500">(10+)</span></td><td>40</td><td><strong class="text-emerald-400">${(40*T).toLocaleString()}</strong></td><td><strong class="text-emerald-400">${(240*T).toLocaleString()}</strong></td><td><strong class="text-emerald-400">${(960*T).toLocaleString()}</strong></td><td><strong class="text-emerald-400">${(3840*T).toLocaleString()}</strong></td></tr>
+              </tbody>
+            </table>
+            <p class="text-gray-500 text-xs mt-2">${t.svcFoot} sats/MJ: ${T}</p>
+          </div>
+        </div>`;
+
+      // Calculator panel
+      const isCult = calcState.cat === 'cultivo';
+      const calcMats = REF_MAT[calcState.cat] || [];
+      const calcCatBtns = Object.keys(catNames).map(k =>
+        `<button onclick="setCalcCat('${k}')" class="px-3 py-2 rounded-lg text-sm border transition ${calcState.cat===k ? 'border-amber-500 text-amber-400 bg-amber-900/20' : 'border-gray-700 text-gray-400 hover:border-gray-500'}">${getCatName(k)}</button>`
+      ).join('');
+
+      let calcHTML = `
+        <div class="bg-[#0d2620] rounded-2xl p-6 border border-emerald-800">
+          <h2 class="text-lg font-bold text-white mb-2">🧮 ${t.calcTitle}</h2>
+          <p class="text-gray-400 text-sm mb-4">${t.calcDesc}</p>
+          <div class="bg-[#071510] rounded-xl p-4 mb-3 ${calcState.cat?'':'border-2 border-amber-500/50'}">
+            <p class="text-amber-400 font-medium mb-2">① ${t.calcS0}</p>
+            <div class="grid grid-cols-2 sm:grid-cols-4 gap-2">${calcCatBtns}</div>
+          </div>`;
+
+      if (calcState.cat) {
+        // Step 2: Inputs
+        calcHTML += `
+          <div class="bg-[#071510] rounded-xl p-4 mb-3">
+            <p class="text-amber-400 font-medium mb-2">② ${t.calcS1}</p>
+            ${calcState.mats.map((m,i) => `
+              <div class="flex gap-2 items-center mb-2 mat-row">
+                <select class="mat-sel flex-1 px-3 py-2 bg-[#0d2620] border border-emerald-800 rounded-lg text-white text-sm focus:outline-none" onchange="recalc()">
+                  ${calcMats.map((r,j)=>`<option value="${j}" ${m.idx===j?'selected':''}>${rn(r)} — ${r.mj} MJ/${r.u}</option>`).join('')}
+                </select>
+                <input type="number" class="mat-qty w-20 px-3 py-2 bg-[#0d2620] border border-emerald-800 rounded-lg text-white text-sm focus:outline-none" placeholder="${calcMats[m.idx]?.u||'kg'}" value="${m.qty}" min="0" step="0.1" oninput="recalc()">
+                <span class="text-gray-500 text-xs font-mono bg-[#071510] px-2 py-0.5 rounded" id="mmj${i}"></span>
+                ${i>0?`<button onclick="rmMatRow(${i})" class="ml-1 w-5 h-5 rounded-full bg-gray-800 text-gray-500 hover:bg-gray-700 hover:text-gray-300 text-xs flex items-center justify-center flex-shrink-0" title="${lang==='en'?'Remove':'Quitar'}">×</button>`:''}
+              </div>`).join('')}
+            <button onclick="addMatRow()" class="text-emerald-400/60 hover:text-emerald-400 text-sm mt-1">${t.addInput}</button>
+            <details class="mt-2"><summary class="text-gray-500 text-xs cursor-pointer">${t.refTable}</summary>
+              <table class="w-full text-xs text-gray-500 mt-2"><thead><tr class="text-emerald-400"><th class="text-left pb-1">${lang==='fr'?'Matériau':'Material'}</th><th class="text-left pb-1">MJ</th><th class="text-left pb-1">${lang==='en'?'unit':'u'}</th></tr></thead>
+              <tbody>${calcMats.map(r=>`<tr class="hover:text-gray-300"><td>${rn(r)}</td><td class="text-amber-400 font-mono">${r.mj}</td><td>${r.u}</td></tr>`).join('')}</tbody></table>
+            </details>
+          </div>`;
+
+        // Step 3: Water
+        calcHTML += `
+          <div class="bg-[#071510] rounded-xl p-4 mb-3">
+            <p class="text-amber-400 font-medium mb-2">③ ${t.calcS2}</p>
+            <div class="flex flex-wrap gap-2 mb-2">
+              ${REF_WATER.map((w,i)=>`<button class="water-pill px-3 py-1 rounded text-xs border ${calcState.waterType===i?'selected border-emerald-500 text-emerald-400':'border-gray-600 text-gray-400'}" data-i="${i}" onclick="selPill(this,'water-pill','waterType')">${rn(w)}${w.mj>0?' ('+w.mj+' MJ/lt)':''}</button>`).join('')}
+            </div>
+            <div class="flex gap-2 items-center">
+              <input type="number" id="c-water" class="w-40 px-3 py-2 bg-[#0d2620] border border-emerald-800 rounded-lg text-white text-sm focus:outline-none" placeholder="${isCult?t.ltDay:t.ltTotal}" value="${calcState.waterQty}" min="0" oninput="recalc()">
+              <span class="text-gray-500 text-xs font-mono bg-[#071510] px-2 py-0.5 rounded" id="wmj"></span>
+            </div>
+            ${isCult?`<p class="text-gray-500 text-xs mt-1">${t.waterMult}</p>`:''}
+          </div>`;
+
+        // Step 4: Energy
+        calcHTML += `
+          <div class="bg-[#071510] rounded-xl p-4 mb-3">
+            <p class="text-amber-400 font-medium mb-2">④ ${t.calcS3}</p>
+            <p class="text-gray-500 text-xs mb-2">${t.calcS3h}</p>
+            ${calcState.energyRows.map((e,i)=>`
+              <div class="flex gap-2 items-center mb-2 energy-row">
+                <select class="en-sel flex-1 px-3 py-2 bg-[#0d2620] border border-emerald-800 rounded-lg text-white text-sm focus:outline-none" onchange="recalc()">
+                  ${REF_ENERGY.map((r,j)=>`<option value="${j}" ${e.idx===j?'selected':''}>${rn(r)}${r.mj>0?' ('+r.mj+' MJ/'+r.u+')':''}</option>`).join('')}
+                </select>
+                <input type="number" class="en-qty w-20 px-3 py-2 bg-[#0d2620] border border-emerald-800 rounded-lg text-white text-sm focus:outline-none" placeholder="${REF_ENERGY[e.idx]?.u||''}" value="${e.qty}" min="0" step="0.1" oninput="recalc()">
+                <span class="enmj text-gray-500 text-xs font-mono"></span>
+                ${i>0?`<button onclick="rmEnergyRow(${i})" class="ml-1 w-5 h-5 rounded-full bg-gray-800 text-gray-500 hover:bg-gray-700 hover:text-gray-300 text-xs flex items-center justify-center flex-shrink-0" title="${lang==='en'?'Remove':'Quitar'}">×</button>`:''}
+              </div>`).join('')}
+            <button onclick="addEnergyRow()" class="text-emerald-400/60 hover:text-emerald-400 text-sm mt-1">${t.addSource}</button>
+          </div>`;
+
+        // Step 5: Time (unified)
+        calcHTML += `
+          <div class="bg-[#071510] rounded-xl p-4 mb-3">
+            <p class="text-amber-400 font-medium mb-3">⑤ ${t.calcS4}</p>`;
+
+        if (isCult) {
+          calcHTML += `
+            <div class="bg-[#0a1510] border-l-3 border-l-emerald-600 p-3 rounded-r-lg mb-3">
+              <p class="text-emerald-300 font-medium text-sm mb-1">${t.calcGrow}</p>
+              <p class="text-gray-500 text-xs mb-2">${t.calcGrowH}</p>
+              <div class="flex flex-wrap gap-2 items-center">
+                <input type="number" id="c-natd" class="w-20 px-2 py-1.5 bg-[#0d2620] border border-emerald-800 rounded text-white text-sm focus:outline-none" placeholder="${t.days}" value="${calcState.naturalDays}" min="0" oninput="recalc()">
+                <span class="text-gray-500 text-xs">${t.days} ×</span>
+                <input type="number" id="c-nata" class="w-20 px-2 py-1.5 bg-[#0d2620] border border-emerald-800 rounded text-white text-sm focus:outline-none" placeholder="m²" value="${calcState.naturalArea}" min="0" step="0.1" oninput="recalc()">
+                <span class="text-gray-500 text-xs">m² ×</span>
+                <input type="number" id="c-nats" class="w-20 px-2 py-1.5 bg-[#0d2620] border border-emerald-800 rounded text-white text-sm focus:outline-none" placeholder="${t.sunH}" value="${calcState.naturalSunH}" min="0" max="16" step="0.5" oninput="recalc()">
+                <span class="text-gray-500 text-xs">${t.sunH}</span>
+                <span class="text-gray-500 text-xs font-mono bg-[#071510] px-2 py-0.5 rounded" id="nmj"></span>
+              </div>
+              <p class="text-gray-600 text-xs mt-1">${t.solarEst}</p>
+            </div>`;
+        }
+
+        calcHTML += `
+            <div class="bg-[#0a1510] border-l-3 border-l-purple-600 p-3 rounded-r-lg mb-3">
+              <p class="text-purple-300 font-medium text-sm mb-2">${t.calcTools}</p>
+              <div class="flex flex-wrap gap-2 mb-2">
+                ${REF_TOOLS.map((tt,i)=>`<button class="tool-pill px-3 py-1 rounded text-xs border ${calcState.tools[i]?'selected border-emerald-500 text-emerald-400':'border-gray-600 text-gray-400'}" data-i="${i}" onclick="toggleTool(${i})">${rn(tt)} (${tt.mj} MJ/h)</button>`).join('')}
+              </div>
+              <div class="flex gap-2 items-center">
+                <input type="number" id="c-toolh" class="w-40 px-3 py-2 bg-[#0d2620] border border-emerald-800 rounded-lg text-white text-sm focus:outline-none" placeholder="${t.calcToolH}" value="${calcState.toolHours}" min="0" step="0.5" oninput="recalc()">
+                <span class="text-gray-500 text-xs">${t.hours}</span>
+                <span class="text-gray-500 text-xs font-mono bg-[#071510] px-2 py-0.5 rounded" id="tmj"></span>
+              </div>
+            </div>
+            <div class="bg-[#0a1510] border-l-3 border-l-sky-600 p-3 rounded-r-lg">
+              <p class="text-sky-300 font-medium text-sm mb-2">${t.calcLabor}</p>
+              <div class="flex gap-2 items-center mb-2">
+                <input type="number" id="c-labh" class="w-40 px-3 py-2 bg-[#0d2620] border border-emerald-800 rounded-lg text-white text-sm focus:outline-none" placeholder="${t.calcLaborH}" value="${calcState.laborHours}" min="0" step="0.5" oninput="recalc()">
+                <span class="text-gray-500 text-xs">${t.hours}</span>
+                <span class="text-gray-500 text-xs font-mono bg-[#071510] px-2 py-0.5 rounded" id="lmj"></span>
+              </div>
+              <p class="text-gray-500 text-xs mb-2">${t.calcExpert}</p>
+              <div class="flex flex-wrap gap-2">
+                ${[{l:'appr',s:'0-2'},{l:'comp',s:'3-5'},{l:'exprt',s:'6-10'},{l:'mstr',s:'10+'}].map((e,i)=>`<button class="expert-pill px-3 py-1 rounded text-xs border ${calcState.expertIdx===i?'selected border-emerald-500 text-emerald-400':'border-gray-600 text-gray-400'}" data-i="${i}" onclick="selPill(this,'expert-pill','expertIdx')">${t[e.l]} (${e.s})</button>`).join('')}
+              </div>
+            </div>
+          </div>`;
+
+        // Step 6: Transport
+        calcHTML += `
+          <div class="bg-[#071510] rounded-xl p-4 mb-3">
+            <p class="text-amber-400 font-medium mb-2">⑥ ${t.calcS5}</p>
+            <p class="text-gray-500 text-xs mb-2">${t.calcS5h}</p>
+            <div class="flex flex-wrap gap-2 mb-2">
+              ${REF_TRANSPORT.map((tr,i)=>`<button class="trans-pill px-3 py-1 rounded text-xs border ${calcState.transportIdx===i?'selected border-emerald-500 text-emerald-400':'border-gray-600 text-gray-400'}" data-i="${i}" onclick="selPill(this,'trans-pill','transportIdx')">${rn(tr)}${tr.mj>0?' ('+tr.mj+' MJ/km)':''}</button>`).join('')}
+            </div>
+            <div class="flex gap-2 items-center">
+              <input type="number" id="c-trk" class="w-40 px-3 py-2 bg-[#0d2620] border border-emerald-800 rounded-lg text-white text-sm focus:outline-none" placeholder="${t.km}" value="${calcState.transportKm}" min="0" oninput="recalc()">
+              <span class="text-gray-500 text-xs">${t.km}</span>
+              <span class="text-gray-500 text-xs font-mono bg-[#071510] px-2 py-0.5 rounded" id="trmj"></span>
+            </div>
+          </div>`;
+
+        // Step 7: Units
+        calcHTML += `
+          <div class="bg-[#071510] rounded-xl p-4 mb-3">
+            <p class="text-amber-400 font-medium mb-2">⑦ ${t.calcS6}</p>
+            <div class="flex gap-2 items-center">
+              <input type="number" id="c-units" class="w-28 px-3 py-2 bg-[#0d2620] border border-emerald-800 rounded-lg text-white text-sm focus:outline-none" placeholder="1" value="${calcState.units}" min="1" oninput="recalc()">
+              <span class="text-gray-500 text-xs">${t.units}</span>
+            </div>
+          </div>`;
+
+        calcHTML += `<div id="calc-result-area"><p class="text-gray-500 text-center py-6">${t.fillQ}</p></div>
+          <div id="calc-margin-area" style="display:none" class="bg-[#0d2620] rounded-xl p-4 mt-3 border border-emerald-800" data-base="0">
+            <div class="flex justify-between items-baseline">
+              <div><div class="text-gray-400 text-xs">${t.margin}</div><div class="text-amber-400 font-bold text-xl" id="margin-pct">${calcState.margin}%</div></div>
+              <div class="text-right"><div class="text-gray-400 text-xs">${t.sellPrice}</div><div class="text-emerald-400 font-bold text-xl" id="margin-price">0 sats</div></div>
+            </div>
+            <input type="range" id="c-margin" min="0" max="100" value="${calcState.margin}" oninput="onMarginChange(this.value)" class="w-full mt-2" style="accent-color:#f7931a">
+            <div class="flex justify-between text-xs text-gray-500 mt-1"><span>${t.atCost}</span><span>50%</span><span>100%</span></div>
+          </div>
+          <div id="suggest-area" style="display:none" class="bg-[#0d2620] rounded-xl p-4 mt-3 border border-emerald-800 border-dashed">
+            <p class="text-gray-400 text-sm">${t.sugQ}</p>
+            <input type="text" id="sug-name" placeholder="${t.sugPH}" class="w-full mt-2 px-4 py-2 bg-[#071510] border border-emerald-800 rounded-lg text-white text-sm focus:border-emerald-500 focus:outline-none">
+            <input type="hidden" id="sug-mj" value="0">
+            <div id="turnstile-energy" class="flex justify-center my-3" style="min-height:65px">
+              <p class="text-gray-500 text-xs self-center" id="turnstile-loading">${lang==='en'?'Loading security check...':lang==='fr'?'Chargement de la vérification...':lang==='br'?'Carregando verificação...':'Cargando verificación...'}</p>
+            </div>
+            <button onclick="submitSuggestion()" class="w-full bg-amber-500 hover:bg-amber-400 text-black font-bold py-2 rounded-lg text-sm">${t.sugBtn}</button>
+            <div id="sug-msg"></div>
+          </div>`;
+      } else {
+        calcHTML += `<p class="text-gray-500 text-center py-6">${t.calcS0h}</p>`;
+      }
+      calcHTML += `</div>`;
+
+      // How it works panel
+      const hr = networkData.hashrate_ehs.toFixed ? networkData.hashrate_ehs.toFixed(0) : networkData.hashrate_ehs;
+      const ths = (typeof networkData.hashrate_ehs === 'number' ? networkData.hashrate_ehs : 850) * 1000000;
+      const mj_h = (ths * EFICIENCIA_J_TH * 3600) / 1000000;
+      const sats_h = REWARD_BTC * SATS_POR_BTC * BLOQUES_POR_HORA;
+
+      const howHTML = `
+        <div class="space-y-6">
+          <div class="bg-[#0d2620] rounded-2xl p-6 border border-emerald-800">
+            <h2 class="text-lg font-bold text-white mb-4">🤔 ${t.whyTitle}</h2>
+            <div class="bg-[#071510] border-l-4 border-amber-500 p-4 rounded-r-lg mb-4">
+              <h3 class="text-amber-400 font-medium mb-2">${t.problemTitle}</h3>
+              <p class="text-gray-400 text-sm mb-2">${t.problemText1}</p>
+              <p class="text-gray-400 text-sm">${t.problemText2} <strong class="text-white">${t.problemText3}</strong></p>
+            </div>
+            <div class="bg-[#071510] border-l-4 border-amber-500 p-4 rounded-r-lg mb-4">
+              <h3 class="text-amber-400 font-medium mb-2">${t.energyTitle}</h3>
+              <p class="text-gray-400 text-sm mb-2">${t.energyText1}</p>
+              <p class="text-gray-300 text-sm mt-3"><strong>${t.energyText2}</strong> ${t.energyText3}</p>
+              <p class="text-gray-400 text-sm mt-2">${t.energyText4}</p>
+            </div>
+            <div class="bg-[#071510] border-l-4 border-sky-400 p-4 rounded-r-lg">
+              <h3 class="text-sky-300 font-medium mb-2">${t.btcTitle}</h3>
+              <p class="text-gray-400 text-sm">${t.btcText1}</p>
+              <p class="text-white font-medium text-sm mt-2">${t.btcText2}</p>
+            </div>
+          </div>
+
+          <div class="bg-[#0d2620] rounded-2xl p-6 border border-emerald-800">
+            <h2 class="text-lg font-bold text-white mb-4">${t.formulaTitle}</h2>
+            <div class="bg-[#071510] border-l-4 border-sky-400 p-4 rounded-r-lg mb-4">
+              <h3 class="text-sky-300 font-medium mb-2">${t.formulaMain}</h3>
+              <p class="text-emerald-300 font-mono text-sm bg-black/30 p-3 rounded">${t.formulaEq}</p>
+            </div>
+            <div class="bg-[#071510] border-l-4 border-amber-500 p-4 rounded-r-lg mb-4">
+              <h3 class="text-amber-400 font-medium mb-2">${t.formulaWhere}</h3>
+              <p class="text-gray-400 text-sm mb-4">${t.formulaWhereText}</p>
+              <div class="space-y-3">
+                <div class="flex items-center gap-3"><span class="w-8 h-8 rounded-full bg-sky-900/50 text-sky-400 flex items-center justify-center font-bold text-sm flex-shrink-0">I</span><span class="text-gray-400 text-sm flex-1">${t.fS1}</span><span class="text-emerald-400 font-bold font-mono">${hr} EH/s</span><span class="text-xs px-2 py-0.5 rounded bg-emerald-900/30 text-emerald-400">${t.srcLive}</span></div>
+                <p class="text-gray-500 text-xs ml-11 pb-3 border-b border-gray-800">${t.fS1d}</p>
+                <div class="flex items-center gap-3"><span class="w-8 h-8 rounded-full bg-sky-900/50 text-sky-400 flex items-center justify-center font-bold text-sm flex-shrink-0">II</span><span class="text-gray-400 text-sm flex-1">${t.fS2}</span><span class="text-emerald-400 font-bold font-mono">~${EFICIENCIA_J_TH} J/TH</span><span class="text-xs px-2 py-0.5 rounded bg-amber-900/30 text-amber-400">${t.srcEst}</span></div>
+                <p class="text-gray-500 text-xs ml-11 pb-3 border-b border-gray-800">${t.fS2d}</p>
+                <div class="flex items-center gap-3"><span class="w-8 h-8 rounded-full bg-sky-900/50 text-sky-400 flex items-center justify-center font-bold text-sm flex-shrink-0">III</span><span class="text-gray-400 text-sm flex-1">${t.fS3}</span><span class="text-emerald-400 font-bold font-mono">${networkData.potencia_gw} GW</span><span class="text-xs px-2 py-0.5 rounded bg-amber-900/30 text-amber-400">${t.srcCalc}</span></div>
+                <p class="text-gray-500 text-xs ml-11 pb-3 border-b border-gray-800">${hr}M TH/s × ${EFICIENCIA_J_TH} J/TH = ${networkData.potencia_gw} GW</p>
+                <div class="flex items-center gap-3"><span class="w-8 h-8 rounded-full bg-sky-900/50 text-sky-400 flex items-center justify-center font-bold text-sm flex-shrink-0">IV</span><span class="text-gray-400 text-sm flex-1">${t.fS4}</span><span class="text-emerald-400 font-bold font-mono">${Math.round(mj_h).toLocaleString()} MJ</span><span class="text-xs px-2 py-0.5 rounded bg-amber-900/30 text-amber-400">${t.srcCalc}</span></div>
+                <p class="text-gray-500 text-xs ml-11 pb-3 border-b border-gray-800">${networkData.potencia_gw} GW × 3,600 seg ÷ 1,000,000</p>
+                <div class="flex items-center gap-3"><span class="w-8 h-8 rounded-full bg-sky-900/50 text-sky-400 flex items-center justify-center font-bold text-sm flex-shrink-0">V</span><span class="text-gray-400 text-sm flex-1">${t.fS5}</span><span class="text-emerald-400 font-bold font-mono">${sats_h.toLocaleString()}</span><span class="text-xs px-2 py-0.5 rounded bg-sky-900/30 text-sky-400">${t.srcProto}</span></div>
+                <p class="text-gray-500 text-xs ml-11 pb-3 border-b border-gray-800">${REWARD_BTC} BTC × ${SATS_POR_BTC.toLocaleString()} × ${BLOQUES_POR_HORA} — ${t.fS5d}</p>
+                <div class="flex items-center gap-3 pt-2 border-t-2 border-emerald-800"><span class="w-10 h-10 rounded-full bg-emerald-900/50 text-emerald-400 flex items-center justify-center font-bold text-lg flex-shrink-0">VI</span><span class="text-white font-bold flex-1">${t.fS6}</span><span class="text-emerald-400 font-bold font-mono text-xl">${T} sats/MJ</span><span class="text-xs px-2 py-0.5 rounded bg-emerald-900/30 text-emerald-400">${t.srcResult}</span></div>
+                <p class="text-gray-500 text-xs ml-12">${sats_h.toLocaleString()} ÷ ${Math.round(mj_h).toLocaleString()} = <strong class="text-emerald-400">${T} sats/MJ</strong> · <strong class="text-emerald-400">${networkData.tasa_sats_kwh} sats/kWh</strong></p>
+              </div>
+            </div>
+            <div class="bg-[#071510] border-l-4 border-sky-400 p-4 rounded-r-lg">
+              <h3 class="text-sky-300 font-medium mb-2">${t.examplesTitle}</h3>
+              <p class="text-gray-400 text-sm">☕ ${t.exCoffee} = 0.5 × ${T} = <strong class="text-emerald-400">${Math.round(0.5*T).toLocaleString()} sats</strong></p>
+              <p class="text-gray-400 text-sm">👕 ${t.exShirt} = 32 × ${T} = <strong class="text-emerald-400">${Math.round(32*T).toLocaleString()} sats</strong></p>
+              <p class="text-gray-400 text-sm">📱 ${t.exPhone} = 1000 × ${T} = <strong class="text-emerald-400">${Math.round(1000*T).toLocaleString()} sats</strong></p>
+            </div>
+          </div>
+
+          <div class="bg-[#0d2620] rounded-2xl p-6 border border-emerald-800">
+            <h2 class="text-lg font-bold text-white mb-4">${t.votesTitle}</h2>
+            <div class="bg-[#071510] border-l-4 border-amber-500 p-4 rounded-r-lg">
+              <h3 class="text-amber-400 font-medium mb-2">${t.votesSubtitle}</h3>
+              <p class="text-gray-400 text-sm">${t.votesText1}</p>
+              <p class="text-gray-400 text-sm">${t.votesText2}</p>
+              <p class="text-gray-400 text-sm">${t.votesText3}</p>
+            </div>
+          </div>
+
+          <div class="bg-[#0d2620] rounded-2xl p-6 border border-emerald-800">
+            <h2 class="text-lg font-bold text-white mb-4">${t.hwTitle}</h2>
+            <p class="text-gray-400 text-sm mb-4">${t.hwIntro}</p>
+            <div class="bg-[#071510] border-l-4 border-purple-500 p-4 rounded-r-lg mb-4">
+              <h3 class="text-purple-400 font-medium mb-2">${t.hwRBU}</h3>
+              <p class="text-gray-400 text-sm mb-3">${t.hwRBU1}</p>
+              <p class="text-gray-400 text-sm mb-3">${t.hwRBU2}</p>
+              <p class="text-gray-400 text-sm">${t.hwRBU3}</p>
+            </div>
+            <div class="bg-[#071510] border-l-4 border-emerald-500 p-4 rounded-r-lg mb-4">
+              <h3 class="text-emerald-400 font-medium mb-2">${t.hwFloor}</h3>
+              <p class="text-gray-400 text-sm mb-3">${t.hwFloor1}</p>
+              <p class="text-gray-400 text-sm mb-3">${t.hwFloor2}</p>
+              <p class="text-gray-400 text-sm">${t.hwFloor3}</p>
+            </div>
+            <div class="bg-[#071510] border-l-4 border-amber-500 p-4 rounded-r-lg">
+              <h3 class="text-amber-400 font-medium mb-2">${t.hwSD}</h3>
+              <p class="text-gray-400 text-sm mb-3">${t.hwSD1}</p>
+              <p class="text-gray-400 text-sm mb-3">${t.hwSD2}</p>
+              <p class="text-gray-400 text-sm">${t.hwSD3}</p>
+            </div>
+          </div>
+        </div>`;
+
+      // ========== FULL PAGE ==========
+      document.getElementById('app').innerHTML = `
+        <div class="max-w-5xl mx-auto p-4">
+          <div class="flex flex-wrap justify-between items-center gap-4 mb-6">
+            <div class="flex gap-2">
+              <a href="https://takepower.world" class="flex items-center gap-1 px-3 py-1 rounded text-sm bg-[#0d2620] text-amber-300 hover:bg-amber-600 hover:text-white">
+                <svg class="w-4 h-4" viewBox="0 0 32 32" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="2" y="12" width="28" height="16" rx="2"/><path d="M2 18h28"/><rect x="4" y="4" width="24" height="8" rx="1"/><path d="M14 18v6h4v-6"/><circle cx="16" cy="22" r="1.5" fill="currentColor"/></svg>
+                ${t.fund}
+              </a>
+              <a href="https://takepower.world/vision/" class="flex items-center gap-1 px-3 py-1 rounded text-sm bg-[#0d2620] text-emerald-200 hover:bg-emerald-600 hover:text-white">
+                <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polygon points="16.24 7.76 14.12 14.12 7.76 16.24 9.88 9.88 16.24 7.76"/></svg>
+                ${t.vision}
+              </a>
+              <a href="https://takepower.world/learn/" class="flex items-center gap-1 px-3 py-1 rounded text-sm bg-[#0d2620] text-amber-400 hover:bg-amber-500 hover:text-white">${t.bitcoin}</a>
+              <a href="https://takepower.world/tactic/" class="flex items-center gap-1 px-3 py-1 rounded text-sm bg-[#0d2620] text-gray-300 hover:bg-gray-600 hover:text-white"><svg class="w-4 h-4" viewBox="0 0 45 48" fill="currentColor"><path d="M 22,10 C 32.5,11 38.5,18 38,39 L 15,39 C 15,30 25,32.5 23,18"/><path d="M 24,18 C 24.38,20.91 18.45,25.37 16,27 C 13,29 13.18,31.34 11,31 C 9.958,30.06 12.41,27.96 11,28 C 10,28 11.19,29.23 10,30 C 9,30 5.997,31 6,26 C 6,24 12,14 12,14 C 12,14 13.89,12.1 14,10.5 C 13.27,9.506 13.5,8.5 13.5,7.5 C 14.5,6.5 16.5,10 16.5,10 L 18.5,10 C 18.5,10 19.28,8.008 21,7 C 22,7 22,10 22,10"/><rect x="4" y="39" width="37" height="6" rx="1.5"/></svg> ${t.tactic}</a>
+            </div>
+            <div class="flex gap-2">${langBtns}</div>
+          </div>
+
+          <div class="bg-gradient-to-r from-[#0d2620] to-[#15403a] rounded-2xl p-6 mb-6 text-center border border-emerald-800">
+            <h1 class="text-2xl md:text-3xl font-bold text-white mb-2">⚡ ${t.title} ₿</h1>
+            <p class="text-emerald-200">${t.subtitle}</p>
+          </div>
+
+          <div class="bg-[#0d2620] border-l-4 border-sky-400 p-4 mb-6 flex flex-wrap justify-between items-center gap-2">
+            <div>
+              <span class="text-amber-500 font-bold text-xl">${T} sats/MJ</span>
+              <span class="text-gray-400 ml-2">· ${networkData.tasa_sats_kwh} sats/kWh</span>
+            </div>
+            <div class="text-sky-300 text-sm">${hr} EH/s · ${networkData.potencia_gw} GW · mempool.space ${networkData.loading ? '⏳' : '✓'}</div>
+          </div>
+
+          <div class="flex flex-wrap gap-2 mb-6">${tabBtns}</div>
+
+          <div class="panel ${tab==='catalog'?'active':''}">
+            ${catActual === 'servicios' ? servicesPanel : `
+            <div class="bg-[#0d2620] rounded-2xl p-6 border border-emerald-800">
+              <h2 class="text-lg font-bold text-white mb-4">📦 ${t.catalogTitle}</h2>
+              <div class="bg-amber-900/20 border border-amber-700/40 rounded-lg px-4 py-3 mb-4 text-sm text-amber-200/80"><span class="font-bold">⚠️ ${t.catalogDisclaimerTitle}</span> — ${t.catalogDisclaimer}</div>
+              <div class="flex flex-wrap gap-2 mb-4">${catBtns}</div>
+              <div class="relative mb-4">
+                <input type="text" id="search-input" placeholder="${t.searchPlaceholder}" oninput="renderProducts()"
+                  class="w-full px-4 py-3 pl-10 bg-[#071510] border border-emerald-800 rounded-lg text-white placeholder-gray-500 focus:border-emerald-500 focus:outline-none">
+                <span class="absolute left-3 top-1/2 -translate-y-1/2 text-gray-500">🔍</span>
+              </div>
+              <div id="products-grid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">${productsGrid}</div>
+            </div>`}
+          </div>
+
+          <div class="panel ${tab==='calc'?'active':''}">${calcHTML}</div>
+          <div class="panel ${tab==='how'?'active':''}">${howHTML}</div>
+
+          <footer class="text-center py-8 mt-8 border-t border-emerald-900">
+            <p class="text-gray-400">⚡ ${t.title} — Open Source</p>
+            <p class="text-gray-500 italic text-sm mt-2">${t.footerQuote}</p>
+            <div class="mt-4"><a href="/privacy/" class="text-emerald-400/50 hover:text-emerald-300 text-xs">Privacy Policy</a></div>
+          </footer>
+        </div>
+      `;
+      if (tab === 'calc' && calcState.cat) setTimeout(recalc, 30);
+      // Always try to render Turnstile when calc tab is active
+      if (tab === 'calc') setTimeout(() => {
+        const sa = document.getElementById('suggest-area');
+        if (sa && sa.style.display === 'none') return; // Only if visible
+        if (turnstileWidgetId === null) renderTurnstileWidget();
+      }, 500);
+    }
+
+    function setCat(c) { catActual = c; render(); }
+
+    function renderProducts() {
+      const t = texts[lang] || texts.es;
+      const filtered = filterProducts();
+      const el = document.getElementById('products-grid');
+      if (!el) return;
+      if (!filtered.length) { el.innerHTML = `<p class="text-gray-400 col-span-full">${t.noProducts}</p>`; return; }
+      el.innerHTML = filtered.map(p => {
+        const totalVotos = (p.votosUp || 0) + (p.votosDown || 0);
+        const pctDown = totalVotos > 0 ? Math.round((p.votosDown || 0) / totalVotos * 100) : 0;
+        const showWarning = pctDown >= 50;
+        const communityBadge = p.fromCommunity ? '<span class="ml-2 text-xs bg-purple-900/50 text-purple-300 px-2 py-0.5 rounded">👥</span>' : '';
+        return `
+        <div class="product bg-[#071510] rounded-lg p-4 border border-transparent hover:border-amber-500 transition">
+          <div class="flex justify-between items-start">
+            <div class="font-medium text-white cursor-pointer flex-1" onclick="selectProduct(${p.mj})">${p.nombre}${communityBadge}</div>
+            <button onclick="copyProductPrice(${p.sats}, event)" class="text-gray-500 hover:text-amber-400 p-1">${iconCopy}</button>
+          </div>
+          <div class="text-gray-400 text-sm">${p.mj} MJ · ${(p.mj/3.6).toFixed(2)} kWh</div>
+          <div class="text-emerald-400 font-bold text-xl mt-2">${p.sats.toLocaleString()} sats</div>
+          <div class="flex items-center gap-2 mt-3 pt-3 border-t border-gray-800">
+            <button onclick="voteProduct('${p.id}', '${p.cat}', 1, event, ${p.isPredefined || false})" class="vote-btn flex items-center gap-1 px-2 py-1 rounded text-sm ${p.voted ? 'text-gray-600' : 'text-gray-400 hover:text-emerald-400'}" ${p.voted ? 'disabled' : ''}>${iconThumbUp} <span>${p.votosUp || 0}</span></button>
+            <button onclick="voteProduct('${p.id}', '${p.cat}', -1, event, ${p.isPredefined || false})" class="vote-btn flex items-center gap-1 px-2 py-1 rounded text-sm ${p.voted ? 'text-gray-600' : 'text-gray-400 hover:text-red-400'}" ${p.voted ? 'disabled' : ''}>${iconThumbDown} <span>${p.votosDown || 0}</span></button>
+            ${showWarning ? `<span class="text-red-400 text-xs ml-auto">${pctDown}% ⚠️</span>` : ''}
+          </div>
+        </div>`;
+      }).join('');
+      document.querySelectorAll('.cat-btn').forEach(btn => {
+        const cat = btn.onclick?.toString().match(/setCat\('(\w+)'\)/)?.[1];
+        if (cat === catActual || (cat === undefined && catActual === 'todas')) {
+          btn.classList.remove('border-gray-600', 'text-gray-400');
+          btn.classList.add('border-emerald-500', 'text-emerald-400');
+        } else {
+          btn.classList.remove('border-emerald-500', 'text-emerald-400');
+          btn.classList.add('border-gray-600', 'text-gray-400');
+        }
+      });
+    }
+
+    // Init
+    initProducts();
+    render();
+    loadCommunityProducts();
+    fetchNetworkData();
+    setInterval(fetchNetworkData, 5 * 60 * 1000);
+    setInterval(() => loadCommunityProducts(tab === 'calc'), 30 * 1000);
+    
+    function updateProgressBar() {
+      const scrollTop = window.scrollY;
+      const docHeight = document.documentElement.scrollHeight - window.innerHeight;
+      const progress = docHeight > 0 ? (scrollTop / docHeight) * 100 : 0;
+      document.getElementById('progress-bar').style.width = progress + '%';
+    }
+    window.addEventListener('scroll', updateProgressBar);
+    updateProgressBar();
+  </script>
+</body>
+</html>
