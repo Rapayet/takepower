@@ -4,6 +4,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Privacy Policy | Take Power</title>
+  <!-- PRIVACY_REVISION = 5 -->
   <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>₿</text></svg>">
   <link href="https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400;0,700;1,400;1,700&display=swap" rel="stylesheet">
   <script src="https://cdn.tailwindcss.com"></script>
@@ -23,212 +24,324 @@
         back: '← Volver',
         title: 'Política de Privacidad',
         subtitle: 'Tu soberanía digital es nuestra prioridad',
-        lastUpdate: 'Última actualización: Febrero 2026',
+        lastUpdate: 'Última actualización: Noviembre 2026',
         body: `
           <h2>Filosofía</h2>
-          <p>Take Power nació de la convicción de que la riqueza debe ser redistribuida y que los datos no deben usarse para concentrar poder. Recolectamos la mínima información necesaria para que el servicio funcione. No vendemos, compartimos ni monetizamos datos personales. Nunca lo haremos.</p>
+          <p>Take Power nació de la convicción de que la riqueza debe ser redistribuida y que los datos no deben usarse para concentrar poder. Recolectamos la mínima información necesaria para que el servicio funcione. No vendemos ni monetizamos datos personales. Nunca lo haremos. Esta página explica con precisión qué se guarda, para qué y por cuánto tiempo.</p>
 
           <h2>Qué datos procesamos</h2>
 
           <h3>1. Reclamo de sats (Claim)</h3>
-          <p>Cuando reclamas tus 10,000 sats, almacenamos:</p>
+          <p>Cuando reclamas tus 10,000 sats, guardamos:</p>
           <ul>
-            <li><strong>Lightning Address</strong> o <strong>identidad del nodo</strong> (payee): Se usa únicamente para controlar el intervalo de 21 días entre reclamos y evitar abusos. No se vincula a tu nombre ni a ningún dato personal.</li>
-            <li><strong>Hash de la transacción</strong>: Registro del pago Lightning para auditoría del fondo.</li>
-            <li><strong>Fecha del reclamo</strong> y monto.</li>
+            <li><strong>Tu dirección IP, de forma temporal.</strong> Se usa únicamente para controlar el intervalo de 21 días entre reclamos desde una misma conexión y frenar abusos, como reclamar varias veces con direcciones distintas. Se elimina automáticamente a los 22 días del reclamo (los 21 del intervalo más un día de margen). Si el pago falla, se elimina de inmediato. No se usa para ninguna otra finalidad.</li>
+            <li><strong>Lightning Address</strong> o <strong>identidad del nodo</strong> (payee): se usa para controlar el intervalo de 21 días por destinatario y para llevar el registro del fondo, y se conserva en nuestra base de datos. Una Lightning Address tiene forma de correo (usuario@dominio) y puede contener tu nombre si así la elegiste; si quieres más privacidad, usa una que no te identifique.</li>
+            <li><strong>Hash del pago</strong>, <strong>fecha</strong> y <strong>monto</strong>: registro del pago Lightning, para auditar el fondo. Estos datos del pago (sin tu Lightning Address ni tu IP) también se publican en el libro público, como se explica en el punto 8.</li>
           </ul>
-          <p>No almacenamos tu IP, tu ubicación geográfica ni ningún dato del navegador para esta función.</p>
 
           <h3>2. Donaciones</h3>
-          <p>Cuando donas al fondo, se genera un invoice Lightning. Solo almacenamos el hash del pago y el monto. No hay forma de vincular una donación a una identidad personal.</p>
+          <p>Cuando donas al fondo se genera un invoice Lightning. Guardamos el hash del pago, el monto y la fecha, y esos datos del pago (sin tu IP) también se publican en el libro público, como se explica en el punto 8. No te pedimos ningún dato de identidad ni guardamos tu IP en esta función (aun así, el servidor registra tu visita, como se explica en el punto 4).</p>
 
-          <h3>3. Patrón Energético (Votos)</h3>
-          <p>Para el sistema de votación de productos, almacenamos tu dirección IP de forma temporal con el único fin de evitar votos duplicados. Esta IP no se cruza con ningún otro dato ni se usa para rastreo.</p>
+          <h3>3. Patrón Energético (votos y sugerencias)</h3>
+          <p>Para evitar votos repetidos, guardamos tu dirección IP junto a cada voto. Esa IP se elimina automáticamente a los 22 días del voto; el voto se conserva, ya sin IP. Mientras tanto, no se cruza con otros datos ni se usa para rastrearte. Los productos que sugieras (nombre y energía) se publican en el catálogo y no llevan tu IP.</p>
 
-          <h3>4. Verificación humana (Cloudflare Turnstile)</h3>
-          <p>Usamos Cloudflare Turnstile para proteger el fondo de bots y abusos automatizados. Turnstile es una alternativa a los captchas tradicionales que <strong>no usa cookies de rastreo</strong> y <strong>no recolecta datos personales identificables</strong>. La verificación se procesa en los servidores de Cloudflare. Puedes leer su política en <a href="https://www.cloudflare.com/privacypolicy/" target="_blank" class="text-amber-400 hover:text-amber-300">cloudflare.com/privacypolicy</a>.</p>
+          <h3>4. Registros técnicos del servidor</h3>
+          <p>Como cualquier servidor web, el nuestro registra cada solicitud: dirección IP, fecha y hora, página pedida, código de respuesta y navegador (User-Agent). Se usan para seguridad y para diagnosticar fallos, y se eliminan automáticamente a los 15 días.</p>
 
-          <h3>5. Analítica (Umami)</h3>
-          <p>Usamos Umami, una herramienta de analítica de código abierto, para entender el tráfico del sitio de forma agregada. Umami <strong>no usa cookies</strong>, <strong>no rastrea individuos</strong>, no recolecta datos personales y no comparte información con terceros. Solo vemos métricas generales como número de visitas y páginas más vistas.</p>
+          <h3>5. Verificación humana (Cloudflare Turnstile)</h3>
+          <p>Usamos Cloudflare Turnstile para proteger el fondo de bots y abusos automatizados. Al cargarse el widget, Cloudflare procesa datos técnicos de tu navegador y de tu conexión (como tu IP, la huella TLS y el User-Agent) para decidir si eres una persona. Además, nuestro servidor envía a Cloudflare tu IP junto con el resultado de la verificación para comprobarlo. Según el anexo de privacidad de Turnstile, Cloudflare actúa como encargado del tratamiento y, para mejorar su detección de bots, también como responsable. No controlamos cuánto tiempo conserva esos datos. Más información: <a href="https://www.cloudflare.com/privacypolicy/" target="_blank" rel="noopener" class="text-amber-400 hover:text-amber-300">política de privacidad de Cloudflare</a> y <a href="https://www.cloudflare.com/turnstile-privacy-policy/" target="_blank" rel="noopener" class="text-amber-400 hover:text-amber-300">anexo de privacidad de Turnstile</a>.</p>
+
+          <h3>6. Analítica (Umami)</h3>
+          <p>Usamos Umami Cloud para saber, de forma agregada, cuántas personas visitan el sitio y qué páginas ven. Umami no usa cookies y registra métricas como páginas vistas, sitio de origen (referrer), navegador, sistema operativo, tipo de dispositivo y ubicación aproximada. Como cualquier recurso externo, su script se carga desde los servidores de Umami (cloud.umami.is), que reciben tu dirección IP. Más información en la <a href="https://umami.is/privacy" target="_blank" rel="noopener" class="text-amber-400 hover:text-amber-300">política de privacidad de Umami</a>. Puedes bloquear ese script con tu navegador o con un bloqueador de rastreadores; el sitio funciona igual.</p>
+
+          <h3>7. Otros recursos de terceros</h3>
+          <p>Para mostrar las páginas, tu navegador carga recursos de terceros que, por ese solo hecho, reciben tu IP y datos de tu navegador: Google Fonts (tipografías), Tailwind CSS (estilos, cdn.tailwindcss.com), cdnjs de Cloudflare (la librería que dibuja los códigos QR) y, para mostrar la potencia de la red Bitcoin, blockchain.info y mempool.space. No controlamos lo que hacen con esos datos; consulta sus políticas.</p>
+
+          <h3>8. Libro público de movimientos</h3>
+          <p>El Baúl publica un libro abierto con todos los pagos que entran o salen de su nodo Lightning: donaciones, depósitos, reclamos, liquidez, gastos y retiros. De cada pago se publica solo esto: la <strong>hora</strong> (UTC, al milisegundo), el <strong>tipo</strong>, el <strong>monto</strong>, la <strong>comisión</strong> y el <strong>hash del pago</strong> (o, si el movimiento ocurre en la cadena de Bitcoin, el identificador de la transacción). No se publican tu IP, tu Lightning Address, la identidad de tu nodo, facturas, descripciones ni mensajes. Cada bloque sí lleva la clave pública del nodo del propio Baúl (la misma que muestra cualquier factura Lightning que el Baúl emite): no es secreta, no da acceso a nada y no identifica a quien paga ni a quien reclama. El libro es una lista de pagos, no de personas: no dice quién reclamó ni quién donó.</p>
+          <p>Aun así, hay tres cosas que conviene saber. Primero, quien tenga el hash de su propio pago (por ejemplo, en el comprobante de su billetera) puede encontrar esa línea en el libro, y si enseñas ese comprobante a otra persona, esa persona podrá ver que el pago fue tuyo. Segundo, la hora exacta y el monto podrían cruzarse con lo que alguien ya sepa de ti, por ejemplo, que te vio reclamar a cierta hora. Tercero, <strong>lo que se publica en el libro no se puede borrar ni corregir</strong>: cada bloque queda encadenado al anterior, copiado en GitHub y sellado en Bitcoin (punto 9). Si nos pides que borremos tus datos, podremos quitar lo que está solo en nuestra base de datos, pero no lo que ya está en el libro público ni en sus copias.</p>
+
+          <h3>9. Copia en GitHub y sellos de tiempo</h3>
+          <p>Con la frecuencia que GitHub permita, un proceso automático copia el libro público en un repositorio abierto de GitHub (<a href="https://github.com/Rapayet/takepower-ledger" target="_blank" rel="noopener" class="text-amber-400 hover:text-amber-300">takepower-ledger</a>), lo verifica y le pone sellos de tiempo con <a href="https://opentimestamps.org" target="_blank" rel="noopener" class="text-amber-400 hover:text-amber-300">OpenTimestamps</a>, para poder probar qué se publicó y cuándo. GitHub (propiedad de Microsoft) aloja ese repositorio y trata los datos de quienes lo visitan según su <a href="https://docs.github.com/en/site-policy/privacy-policies/github-general-privacy-statement" target="_blank" rel="noopener" class="text-amber-400 hover:text-amber-300">declaración de privacidad</a>. Los servidores de calendario de OpenTimestamps reciben solo una huella criptográfica calculada a partir de los bloques, no su contenido, y el sello queda anclado en Bitcoin, una cadena pública que en la práctica es imposible de reescribir. Las copias y los sellos existen precisamente para que lo publicado no pueda retirarse. Quien descargue el libro o clone el repositorio puede guardar su propia copia, y no controlamos esas copias.</p>
+
+          <h2>Cuánto tiempo los conservamos</h2>
+          <ul>
+            <li><strong>IP del reclamo:</strong> 22 días desde el reclamo; se elimina automáticamente.</li>
+            <li><strong>Lightning Address o nodo, fecha, monto y hash del pago:</strong> mientras el fondo exista, como registro del fondo.</li>
+            <li><strong>Libro público (hora, tipo, monto, comisión y hash de cada pago):</strong> de forma permanente; no se puede borrar ni corregir (puntos 8 y 9).</li>
+            <li><strong>IP de un voto:</strong> 22 días desde el voto; se elimina automáticamente (el voto se conserva, sin IP).</li>
+            <li><strong>Registros del servidor:</strong> 15 días.</li>
+            <li><strong>Copias de seguridad internas:</strong> pueden conservar datos que ya se borraron de la base activa, hasta que esas copias se eliminen.</li>
+          </ul>
 
           <h2>Qué NO hacemos</h2>
           <ul>
             <li>No usamos Google Analytics ni servicios de analítica invasivos.</li>
-            <li>No instalamos cookies de rastreo ni de publicidad.</li>
-            <li>No almacenamos contraseñas (no hay cuentas de usuario).</li>
-            <li>No vendemos ni compartimos datos con terceros.</li>
+            <li>No instalamos cookies propias de rastreo ni de publicidad.</li>
+            <li>No vendemos tus datos ni los cedemos a terceros con fines comerciales; los únicos terceros que reciben datos son los servicios técnicos descritos arriba y, en el caso del libro público, cualquier persona que lo lea (punto 8).</li>
+            <li>No hay cuentas de usuario ni contraseñas.</li>
             <li>No mostramos publicidad.</li>
             <li>No hacemos perfilado de usuarios.</li>
-            <li>No recolectamos emails ni datos de contacto.</li>
+            <li>No pedimos correos electrónicos ni otros datos de contacto. Si nos escribes por tu cuenta, usamos tu dirección solo para responderte.</li>
           </ul>
 
           <h2>Almacenamiento local (localStorage)</h2>
-          <p>Usamos localStorage del navegador únicamente para recordar tu preferencia de idioma. Este dato permanece en tu dispositivo y nunca se envía a nuestros servidores.</p>
+          <p>Usamos localStorage del navegador únicamente para recordar tu preferencia de idioma. Ese dato permanece en tu dispositivo y no se envía a nuestros servidores.</p>
+
+          <h2>Consultas y solicitudes</h2>
+          <p>Para preguntas sobre esta política, o para pedir que se borren los datos asociados a tu Lightning Address o a tu IP, escribe a <a href="mailto:power.area517@passinbox.com" class="text-amber-400 hover:text-amber-300">power.area517@passinbox.com</a>. Lo que ya figura en el libro público no se puede borrar (ver el punto 8).</p>
 
           <h2>Código abierto</h2>
-          <p>Todo nuestro código es abierto y auditable. Puedes verificar exactamente qué datos procesamos y cómo los manejamos. No hay puertas traseras ni código oculto.</p>
+          <p>El proyecto es de código abierto, pero la copia pública del servidor puede ir por detrás de la versión que está en funcionamiento. Lo que describe esta página es lo que hace la versión en funcionamiento. La especificación del libro público, su verificador y el programa del espejo están publicados en el repositorio de GitHub que se menciona en el punto 9.</p>
 
           <h2>Sobre este proyecto</h2>
-          <p>Take Power es un proyecto anónimo y autónomo. No hay una empresa, organización ni individuo detrás recibiendo consultas. El fondo opera de manera automática: distribuye sats a quien los reclama y acepta donaciones de quien quiera contribuir. El código habla por sí mismo.</p>
+          <p>Take Power es un proyecto independiente, operado por una persona, sin empresa ni organización detrás. Quien lo opera tiene acceso técnico al servidor y a la base de datos descritos en esta página, y solo los usa para que el fondo funcione. El fondo opera de forma automática: distribuye sats a quien los reclama y acepta donaciones de quien quiera contribuir.</p>
+
+          <h2>Cambios en esta política</h2>
+          <p>Si el sistema cambia de una forma que afecte a los datos, actualizaremos esta página y su fecha.</p>
         `
       },
       en: {
         back: '← Back',
         title: 'Privacy Policy',
         subtitle: 'Your digital sovereignty is our priority',
-        lastUpdate: 'Last updated: February 2026',
+        lastUpdate: 'Last updated: November 2026',
         body: `
           <h2>Philosophy</h2>
-          <p>Take Power was born from the conviction that wealth must be redistributed and that data should not be used to concentrate power. We collect the minimum information necessary for the service to work. We do not sell, share, or monetize personal data. We never will.</p>
+          <p>Take Power was born from the conviction that wealth must be redistributed and that data should not be used to concentrate power. We collect the minimum information necessary for the service to work. We do not sell or monetize personal data. We never will. This page explains precisely what is stored, why, and for how long.</p>
 
           <h2>What data we process</h2>
 
           <h3>1. Sats Claim</h3>
           <p>When you claim your 10,000 sats, we store:</p>
           <ul>
-            <li><strong>Lightning Address</strong> or <strong>node identity</strong> (payee): Used solely to enforce the 21-day interval between claims and prevent abuse. It is not linked to your name or any personal data.</li>
-            <li><strong>Transaction hash</strong>: Record of the Lightning payment for fund auditing.</li>
-            <li><strong>Claim date</strong> and amount.</li>
+            <li><strong>Your IP address, temporarily.</strong> It is used solely to enforce the 21-day interval between claims from the same connection and to prevent abuse, such as claiming several times with different addresses. It is deleted automatically 22 days after the claim (the 21 days of the interval plus one day of margin). If the payment fails, it is deleted immediately. It is not used for anything else.</li>
+            <li><strong>Lightning Address</strong> or <strong>node identity</strong> (payee): used to enforce the 21-day interval per recipient and to keep the fund's record, and kept in our database. A Lightning Address looks like an email (user@domain) and may contain your name if you chose it that way; if you want more privacy, use one that does not identify you.</li>
+            <li><strong>Payment hash</strong>, <strong>date</strong> and <strong>amount</strong>: a record of the Lightning payment, for auditing the fund. These payment details (without your Lightning Address or your IP) are also published in the public ledger, as explained in section 8.</li>
           </ul>
-          <p>We do not store your IP address, geographic location, or any browser data for this function.</p>
 
           <h3>2. Donations</h3>
-          <p>When you donate to the fund, a Lightning invoice is generated. We only store the payment hash and amount. There is no way to link a donation to a personal identity.</p>
+          <p>When you donate to the fund, a Lightning invoice is generated. We store the payment hash, the amount and the date, and those payment details (without your IP) are also published in the public ledger, as explained in section 8. We do not ask for any identity data or store your IP address for this function (the server still logs your visit, as explained in section 4).</p>
 
-          <h3>3. Energy Standard (Votes)</h3>
-          <p>For the product voting system, we temporarily store your IP address solely to prevent duplicate votes. This IP is not cross-referenced with any other data and is not used for tracking.</p>
+          <h3>3. Energy Standard (votes and suggestions)</h3>
+          <p>To prevent repeated votes, we store your IP address next to each vote. That IP is deleted automatically 22 days after the vote; the vote itself is kept, without the IP. Until then, it is not cross-referenced with other data or used to track you. Products you suggest (name and energy) are published in the catalog and do not carry your IP.</p>
 
-          <h3>4. Human verification (Cloudflare Turnstile)</h3>
-          <p>We use Cloudflare Turnstile to protect the fund from bots and automated abuse. Turnstile is an alternative to traditional captchas that <strong>does not use tracking cookies</strong> and <strong>does not collect personally identifiable data</strong>. Verification is processed on Cloudflare's servers. You can read their policy at <a href="https://www.cloudflare.com/privacypolicy/" target="_blank" class="text-amber-400 hover:text-amber-300">cloudflare.com/privacypolicy</a>.</p>
+          <h3>4. Server logs</h3>
+          <p>Like any web server, ours records each request: IP address, date and time, requested page, response code and browser (User-Agent). They are used for security and to diagnose failures, and are deleted automatically after 15 days.</p>
 
-          <h3>5. Analytics (Umami)</h3>
-          <p>We use Umami, an open-source analytics tool, to understand site traffic in aggregate. Umami <strong>does not use cookies</strong>, <strong>does not track individuals</strong>, does not collect personal data, and does not share information with third parties. We only see general metrics like visit counts and most viewed pages.</p>
+          <h3>5. Human verification (Cloudflare Turnstile)</h3>
+          <p>We use Cloudflare Turnstile to protect the fund from bots and automated abuse. When the widget loads, Cloudflare processes technical data from your browser and connection (such as your IP, the TLS fingerprint and the User-Agent) to decide whether you are a person. In addition, our server sends Cloudflare your IP together with the verification result in order to check it. According to the Turnstile privacy addendum, Cloudflare acts as a processor and, to improve its bot detection, also as a controller. We do not control how long it keeps that data. More information: <a href="https://www.cloudflare.com/privacypolicy/" target="_blank" rel="noopener" class="text-amber-400 hover:text-amber-300">Cloudflare's privacy policy</a> and <a href="https://www.cloudflare.com/turnstile-privacy-policy/" target="_blank" rel="noopener" class="text-amber-400 hover:text-amber-300">Turnstile privacy addendum</a>.</p>
+
+          <h3>6. Analytics (Umami)</h3>
+          <p>We use Umami Cloud to learn, in aggregate, how many people visit the site and which pages they view. Umami does not use cookies and records metrics such as page views, referrer, browser, operating system, device type and approximate location. Like any external resource, its script is loaded from Umami's servers (cloud.umami.is), which receive your IP address. More information in <a href="https://umami.is/privacy" target="_blank" rel="noopener" class="text-amber-400 hover:text-amber-300">Umami's privacy policy</a>. You can block that script with your browser or a tracker blocker; the site works the same.</p>
+
+          <h3>7. Other third-party resources</h3>
+          <p>To display the pages, your browser loads third-party resources which, by that fact alone, receive your IP and browser data: Google Fonts (typefaces), Tailwind CSS (styles, cdn.tailwindcss.com), Cloudflare's cdnjs (the library that draws QR codes) and, to show the power of the Bitcoin network, blockchain.info and mempool.space. We do not control what they do with that data; see their policies.</p>
+
+          <h3>8. Public ledger of movements</h3>
+          <p>The Chest publishes an open ledger of every payment that enters or leaves its Lightning node: donations, deposits, claims, liquidity, expenses and withdrawals. For each payment only this is published: the <strong>time</strong> (UTC, to the millisecond), the <strong>type</strong>, the <strong>amount</strong>, the <strong>fee</strong> and the <strong>payment hash</strong> (or, for a movement on the Bitcoin chain, the transaction id). Your IP, your Lightning Address, your node's identity, invoices, descriptions and messages are not published. Each block does carry the public key of the Chest's own node (the same one that any Lightning invoice issued by the Chest already shows): it is not secret, gives access to nothing and does not identify whoever pays or whoever claims. The ledger is a list of payments, not of people: it does not say who claimed or who donated.</p>
+          <p>Even so, three things are worth knowing. First, anyone who has the hash of their own payment (for example, on their wallet's receipt) can find that line in the ledger, and if you show that receipt to someone else, they will be able to see that the payment was yours. Second, the exact time and the amount could be cross-referenced with what someone already knows about you, for example that they saw you claim at a certain time. Third, <strong>what is published in the ledger cannot be erased or corrected</strong>: each block is chained to the previous one, copied to GitHub and sealed in Bitcoin (section 9). If you ask us to delete your data, we can remove what is only in our database, but not what is already in the public ledger or in its copies.</p>
+
+          <h3>9. GitHub copy and timestamps</h3>
+          <p>As often as GitHub allows, an automated process copies the public ledger to an open GitHub repository (<a href="https://github.com/Rapayet/takepower-ledger" target="_blank" rel="noopener" class="text-amber-400 hover:text-amber-300">takepower-ledger</a>), verifies it and stamps it with <a href="https://opentimestamps.org" target="_blank" rel="noopener" class="text-amber-400 hover:text-amber-300">OpenTimestamps</a>, so that it can be proven what was published and when. GitHub (owned by Microsoft) hosts that repository and handles the data of the people who visit it under its <a href="https://docs.github.com/en/site-policy/privacy-policies/github-general-privacy-statement" target="_blank" rel="noopener" class="text-amber-400 hover:text-amber-300">privacy statement</a>. The OpenTimestamps calendar servers receive only a cryptographic fingerprint calculated from the blocks, not their content, and the stamp is anchored in Bitcoin, a public chain that is in practice impossible to rewrite. The copies and the stamps exist precisely so that what was published cannot be withdrawn. Whoever downloads the ledger or clones the repository can keep their own copy, and we do not control those copies.</p>
+
+          <h2>How long we keep it</h2>
+          <ul>
+            <li><strong>Claim IP:</strong> 22 days from the claim; deleted automatically.</li>
+            <li><strong>Lightning Address or node, date, amount and payment hash:</strong> for as long as the fund exists, as the fund's record.</li>
+            <li><strong>Public ledger (time, type, amount, fee and hash of each payment):</strong> permanently; it cannot be erased or corrected (sections 8 and 9).</li>
+            <li><strong>Vote IP:</strong> 22 days from the vote; deleted automatically (the vote itself is kept, without the IP).</li>
+            <li><strong>Server logs:</strong> 15 days.</li>
+            <li><strong>Internal backups:</strong> may keep data that has already been deleted from the live database, until those backups are removed.</li>
+          </ul>
 
           <h2>What we do NOT do</h2>
           <ul>
             <li>We do not use Google Analytics or invasive analytics services.</li>
-            <li>We do not install tracking or advertising cookies.</li>
-            <li>We do not store passwords (there are no user accounts).</li>
-            <li>We do not sell or share data with third parties.</li>
-            <li>We do not display advertising.</li>
+            <li>We do not install our own tracking or advertising cookies.</li>
+            <li>We do not sell your data or hand it to third parties for commercial purposes; the only third parties that receive data are the technical services described above and, in the case of the public ledger, anyone who reads it (section 8).</li>
+            <li>There are no user accounts or passwords.</li>
+            <li>We do not show ads.</li>
             <li>We do not profile users.</li>
-            <li>We do not collect emails or contact information.</li>
+            <li>We do not ask for email addresses or other contact details. If you write to us on your own initiative, we use your address only to reply to you.</li>
           </ul>
 
           <h2>Local storage (localStorage)</h2>
-          <p>We use the browser's localStorage solely to remember your language preference. This data stays on your device and is never sent to our servers.</p>
+          <p>We use your browser's localStorage only to remember your language preference. That data stays on your device and is never sent to our servers.</p>
+
+          <h2>Questions and requests</h2>
+          <p>For questions about this policy, or to ask for the data tied to your Lightning Address or your IP to be deleted, write to <a href="mailto:power.area517@passinbox.com" class="text-amber-400 hover:text-amber-300">power.area517@passinbox.com</a>. What is already in the public ledger cannot be erased (see section 8).</p>
 
           <h2>Open source</h2>
-          <p>All our code is open and auditable. You can verify exactly what data we process and how we handle it. There are no backdoors or hidden code.</p>
+          <p>The project is open source, but the public copy of the server may lag behind the version that is running. What this page describes is what the running version does. The specification of the public ledger, its verifier and the mirror program are published in the GitHub repository mentioned in section 9.</p>
 
           <h2>About this project</h2>
-          <p>Take Power is an anonymous and autonomous project. There is no company, organization, or individual behind it handling inquiries. The fund operates automatically: it distributes sats to those who claim them and accepts donations from those who wish to contribute. The code speaks for itself.</p>
+          <p>Take Power is an independent project run by one person, with no company or organization behind it. Whoever runs it has technical access to the server and to the database described on this page, and uses them only to keep the fund working. The fund operates automatically: it distributes sats to whoever claims them and accepts donations from anyone who wishes to contribute.</p>
+
+          <h2>Changes to this policy</h2>
+          <p>If the system changes in a way that affects data, we will update this page and its date.</p>
         `
       },
       pt: {
         back: '← Voltar',
         title: 'Política de Privacidade',
         subtitle: 'Sua soberania digital é nossa prioridade',
-        lastUpdate: 'Última atualização: Fevereiro 2026',
+        lastUpdate: 'Última atualização: Novembro 2026',
         body: `
           <h2>Filosofia</h2>
-          <p>Take Power nasceu da convicção de que a riqueza deve ser redistribuída e que os dados não devem ser usados para concentrar poder. Coletamos a informação mínima necessária para que o serviço funcione. Não vendemos, compartilhamos nem monetizamos dados pessoais. Nunca faremos isso.</p>
+          <p>Take Power nasceu da convicção de que a riqueza deve ser redistribuída e que os dados não devem ser usados para concentrar poder. Coletamos a informação mínima necessária para que o serviço funcione. Não vendemos nem monetizamos dados pessoais. Nunca faremos isso. Esta página explica com precisão o que é armazenado, para quê e por quanto tempo.</p>
 
           <h2>Quais dados processamos</h2>
 
           <h3>1. Reivindicação de sats (Claim)</h3>
           <p>Quando você reivindica seus 10.000 sats, armazenamos:</p>
           <ul>
-            <li><strong>Lightning Address</strong> ou <strong>identidade do nó</strong> (payee): Usado unicamente para controlar o intervalo de 21 dias entre reivindicações e evitar abusos. Não é vinculado ao seu nome nem a nenhum dado pessoal.</li>
-            <li><strong>Hash da transação</strong>: Registro do pagamento Lightning para auditoria do fundo.</li>
-            <li><strong>Data da reivindicação</strong> e valor.</li>
+            <li><strong>Seu endereço IP, de forma temporária.</strong> É usado somente para controlar o intervalo de 21 dias entre reivindicações feitas a partir de uma mesma conexão e para coibir abusos, como reivindicar várias vezes com endereços diferentes. É apagado automaticamente 22 dias após a reivindicação (os 21 do intervalo mais um dia de margem). Se o pagamento falhar, é apagado imediatamente. Não é usado para nenhuma outra finalidade.</li>
+            <li><strong>Lightning Address</strong> ou <strong>identidade do nó</strong> (payee): usado para controlar o intervalo de 21 dias por destinatário e para manter o registro do fundo, e conservado em nosso banco de dados. Uma Lightning Address tem a forma de um e-mail (usuario@dominio) e pode conter seu nome, se você a escolheu assim; se quiser mais privacidade, use uma que não identifique você.</li>
+            <li><strong>Hash do pagamento</strong>, <strong>data</strong> e <strong>valor</strong>: registro do pagamento Lightning, para auditar o fundo. Esses dados do pagamento (sem sua Lightning Address nem seu IP) também são publicados no livro público, como explicado no item 8.</li>
           </ul>
-          <p>Não armazenamos seu IP, sua localização geográfica nem nenhum dado do navegador para esta função.</p>
 
           <h3>2. Doações</h3>
-          <p>Quando você doa ao fundo, é gerado um invoice Lightning. Apenas armazenamos o hash do pagamento e o valor. Não há como vincular uma doação a uma identidade pessoal.</p>
+          <p>Quando você doa ao fundo, é gerada uma invoice Lightning. Armazenamos o hash do pagamento, o valor e a data, e esses dados do pagamento (sem seu IP) também são publicados no livro público, como explicado no item 8. Não pedimos nenhum dado de identidade nem guardamos seu IP nesta função (ainda assim, o servidor registra sua visita, como explicado no item 4).</p>
 
-          <h3>3. Padrão Energético (Votos)</h3>
-          <p>Para o sistema de votação de produtos, armazenamos seu endereço IP de forma temporária com o único fim de evitar votos duplicados. Este IP não é cruzado com nenhum outro dado nem usado para rastreamento.</p>
+          <h3>3. Padrão Energético (votos e sugestões)</h3>
+          <p>Para evitar votos repetidos, guardamos seu endereço IP junto a cada voto. Esse IP é apagado automaticamente 22 dias após o voto; o voto é conservado, já sem o IP. Enquanto isso, não é cruzado com outros dados nem usado para rastrear você. Os produtos que você sugerir (nome e energia) são publicados no catálogo e não levam seu IP.</p>
 
-          <h3>4. Verificação humana (Cloudflare Turnstile)</h3>
-          <p>Usamos Cloudflare Turnstile para proteger o fundo de bots e abusos automatizados. Turnstile é uma alternativa aos captchas tradicionais que <strong>não usa cookies de rastreamento</strong> e <strong>não coleta dados pessoais identificáveis</strong>. A verificação é processada nos servidores da Cloudflare. Você pode ler a política deles em <a href="https://www.cloudflare.com/privacypolicy/" target="_blank" class="text-amber-400 hover:text-amber-300">cloudflare.com/privacypolicy</a>.</p>
+          <h3>4. Registros técnicos do servidor</h3>
+          <p>Como qualquer servidor web, o nosso registra cada solicitação: endereço IP, data e hora, página solicitada, código de resposta e navegador (User-Agent). São usados para segurança e para diagnosticar falhas, e são apagados automaticamente após 15 dias.</p>
 
-          <h3>5. Análise (Umami)</h3>
-          <p>Usamos Umami, uma ferramenta de análise de código aberto, para entender o tráfego do site de forma agregada. Umami <strong>não usa cookies</strong>, <strong>não rastreia indivíduos</strong>, não coleta dados pessoais e não compartilha informações com terceiros. Apenas vemos métricas gerais como número de visitas e páginas mais vistas.</p>
+          <h3>5. Verificação humana (Cloudflare Turnstile)</h3>
+          <p>Usamos o Cloudflare Turnstile para proteger o fundo contra bots e abusos automatizados. Quando o widget é carregado, a Cloudflare processa dados técnicos do seu navegador e da sua conexão (como seu IP, a impressão digital TLS e o User-Agent) para decidir se você é uma pessoa. Além disso, nosso servidor envia à Cloudflare o seu IP junto com o resultado da verificação, para confirmá-lo. Segundo o adendo de privacidade do Turnstile, a Cloudflare atua como operadora e, para melhorar sua detecção de bots, também como controladora. Não controlamos por quanto tempo ela conserva esses dados. Mais informações: <a href="https://www.cloudflare.com/privacypolicy/" target="_blank" rel="noopener" class="text-amber-400 hover:text-amber-300">política de privacidade da Cloudflare</a> e <a href="https://www.cloudflare.com/turnstile-privacy-policy/" target="_blank" rel="noopener" class="text-amber-400 hover:text-amber-300">adendo de privacidade do Turnstile</a>.</p>
+
+          <h3>6. Análise (Umami)</h3>
+          <p>Usamos o Umami Cloud para saber, de forma agregada, quantas pessoas visitam o site e quais páginas veem. O Umami não usa cookies e registra métricas como visualizações de página, site de origem (referrer), navegador, sistema operacional, tipo de dispositivo e localização aproximada. Como qualquer recurso externo, o script é carregado dos servidores do Umami (cloud.umami.is), que recebem seu endereço IP. Mais informações na <a href="https://umami.is/privacy" target="_blank" rel="noopener" class="text-amber-400 hover:text-amber-300">política de privacidade do Umami</a>. Você pode bloquear esse script com seu navegador ou com um bloqueador de rastreadores; o site funciona do mesmo jeito.</p>
+
+          <h3>7. Outros recursos de terceiros</h3>
+          <p>Para exibir as páginas, seu navegador carrega recursos de terceiros que, por esse simples fato, recebem seu IP e dados do seu navegador: Google Fonts (tipografias), Tailwind CSS (estilos, cdn.tailwindcss.com), cdnjs da Cloudflare (a biblioteca que desenha os códigos QR) e, para mostrar a potência da rede Bitcoin, blockchain.info e mempool.space. Não controlamos o que eles fazem com esses dados; consulte as políticas deles.</p>
+
+          <h3>8. Livro público de movimentos</h3>
+          <p>O Baú publica um livro aberto com todos os pagamentos que entram ou saem do seu nó Lightning: doações, depósitos, reivindicações, liquidez, despesas e retiradas. De cada pagamento é publicado somente isto: a <strong>hora</strong> (UTC, ao milissegundo), o <strong>tipo</strong>, o <strong>valor</strong>, a <strong>taxa</strong> e o <strong>hash do pagamento</strong> (ou, se o movimento ocorre na rede Bitcoin, o identificador da transação). Não são publicados seu IP, sua Lightning Address, a identidade do seu nó, faturas, descrições nem mensagens. Cada bloco inclui, isso sim, a chave pública do nó do próprio Baú (a mesma que qualquer fatura Lightning emitida pelo Baú já mostra): ela não é secreta, não dá acesso a nada e não identifica quem paga nem quem reivindica. O livro é uma lista de pagamentos, não de pessoas: não diz quem reivindicou nem quem doou.</p>
+          <p>Mesmo assim, há três coisas que convém saber. Primeiro, quem tiver o hash do próprio pagamento (por exemplo, no comprovante da sua carteira) consegue encontrar essa linha no livro e, se você mostrar esse comprovante a outra pessoa, ela poderá ver que o pagamento foi seu. Segundo, a hora exata e o valor podem ser cruzados com o que alguém já saiba sobre você, por exemplo, que viu você reivindicar em certo horário. Terceiro, <strong>o que é publicado no livro não pode ser apagado nem corrigido</strong>: cada bloco fica encadeado ao anterior, copiado no GitHub e selado no Bitcoin (item 9). Se você nos pedir para apagar seus dados, poderemos remover o que está somente no nosso banco de dados, mas não o que já está no livro público nem em suas cópias.</p>
+
+          <h3>9. Cópia no GitHub e carimbos de tempo</h3>
+          <p>Com a frequência que o GitHub permitir, um processo automático copia o livro público para um repositório aberto no GitHub (<a href="https://github.com/Rapayet/takepower-ledger" target="_blank" rel="noopener" class="text-amber-400 hover:text-amber-300">takepower-ledger</a>), o verifica e lhe aplica carimbos de tempo com o <a href="https://opentimestamps.org" target="_blank" rel="noopener" class="text-amber-400 hover:text-amber-300">OpenTimestamps</a>, para que se possa provar o que foi publicado e quando. O GitHub (de propriedade da Microsoft) hospeda esse repositório e trata os dados de quem o visita conforme sua <a href="https://docs.github.com/en/site-policy/privacy-policies/github-general-privacy-statement" target="_blank" rel="noopener" class="text-amber-400 hover:text-amber-300">declaração de privacidade</a>. Os servidores de calendário do OpenTimestamps recebem apenas uma impressão digital criptográfica calculada a partir dos blocos, não o conteúdo deles, e o carimbo fica ancorado no Bitcoin, uma cadeia pública que na prática é impossível de reescrever. As cópias e os carimbos existem justamente para que o que foi publicado não possa ser retirado. Quem baixar o livro ou clonar o repositório pode guardar sua própria cópia, e não controlamos essas cópias.</p>
+
+          <h2>Por quanto tempo conservamos</h2>
+          <ul>
+            <li><strong>IP da reivindicação:</strong> 22 dias a partir da reivindicação; apagado automaticamente.</li>
+            <li><strong>Lightning Address ou nó, data, valor e hash do pagamento:</strong> enquanto o fundo existir, como registro do fundo.</li>
+            <li><strong>Livro público (hora, tipo, valor, taxa e hash de cada pagamento):</strong> de forma permanente; não pode ser apagado nem corrigido (itens 8 e 9).</li>
+            <li><strong>IP de um voto:</strong> 22 dias a partir do voto; apagado automaticamente (o voto é conservado, sem o IP).</li>
+            <li><strong>Registros do servidor:</strong> 15 dias.</li>
+            <li><strong>Cópias de segurança internas:</strong> podem conservar dados que já foram apagados do banco ativo, até que essas cópias sejam eliminadas.</li>
+          </ul>
 
           <h2>O que NÃO fazemos</h2>
           <ul>
             <li>Não usamos Google Analytics nem serviços de análise invasivos.</li>
-            <li>Não instalamos cookies de rastreamento ou publicidade.</li>
-            <li>Não armazenamos senhas (não há contas de usuário).</li>
-            <li>Não vendemos nem compartilhamos dados com terceiros.</li>
+            <li>Não instalamos cookies próprios de rastreamento nem de publicidade.</li>
+            <li>Não vendemos seus dados nem os repassamos a terceiros com fins comerciais; os únicos terceiros que recebem dados são os serviços técnicos descritos acima e, no caso do livro público, qualquer pessoa que o leia (item 8).</li>
+            <li>Não há contas de usuário nem senhas.</li>
             <li>Não exibimos publicidade.</li>
-            <li>Não fazemos perfil de usuários.</li>
-            <li>Não coletamos emails nem dados de contato.</li>
+            <li>Não fazemos perfilamento de usuários.</li>
+            <li>Não pedimos e-mails nem outros dados de contato. Se você nos escrever por conta própria, usamos o seu endereço apenas para responder.</li>
           </ul>
 
           <h2>Armazenamento local (localStorage)</h2>
-          <p>Usamos localStorage do navegador unicamente para lembrar sua preferência de idioma. Este dado permanece no seu dispositivo e nunca é enviado aos nossos servidores.</p>
+          <p>Usamos o localStorage do navegador apenas para lembrar sua preferência de idioma. Esse dado permanece no seu dispositivo e nunca é enviado aos nossos servidores.</p>
+
+          <h2>Dúvidas e solicitações</h2>
+          <p>Para dúvidas sobre esta política, ou para pedir a exclusão dos dados associados ao seu endereço Lightning ou ao seu IP, escreva para <a href="mailto:power.area517@passinbox.com" class="text-amber-400 hover:text-amber-300">power.area517@passinbox.com</a>. O que já consta do livro público não pode ser apagado (veja o item 8).</p>
 
           <h2>Código aberto</h2>
-          <p>Todo nosso código é aberto e auditável. Você pode verificar exatamente quais dados processamos e como os manuseamos. Não há portas traseiras nem código oculto.</p>
+          <p>O projeto é de código aberto, mas a cópia pública do servidor pode estar atrasada em relação à versão em funcionamento. O que esta página descreve é o que a versão em funcionamento faz. A especificação do livro público, o verificador dele e o programa do espelho estão publicados no repositório do GitHub mencionado no item 9.</p>
 
           <h2>Sobre este projeto</h2>
-          <p>Take Power é um projeto anônimo e autônomo. Não há uma empresa, organização nem indivíduo por trás recebendo consultas. O fundo opera de maneira automática: distribui sats a quem os reivindica e aceita doações de quem quiser contribuir. O código fala por si mesmo.</p>
+          <p>Take Power é um projeto independente, operado por uma pessoa, sem empresa nem organização por trás. Quem o opera tem acesso técnico ao servidor e ao banco de dados descritos nesta página, e os usa apenas para que o fundo funcione. O fundo opera de forma automática: distribui sats a quem os reivindica e aceita doações de quem quiser contribuir.</p>
+
+          <h2>Mudanças nesta política</h2>
+          <p>Se o sistema mudar de uma forma que afete os dados, atualizaremos esta página e a sua data.</p>
         `
       },
       fr: {
         back: '← Retour',
         title: 'Politique de Confidentialité',
         subtitle: 'Votre souveraineté numérique est notre priorité',
-        lastUpdate: 'Dernière mise à jour : Février 2026',
+        lastUpdate: 'Dernière mise à jour : Novembre 2026',
         body: `
           <h2>Philosophie</h2>
-          <p>Take Power est né de la conviction que la richesse doit être redistribuée et que les données ne doivent pas être utilisées pour concentrer le pouvoir. Nous collectons le minimum d'informations nécessaires au fonctionnement du service. Nous ne vendons, ne partageons ni ne monétisons les données personnelles. Nous ne le ferons jamais.</p>
+          <p>Take Power est né de la conviction que la richesse doit être redistribuée et que les données ne doivent pas être utilisées pour concentrer le pouvoir. Nous collectons le minimum d'informations nécessaires au fonctionnement du service. Nous ne vendons ni ne monétisons les données personnelles. Nous ne le ferons jamais. Cette page explique précisément ce qui est conservé, pourquoi et pendant combien de temps.</p>
 
           <h2>Quelles données nous traitons</h2>
 
           <h3>1. Réclamation de sats (Claim)</h3>
-          <p>Lorsque vous réclamez vos 10 000 sats, nous stockons :</p>
+          <p>Lorsque vous réclamez vos 10 000 sats, nous conservons :</p>
           <ul>
-            <li><strong>Lightning Address</strong> ou <strong>identité du nœud</strong> (payee) : Utilisé uniquement pour contrôler l'intervalle de 21 jours entre les réclamations et prévenir les abus. Il n'est pas lié à votre nom ni à aucune donnée personnelle.</li>
-            <li><strong>Hash de la transaction</strong> : Enregistrement du paiement Lightning pour l'audit du fonds.</li>
-            <li><strong>Date de réclamation</strong> et montant.</li>
+            <li><strong>Votre adresse IP, de façon temporaire.</strong> Elle sert uniquement à contrôler l'intervalle de 21 jours entre deux réclamations depuis une même connexion et à limiter les abus, comme réclamer plusieurs fois avec des adresses différentes. Elle est supprimée automatiquement 22 jours après la réclamation (les 21 jours de l'intervalle plus un jour de marge). Si le paiement échoue, elle est supprimée immédiatement. Elle n'est utilisée à aucune autre fin.</li>
+            <li><strong>Lightning Address</strong> ou <strong>identité du nœud</strong> (payee) : sert à contrôler l'intervalle de 21 jours par destinataire et à tenir le registre du fonds ; elle est conservée dans notre base de données. Une Lightning Address a la forme d'un e-mail (utilisateur@domaine) et peut contenir votre nom si vous l'avez choisie ainsi ; pour plus de confidentialité, utilisez-en une qui ne vous identifie pas.</li>
+            <li><strong>Hash du paiement</strong>, <strong>date</strong> et <strong>montant</strong> : trace du paiement Lightning, pour auditer le fonds. Ces données du paiement (sans votre Lightning Address ni votre IP) sont aussi publiées dans le registre public, comme expliqué au point 8.</li>
           </ul>
-          <p>Nous ne stockons pas votre IP, votre localisation géographique ni aucune donnée du navigateur pour cette fonction.</p>
 
           <h3>2. Dons</h3>
-          <p>Lorsque vous faites un don au fonds, une facture Lightning est générée. Nous ne stockons que le hash du paiement et le montant. Il n'y a aucun moyen de lier un don à une identité personnelle.</p>
+          <p>Lorsque vous faites un don au fonds, une facture (invoice) Lightning est générée. Nous conservons le hash du paiement, le montant et la date, et ces données du paiement (sans votre IP) sont aussi publiées dans le registre public, comme expliqué au point 8. Nous ne demandons aucune donnée d'identité et ne conservons pas votre IP pour cette fonction (le serveur enregistre néanmoins votre visite, comme expliqué au point 4).</p>
 
-          <h3>3. Standard Énergétique (Votes)</h3>
-          <p>Pour le système de vote des produits, nous stockons votre adresse IP de façon temporaire dans le seul but d'éviter les votes en double. Cette IP n'est croisée avec aucune autre donnée et n'est pas utilisée pour le suivi.</p>
+          <h3>3. Standard Énergétique (votes et suggestions)</h3>
+          <p>Pour éviter les votes répétés, nous conservons votre adresse IP à côté de chaque vote. Cette IP est supprimée automatiquement 22 jours après le vote ; le vote est conservé, sans l'IP. D'ici là, elle n'est pas croisée avec d'autres données ni utilisée pour vous pister. Les produits que vous suggérez (nom et énergie) sont publiés dans le catalogue et ne portent pas votre IP.</p>
 
-          <h3>4. Vérification humaine (Cloudflare Turnstile)</h3>
-          <p>Nous utilisons Cloudflare Turnstile pour protéger le fonds contre les bots et les abus automatisés. Turnstile est une alternative aux captchas traditionnels qui <strong>n'utilise pas de cookies de suivi</strong> et <strong>ne collecte pas de données personnelles identifiables</strong>. La vérification est traitée sur les serveurs de Cloudflare. Vous pouvez lire leur politique sur <a href="https://www.cloudflare.com/privacypolicy/" target="_blank" class="text-amber-400 hover:text-amber-300">cloudflare.com/privacypolicy</a>.</p>
+          <h3>4. Journaux techniques du serveur</h3>
+          <p>Comme tout serveur web, le nôtre enregistre chaque requête : adresse IP, date et heure, page demandée, code de réponse et navigateur (User-Agent). Ils servent à la sécurité et au diagnostic des pannes, et sont supprimés automatiquement après 15 jours.</p>
 
-          <h3>5. Analytique (Umami)</h3>
-          <p>Nous utilisons Umami, un outil d'analytique open source, pour comprendre le trafic du site de manière agrégée. Umami <strong>n'utilise pas de cookies</strong>, <strong>ne suit pas les individus</strong>, ne collecte pas de données personnelles et ne partage pas d'informations avec des tiers. Nous ne voyons que des métriques générales comme le nombre de visites et les pages les plus consultées.</p>
+          <h3>5. Vérification humaine (Cloudflare Turnstile)</h3>
+          <p>Nous utilisons Cloudflare Turnstile pour protéger le fonds contre les robots et les abus automatisés. Lorsque le widget se charge, Cloudflare traite des données techniques de votre navigateur et de votre connexion (comme votre IP, l'empreinte TLS et le User-Agent) pour déterminer si vous êtes une personne. En outre, notre serveur envoie à Cloudflare votre IP avec le résultat de la vérification afin de la valider. Selon l'addendum de confidentialité de Turnstile, Cloudflare agit comme sous-traitant et, pour améliorer sa détection des robots, également comme responsable du traitement. Nous ne contrôlons pas la durée pendant laquelle il conserve ces données. Plus d'informations : <a href="https://www.cloudflare.com/privacypolicy/" target="_blank" rel="noopener" class="text-amber-400 hover:text-amber-300">politique de confidentialité de Cloudflare</a> et <a href="https://www.cloudflare.com/turnstile-privacy-policy/" target="_blank" rel="noopener" class="text-amber-400 hover:text-amber-300">addendum de confidentialité de Turnstile</a>.</p>
+
+          <h3>6. Analytique (Umami)</h3>
+          <p>Nous utilisons Umami Cloud pour savoir, de façon agrégée, combien de personnes visitent le site et quelles pages elles consultent. Umami n'utilise pas de cookies et enregistre des mesures comme les pages vues, le site d'origine (referrer), le navigateur, le système d'exploitation, le type d'appareil et la localisation approximative. Comme toute ressource externe, son script est chargé depuis les serveurs d'Umami (cloud.umami.is), qui reçoivent votre adresse IP. Plus d'informations dans la <a href="https://umami.is/privacy" target="_blank" rel="noopener" class="text-amber-400 hover:text-amber-300">politique de confidentialité d'Umami</a>. Vous pouvez bloquer ce script avec votre navigateur ou un bloqueur de traceurs ; le site fonctionne de la même façon.</p>
+
+          <h3>7. Autres ressources tierces</h3>
+          <p>Pour afficher les pages, votre navigateur charge des ressources tierces qui, de ce seul fait, reçoivent votre IP et des données de votre navigateur : Google Fonts (polices), Tailwind CSS (styles, cdn.tailwindcss.com), cdnjs de Cloudflare (la bibliothèque qui dessine les codes QR) et, pour afficher la puissance du réseau Bitcoin, blockchain.info et mempool.space. Nous ne contrôlons pas ce qu'ils font de ces données ; consultez leurs politiques.</p>
+
+          <h3>8. Registre public des mouvements</h3>
+          <p>Le Coffre publie un registre ouvert de tous les paiements qui entrent dans son nœud Lightning ou qui en sortent : dons, dépôts, réclamations, liquidité, dépenses et retraits. De chaque paiement, seul ceci est publié : l'<strong>heure</strong> (UTC, à la milliseconde), le <strong>type</strong>, le <strong>montant</strong>, les <strong>frais</strong> et le <strong>hash du paiement</strong> (ou, pour un mouvement sur la chaîne Bitcoin, l'identifiant de la transaction). Ne sont publiés ni votre IP, ni votre Lightning Address, ni l'identité de votre nœud, ni factures, descriptions ou messages. Chaque bloc porte en revanche la clé publique du nœud du Coffre lui-même (la même que montre déjà toute facture Lightning émise par le Coffre) : elle n'est pas secrète, ne donne accès à rien et n'identifie ni celles et ceux qui paient ni celles et ceux qui réclament. Le registre est une liste de paiements, pas de personnes : il ne dit pas qui a réclamé ni qui a donné.</p>
+          <p>Il y a pourtant trois choses à savoir. D'abord, quiconque possède le hash de son propre paiement (par exemple sur le justificatif de son portefeuille) peut retrouver cette ligne dans le registre, et si vous montrez ce justificatif à quelqu'un, cette personne pourra voir que le paiement était le vôtre. Ensuite, l'heure exacte et le montant peuvent être recoupés avec ce que quelqu'un sait déjà de vous, par exemple qu'il vous a vu faire une réclamation à telle heure. Enfin, <strong>ce qui est publié dans le registre ne peut être ni effacé ni corrigé</strong> : chaque bloc est enchaîné au précédent, copié sur GitHub et scellé dans Bitcoin (point 9). Si vous nous demandez d'effacer vos données, nous pourrons retirer ce qui ne se trouve que dans notre base de données, mais pas ce qui figure déjà dans le registre public ni dans ses copies.</p>
+
+          <h3>9. Copie sur GitHub et horodatages</h3>
+          <p>Aussi souvent que GitHub le permet, un processus automatique copie le registre public dans un dépôt ouvert sur GitHub (<a href="https://github.com/Rapayet/takepower-ledger" target="_blank" rel="noopener" class="text-amber-400 hover:text-amber-300">takepower-ledger</a>), le vérifie et lui applique des horodatages avec <a href="https://opentimestamps.org" target="_blank" rel="noopener" class="text-amber-400 hover:text-amber-300">OpenTimestamps</a>, afin de pouvoir prouver ce qui a été publié et quand. GitHub (propriété de Microsoft) héberge ce dépôt et traite les données de celles et ceux qui le consultent selon sa <a href="https://docs.github.com/en/site-policy/privacy-policies/github-general-privacy-statement" target="_blank" rel="noopener" class="text-amber-400 hover:text-amber-300">déclaration de confidentialité</a>. Les serveurs de calendrier d'OpenTimestamps reçoivent seulement une empreinte cryptographique calculée à partir des blocs, pas leur contenu, et l'horodatage est ancré dans Bitcoin, une chaîne publique pratiquement impossible à réécrire. Les copies et les horodatages existent justement pour que ce qui a été publié ne puisse pas être retiré. Quiconque télécharge le registre ou clone le dépôt peut conserver sa propre copie, et nous ne contrôlons pas ces copies.</p>
+
+          <h2>Combien de temps nous les conservons</h2>
+          <ul>
+            <li><strong>IP de la réclamation :</strong> 22 jours à partir de la réclamation ; supprimée automatiquement.</li>
+            <li><strong>Lightning Address ou nœud, date, montant et hash du paiement :</strong> tant que le fonds existe, comme registre du fonds.</li>
+            <li><strong>Registre public (heure, type, montant, frais et hash de chaque paiement) :</strong> de façon permanente ; il ne peut être ni effacé ni corrigé (points 8 et 9).</li>
+            <li><strong>IP d'un vote :</strong> 22 jours à partir du vote ; supprimée automatiquement (le vote est conservé, sans l'IP).</li>
+            <li><strong>Journaux du serveur :</strong> 15 jours.</li>
+            <li><strong>Sauvegardes internes :</strong> elles peuvent conserver des données déjà supprimées de la base active, jusqu'à leur suppression.</li>
+          </ul>
 
           <h2>Ce que nous ne faisons PAS</h2>
           <ul>
-            <li>Nous n'utilisons pas Google Analytics ni de services d'analyse invasifs.</li>
-            <li>Nous n'installons pas de cookies de suivi ou de publicité.</li>
-            <li>Nous ne stockons pas de mots de passe (il n'y a pas de comptes utilisateur).</li>
-            <li>Nous ne vendons ni ne partageons de données avec des tiers.</li>
+            <li>Nous n'utilisons ni Google Analytics ni services d'analyse intrusifs.</li>
+            <li>Nous n'installons pas de cookies propres de pistage ou de publicité.</li>
+            <li>Nous ne vendons pas vos données et ne les cédons pas à des tiers à des fins commerciales ; les seuls tiers qui reçoivent des données sont les services techniques décrits ci-dessus et, pour le registre public, toute personne qui le lit (point 8).</li>
+            <li>Il n'y a ni comptes utilisateur ni mots de passe.</li>
             <li>Nous n'affichons pas de publicité.</li>
             <li>Nous ne faisons pas de profilage des utilisateurs.</li>
-            <li>Nous ne collectons pas d'emails ni de données de contact.</li>
+            <li>Nous ne demandons ni adresses e-mail ni autres coordonnées. Si vous nous écrivez de votre propre initiative, nous n'utilisons votre adresse que pour vous répondre.</li>
           </ul>
 
           <h2>Stockage local (localStorage)</h2>
           <p>Nous utilisons le localStorage du navigateur uniquement pour mémoriser votre préférence de langue. Cette donnée reste sur votre appareil et n'est jamais envoyée à nos serveurs.</p>
 
+          <h2>Questions et demandes</h2>
+          <p>Pour toute question sur cette politique, ou pour demander la suppression des données associées à votre Lightning Address ou à votre IP, écrivez à <a href="mailto:power.area517@passinbox.com" class="text-amber-400 hover:text-amber-300">power.area517@passinbox.com</a>. Ce qui figure déjà dans le registre public ne peut pas être effacé (voir le point 8).</p>
+
           <h2>Code ouvert</h2>
-          <p>Tout notre code est ouvert et auditable. Vous pouvez vérifier exactement quelles données nous traitons et comment nous les gérons. Il n'y a pas de portes dérobées ni de code caché.</p>
+          <p>Le projet est en code ouvert, mais la copie publique du serveur peut avoir du retard sur la version en fonctionnement. Ce que décrit cette page, c'est ce que fait la version en fonctionnement. La spécification du registre public, son vérificateur et le programme du miroir sont publiés dans le dépôt GitHub mentionné au point 9.</p>
 
           <h2>À propos de ce projet</h2>
-          <p>Take Power est un projet anonyme et autonome. Il n'y a pas d'entreprise, d'organisation ni d'individu derrière qui répond aux demandes. Le fonds fonctionne de manière automatique : il distribue des sats à ceux qui les réclament et accepte les dons de ceux qui souhaitent contribuer. Le code parle de lui-même.</p>
+          <p>Take Power est un projet indépendant, géré par une seule personne, sans entreprise ni organisation derrière lui. Celui ou celle qui le gère a un accès technique au serveur et à la base de données décrits sur cette page, et ne les utilise que pour que le fonds fonctionne. Le fonds fonctionne de manière automatique : il distribue des sats à celles et ceux qui les réclament et accepte les dons de toute personne qui souhaite contribuer.</p>
+
+          <h2>Modifications de cette politique</h2>
+          <p>Si le système change d'une manière qui affecte les données, nous mettrons à jour cette page et sa date.</p>
         `
       }
     };

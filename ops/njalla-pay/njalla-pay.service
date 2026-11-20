@@ -1,0 +1,15 @@
+[Unit]
+Description=Njalla: mantiene con saldo la billetera para que el servidor se renueve solo (v2)
+After=network-online.target phoenixd.service
+Wants=network-online.target
+
+[Service]
+Type=oneshot
+User=root
+Environment=HOME=/root
+EnvironmentFile=/etc/njalla-pay.env
+ExecStart=/usr/bin/node /usr/local/sbin/njalla-pay.js
+NoNewPrivileges=yes
+PrivateTmp=yes
+TimeoutStartSec=600
+Nice=5

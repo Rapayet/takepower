@@ -1,0 +1,9 @@
+[Unit]
+Description=Njalla: revision diaria del saldo (v2)
+
+[Timer]
+OnCalendar=*-*-* 14:37:00
+Persistent=true
+
+[Install]
+WantedBy=timers.target

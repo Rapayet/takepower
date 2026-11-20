@@ -1,0 +1,1255 @@
+<!DOCTYPE html>
+<!-- LEDGER_PAGE_VERSION = 1 -->
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Libro público del Baúl | Take Power</title>
+<meta name="description" content="Cada pago que entra o sale del nodo del Baúl Común de la Humanidad, en bloques encadenados que cualquiera puede comprobar.">
+<link rel="canonical" href="https://www.takepower.world/ledger/">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ctext y='.9em' font-size='90'%3E%E2%82%BF%3C/text%3E%3C/svg%3E">
+<style>
+:root{--bg:#071510;--card:#0d2620;--card2:#15403a;--line:#065f46;--text:#e0e0e0;--soft:#d1d5db;--muted:#9ca3af;--amber:#fbbf24;--amber2:#fcd34d;--orange:#f7931a;--green:#34d399;--emerald:#059669;--blq1:#09201a;--blq2:#06130f}
+*{box-sizing:border-box}
+html{-webkit-text-size-adjust:100%}
+body{margin:0;min-height:100vh;background:var(--bg);color:var(--text);font-family:Lora,Georgia,'Times New Roman',serif;line-height:1.6}
+a{color:var(--amber)}
+a:hover{color:var(--amber2)}
+:focus-visible{outline:2px solid var(--amber);outline-offset:2px}
+.wrap{max-width:56rem;margin:0 auto;padding:2rem 1rem}
+.top{display:flex;flex-wrap:wrap;justify-content:space-between;align-items:center;gap:1rem;margin-bottom:2rem}
+.btn{display:inline-block;padding:.25rem .75rem;border-radius:.375rem;font-size:.875rem;background:var(--card);color:var(--amber2);border:0;text-decoration:none;cursor:pointer;font-family:inherit;line-height:1.6}
+.btn:hover{background:#d97706;color:#fff}
+.btn[aria-disabled=true]{opacity:.6;cursor:default}
+.langs{display:flex;gap:.5rem;margin-left:auto}
+.langs .btn{color:#a7f3d0}
+.langs .btn:hover{background:#047857;color:#fff}
+.langs .btn[aria-pressed=true]{background:var(--emerald);color:#fff}
+.nav{display:flex;flex-wrap:wrap;gap:.5rem}
+.nav a{display:inline-flex;align-items:center;gap:.25rem;padding:.25rem .75rem;border-radius:.375rem;font-size:.875rem;line-height:1.6;background:var(--card);text-decoration:none}
+.nav a:hover{color:#fff}
+.nav svg{display:block;width:1rem;height:1rem;flex:none}
+.nav .n-vis{color:#a7f3d0}
+.nav .n-vis:hover{background:#047857}
+.nav .n-fnd,.nav .n-nrg{color:var(--amber2)}
+.nav .n-fnd:hover,.nav .n-nrg:hover{background:#b45309}
+.nav .n-btc{color:#fb923c}
+.nav .n-btc:hover{background:#c2410c}
+.nav .n-tac{color:#d1d5db}
+.nav .n-tac:hover{background:#4b5563}
+.card{background:var(--card);border:1px solid var(--line);border-radius:1rem;padding:1.25rem 1.25rem;margin-bottom:1.5rem}
+.card h2{margin:0 0 .75rem;font-size:1.3rem;color:var(--orange)}
+.card h3{margin:1.25rem 0 .5rem;font-size:1.05rem;color:var(--green)}
+.card p{margin:0 0 .9rem;color:var(--soft)}
+.hero{background:linear-gradient(to right,var(--card),var(--card2));border:1px solid var(--line);border-radius:1rem;padding:2rem 1.25rem;text-align:center;margin-bottom:1.5rem}
+.hero .ico{font-family:"Apple Color Emoji","Segoe UI Emoji","Noto Color Emoji","Twemoji Mozilla",sans-serif;font-size:3.4rem;line-height:1.1;color:var(--amber);margin-bottom:.35rem}
+.hero h1{margin:0 0 .5rem;font-size:1.9rem;color:#fff;line-height:1.25}
+.hero p{margin:0;color:#a7f3d0}
+.fresh{border-radius:.75rem;padding:.75rem 1rem;margin-bottom:1.5rem;border:1px solid var(--line);background:#0b3a2a}
+.fresh strong{display:block;font-size:1.05rem}
+.fresh small{display:block;color:var(--muted)}
+.fresh.ok strong{color:#6ee7b7}
+.fresh.warn{background:#3a2a07;border-color:#d97706}
+.fresh.warn strong{color:var(--amber2)}
+.fresh.bad{background:#3b1212;border-color:#b91c1c}
+.fresh.bad strong{color:#fca5a5}
+.stats{display:grid;grid-template-columns:repeat(auto-fit,minmax(13rem,1fr));gap:1rem;margin-bottom:1.5rem}
+.stat{background:var(--card);border:1px solid var(--line);border-radius:1rem;padding:1rem}
+.stat .k{color:var(--muted);font-size:.85rem}
+.stat .v{font-size:1.6rem;color:#fff;font-weight:700;line-height:1.3}
+.stat .v small{font-size:.9rem;color:var(--muted);font-weight:400}
+.note{color:var(--muted);font-size:.85rem}
+.mono{font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;font-size:.85rem}
+.hash{word-break:break-all;background:#071510;border:1px solid var(--line);border-radius:.5rem;padding:.5rem .75rem;margin:0 0 .5rem}
+.copy{background:transparent;border:1px solid var(--line);color:#a7f3d0;border-radius:.375rem;font-size:.75rem;padding:.05rem .5rem;cursor:pointer;font-family:inherit}
+.copy:hover{background:#047857;color:#fff}
+.val{display:inline-flex;align-items:center;gap:.4rem;flex-wrap:wrap;justify-content:flex-end}
+.tw{overflow-x:auto}
+#abiertos .tw,#movimientos .tw{background:linear-gradient(180deg,var(--blq1),var(--blq2));border:1px solid var(--line);border-radius:.8rem;padding:.2rem .7rem .35rem}
+table.mov{width:100%;border-collapse:collapse;font-size:.9rem}
+table.mov caption{position:absolute;left:-9999px}
+table.mov th{text-align:left;color:var(--muted);font-weight:400;padding:.4rem .5rem;border-bottom:1px solid var(--line);white-space:nowrap}
+table.mov td{padding:.45rem .5rem;border-bottom:1px solid #0b3a2a;vertical-align:top}
+table.mov td.r,table.mov th.r{text-align:right}
+.badge{display:inline-block;padding:.02rem .55rem;border-radius:999px;font-size:.78rem;border:1px solid var(--line);background:#0b2f26;color:#a7f3d0;white-space:nowrap}
+.b-entrada{background:#0b3a2a;border-color:#10b981;color:#6ee7b7}
+.b-sin_clasificar{background:#3a2a07;border-color:#d97706;color:var(--amber2)}
+.b-reclamo{background:#3a2406;border-color:#f7931a;color:#fdba6a}
+.b-liquidez{background:#0a2a3a;border-color:#38bdf8;color:#7dd3fc}
+.b-gasto{background:#2a1f45;border-color:#a78bfa;color:#c4b5fd}
+.b-retiro{background:#3d1630;border-color:#f472b6;color:#f9a8d4}
+.pos{color:#6ee7b7}
+.neg{color:#e5e7eb}
+.warnbox{background:#3a2a07;border:1px solid #d97706;border-radius:.75rem;padding:.75rem 1rem;margin-bottom:1.5rem}
+.warnbox h2{margin:0 0 .5rem;font-size:1.05rem;color:var(--amber2)}
+.warnbox ul{margin:0;padding-left:1.25rem}
+.okbox{background:#0b3a2a;border:1px solid #10b981;border-radius:.75rem;padding:.75rem 1rem;margin:.75rem 0;color:#a7f3d0}
+.badbox{background:#3b1212;border:1px solid #b91c1c;border-radius:.75rem;padding:.75rem 1rem;margin:.75rem 0;color:#fecaca}
+.center{text-align:center}
+pre.cmd{background:#071510;border:1px solid var(--line);border-radius:.5rem;padding:.75rem;overflow-x:auto;white-space:pre-wrap;overflow-wrap:anywhere;margin:0 0 .5rem;color:#e5e7eb}
+.nw{white-space:nowrap}
+dl.det{margin:0;display:grid;grid-template-columns:max-content 1fr;gap:.25rem 1rem}
+dl.det dt{color:var(--muted)}
+dl.det dd{margin:0;word-break:break-all}
+dl.leg dt{margin-top:.6rem}
+dl.leg dd{margin:0;color:var(--soft)}
+/* persianas: cerradas ocupan una linea; se abren con un clic o con el teclado */
+details.pers{background:var(--card);border:1px solid var(--line);border-radius:1rem;margin:0 0 .65rem}
+details.pers>summary{position:relative;list-style:none;cursor:pointer;padding:.8rem 2.8rem .8rem 1.1rem;color:var(--orange);font-size:1.08rem;line-height:1.35;border-radius:1rem}
+details.pers[open]>summary{border-radius:1rem 1rem 0 0}
+details.pers>summary::-webkit-details-marker{display:none}
+details.pers>summary::after{content:'';position:absolute;right:1.15rem;top:50%;width:.55rem;height:.55rem;margin-top:-.45rem;border-right:2px solid var(--amber);border-bottom:2px solid var(--amber);transform:rotate(45deg);transition:transform .25s ease,margin-top .25s ease}
+details.pers[open]>summary::after{transform:rotate(-135deg);margin-top:-.1rem}
+details.pers>summary:hover{background:rgba(255,255,255,.04)}
+details.pers .cuerpo{padding:.1rem 1.25rem 1.1rem}
+details.pers .cuerpo p{margin:0 0 .9rem;color:var(--soft)}
+details.pers .cuerpo h3{margin:1.1rem 0 .5rem;font-size:1.05rem;color:var(--green)}
+details.pers .cuerpo ol,details.pers .cuerpo ul{margin:0 0 .9rem;padding-left:1.3rem;color:var(--soft)}
+details.pers .cuerpo li{margin-bottom:.5rem}
+details.pers .cuerpo .note{color:var(--muted)}
+details.pers.mini{background:transparent;border:0;border-radius:0;margin:.6rem 0 0}
+details.pers.mini>summary{padding:.3rem 1.8rem .3rem 0;color:var(--amber2);font-size:.95rem;border-radius:.4rem}
+details.pers.mini>summary::after{right:.3rem}
+details.pers.mini .cuerpo{padding:.25rem 0 .4rem}
+@supports selector(::details-content){
+  details.pers{interpolate-size:allow-keywords}
+  details.pers::details-content{block-size:0;overflow:hidden;transition:block-size .28s ease,content-visibility .28s allow-discrete}
+  details.pers[open]::details-content{block-size:auto}
+}
+@media (prefers-reduced-motion:reduce){
+  details.pers::details-content,details.pers>summary::after{transition:none}
+}
+.masl{margin:1.75rem 0 .6rem;color:var(--muted);font-size:.85rem;text-align:center}
+.sr{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
+/* la cadena: tarjetas en una fila (la mas nueva a la izquierda) unidas por eslabones del color de su huella */
+.carril{display:flex;align-items:stretch;overflow-x:auto;padding:.9rem .15rem 1.1rem;scroll-snap-type:x proximity;scroll-padding-left:.15rem;scrollbar-width:thin;scrollbar-color:var(--line) transparent}
+.carril:focus-visible{outline-offset:-2px}
+.bloque{position:relative;flex:none;width:11.5rem;display:flex;flex-direction:column;gap:.5rem;padding:.8rem .85rem .75rem 1.5rem;background:linear-gradient(180deg,var(--blq1),var(--blq2));border:1px solid var(--line);border-radius:.8rem;scroll-snap-align:start}
+.bloque.abierto{border:1px dashed #d97706}
+.lomo{position:absolute;left:-1px;top:-1px;bottom:-1px;width:.65rem;display:flex;flex-direction:column;border-radius:.8rem 0 0 .8rem;overflow:hidden}
+.lomo i{flex:1;display:block;background:#2a4a43}
+.bloque.abierto .lomo i{background:repeating-linear-gradient(135deg,#7c5a14 0 4px,#3a2a07 4px 8px)}
+.bq-cab{display:flex;flex-direction:column;line-height:1.25}
+.bq-cab b{color:#fff;font-size:1rem}
+.bq-cab small{color:var(--muted);font-size:.75rem}
+.tag{display:inline-block;align-self:flex-start;margin-top:.2rem;border:1px solid #d97706;color:var(--amber2);border-radius:999px;padding:0 .5rem;font-size:.72rem}
+.ranuras{display:flex;flex-wrap:wrap;gap:.3rem;min-height:1.1rem;align-items:center}
+.cu{display:block;width:1.1rem;height:1.1rem;border-radius:.3rem;background:#2f5a50}
+.cu.vacia{background:transparent;border:1px dashed var(--muted)}
+.cu.tp-entrada{background:#10b981}
+.cu.tp-reclamo{background:#f7931a}
+.cu.tp-liquidez{background:#38bdf8}
+.cu.tp-gasto{background:#a78bfa}
+.cu.tp-retiro{background:#f472b6}
+.cu.tp-sin_clasificar{background:repeating-linear-gradient(45deg,#fbbf24 0 3px,#92400e 3px 6px)}
+.cu.tp-otro{background:#9ca3af}
+.ranuras .mas{font-size:.75rem;color:var(--muted)}
+.bq-suma{font-size:.82rem;color:var(--soft)}
+.bq-motivo{font-size:.78rem;color:var(--muted);line-height:1.3}
+.bq-chips{margin-top:auto;display:flex;flex-direction:column;gap:.4rem;padding-top:.35rem}
+.chip{font-size:.7rem;color:var(--muted);line-height:1.25}
+.chip .v{display:flex;align-items:center;gap:.4rem;margin-top:.12rem}
+.sw{display:inline-flex;height:.85rem;border-radius:.2rem;overflow:hidden;flex:none;background:#2a4a43}
+.sw i{display:block;width:.45rem}
+.chip .mono{font-size:.74rem;color:var(--soft)}
+.bq-ver{font-size:.75rem}
+.enlace{position:relative;flex:none;width:3.4rem;display:flex;align-items:center;justify-content:center}
+.enlace svg{display:block;width:100%;height:auto;overflow:visible}
+.enlace .hilo{stroke:#1d7a63;stroke-width:2.5;fill:none}
+.enlace .a{fill:var(--card);stroke:var(--ca,#4b7a6e);stroke-width:3}
+.enlace .b{fill:none;stroke:var(--cb,#4b7a6e);stroke-width:3}
+.enlace.abierto .hilo{stroke:#d97706;stroke-dasharray:3 3}
+.enlace.abierto .a,.enlace.abierto .b{stroke-dasharray:5 3}
+.enlace.roto .hilo{stroke:#ef4444;stroke-dasharray:3 3}
+.enlace.roto .a,.enlace.roto .b{stroke:#ef4444}
+.enlace .ojo{position:absolute;top:calc(50% - 2.2rem);color:#fca5a5;font-size:1.1rem}
+.mas-bloques{flex:none;display:flex;align-items:center;padding:0 .5rem 0 .9rem}
+ul.lim{margin:0 0 .9rem;padding-left:1.25rem;color:var(--soft)}
+.foot{text-align:center;margin:2rem 0 1rem}
+.foot a{font-size:.875rem;text-decoration:none}
+.cita{max-width:36rem;margin:0 auto 1.5rem;padding:1.5rem .5rem 0;border-top:1px solid var(--line)}
+.cita blockquote{margin:0}
+.cita blockquote p{margin:0 0 .5rem;font-style:italic;font-size:1rem;line-height:1.5;color:var(--text);text-wrap:balance}
+.cita figcaption{font-size:.8rem;color:var(--muted)}
+@media (max-width:640px){
+  .wrap{padding:1.25rem .75rem}
+  .top{flex-direction:column}
+  .langs{margin-left:0}
+  .nav{justify-content:center;gap:.25rem}
+  .nav a{padding:.25rem .5rem;font-size:.75rem}
+  .nav svg{width:.8rem;height:.8rem}
+  .hero h1{font-size:1.5rem}
+  table.mov thead{display:none}
+  table.mov,table.mov tbody,table.mov tr,table.mov td{display:block;width:100%}
+  #abiertos .tw,#movimientos .tw{background:none;border:0;border-radius:0;padding:0}
+  table.mov tr{background:linear-gradient(180deg,var(--blq1),var(--blq2));border:1px solid var(--line);border-radius:.5rem;margin-bottom:.6rem;padding:.25rem 0}
+  table.mov td{display:flex;justify-content:space-between;gap:1rem;border:0;padding:.2rem .6rem;text-align:right}
+  table.mov td::before{content:attr(data-l);color:var(--muted);text-align:left;flex:none}
+  table.mov td.r{text-align:right}
+  .bloque{width:10.5rem}
+  details.pers>summary{font-size:1rem}
+  details.pers .cuerpo{padding:.1rem 1rem 1rem}
+}
+</style>
+</head>
+<body>
+<noscript>
+<div class="wrap"><div class="card">
+<p>Esta página necesita JavaScript para mostrar el libro. Los archivos están en /ledger/estado.json, /ledger/indice.json y /ledger/bloques/.</p>
+<p>This page needs JavaScript to show the ledger. The files are at /ledger/estado.json, /ledger/indice.json and /ledger/bloques/.</p>
+<p>Esta página precisa de JavaScript para mostrar o livro. Os arquivos estão em /ledger/estado.json, /ledger/indice.json e /ledger/bloques/.</p>
+<p>Cette page a besoin de JavaScript pour afficher le registre. Les fichiers sont dans /ledger/estado.json, /ledger/indice.json et /ledger/bloques/.</p>
+</div></div>
+</noscript>
+<div id="app"></div>
+<script>
+(function () {
+  'use strict';
+
+  var BASE = '/ledger/';
+  var REPO = 'https://github.com/Rapayet/takepower-ledger';
+  var HOME = 'https://takepower.world';
+  var CITA_AUTOR = '— Baruch Spinoza';
+  var LANGS = ['es', 'pt', 'fr', 'en'];
+  var LOCALES = { es: 'es-CO', pt: 'pt-BR', fr: 'fr-FR', en: 'en-US' };
+  var NOMBRES = { es: 'Español', pt: 'Português (Brasil)', fr: 'Français', en: 'English' };
+  var ZERO = new Array(65).join('0');
+  var TIPOS = ['entrada', 'reclamo', 'liquidez', 'gasto', 'retiro', 'sin_clasificar'];
+  var POR_PAGINA = 20;
+  var LOTE_BLOQUES = 4;
+  var HORA = 3600000;
+  var AVISO_MS = 3 * HORA;
+  var ALARMA_MS = 24 * HORA;
+  var REFRESCO_MS = 5 * 60000;
+  var MAX_VERIF = 20000;
+  var PARALELO = 6;
+  var LANE = 8;           // bloques que se ven en la cadena al abrir (y cuantos se suman con "ver bloques anteriores")
+  var RANURAS = 5;        // cuadritos por bloque si el estado no dice otra cosa
+  var MAX_RANURAS = 12;
+  var HASHES = ['experimento', 'funciona', 'limites', 'verificar', 'independiente'];
+  var LIBRO = '\uD83D\uDCD6';   // 📖, como el 📜 de /learn y el ⚡ de /energystandard; es decorativo (aria-hidden)
+  var ESLABON = '<svg viewBox="0 0 54 28" width="54" height="28" focusable="false" aria-hidden="true"><path class="hilo" d="M0 14H54"/><rect class="a" x="10" y="5" width="21" height="18" rx="9"/><rect class="b" x="23" y="5" width="21" height="18" rx="9"/></svg>';
+
+  // barra de navegacion del sitio: los mismos 5 enlaces, nombres, colores e iconos de las demas paginas. NO lleva enlace al libro (a el se entra solo desde el panel de la pagina principal del Baul).
+  // Los iconos son constantes de esta pagina (nunca datos del libro); el simbolo o el icono es decorativo y va oculto para los lectores de pantalla.
+  var ICONOS = {
+    vision: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" focusable="false" aria-hidden="true"><circle cx="12" cy="12" r="10"/><polygon points="16.24 7.76 14.12 14.12 7.76 16.24 9.88 9.88 16.24 7.76"/></svg>',
+    fondo: '<svg viewBox="0 0 32 32" fill="none" stroke="currentColor" stroke-width="1.5" focusable="false" aria-hidden="true"><rect x="2" y="12" width="28" height="16" rx="2"/><path d="M2 18h28"/><rect x="4" y="4" width="24" height="8" rx="1"/><path d="M14 18v6h4v-6"/><circle cx="16" cy="22" r="1.5" fill="currentColor"/></svg>',
+    tactica: '<svg viewBox="0 0 45 48" fill="currentColor" focusable="false" aria-hidden="true"><path d="M 22,10 C 32.5,11 38.5,18 38,39 L 15,39 C 15,30 25,32.5 23,18"/><path d="M 24,18 C 24.38,20.91 18.45,25.37 16,27 C 13,29 13.18,31.34 11,31 C 9.958,30.06 12.41,27.96 11,28 C 10,28 11.19,29.23 10,30 C 9,30 5.997,31 6,26 C 6,24 12,14 12,14 C 12,14 13.89,12.1 14,10.5 C 13.27,9.506 13.5,8.5 13.5,7.5 C 14.5,6.5 16.5,10 16.5,10 L 18.5,10 C 18.5,10 19.28,8.008 21,7 C 22,7 22,10 22,10"/><rect x="4" y="39" width="37" height="6" rx="1.5"/></svg>'
+  };
+  var NAV = [
+    { id: 'vision', ruta: '/vision/', clase: 'n-vis', icono: 'vision', clave: 'navVision' },
+    { id: 'fondo', ruta: '', clase: 'n-fnd', icono: 'fondo', clave: 'navFondo' },
+    { id: 'bitcoin', ruta: '/learn/', clase: 'n-btc', glifo: '\u20BF', clave: 'navBtc' },
+    { id: 'energia', ruta: '/energystandard/', clase: 'n-nrg', glifo: '\u26A1', clave: 'navEnergy' },
+    { id: 'tactica', ruta: '/tactic/', clase: 'n-tac', icono: 'tactica', clave: 'navTactic' }
+  ];
+
+  var TXT = {
+    es: {
+      docTitle: 'Libro público del Baúl | Take Power',
+      metaDesc: 'Cada pago que entra o sale del nodo del Baúl Común de la Humanidad, en bloques encadenados que cualquiera puede comprobar.',
+      navLabel: 'Navegación del sitio', navVision: 'Visión', navFondo: 'Baúl', navBtc: 'Bitcoin', navEnergy: 'Patrón Energético', navTactic: 'Táctica', langs: 'Idioma',
+      title: 'Libro público del Baúl',
+      subtitle: 'Un registro público para la transparencia del fondo.',
+      citaTrad: '«El hombre libre nunca obra con engaño, sino siempre de buena fe.»',
+      loading: 'Cargando el libro…',
+      empty: 'El libro todavía no empezó. Cuando se escriba el primer bloque, aparecerá aquí.',
+      error: 'No se pudo leer el libro ahora mismo. Prueba de nuevo en unos minutos.',
+      retry: 'Reintentar',
+      freshOk: 'Actualizado hace {t}',
+      freshHint: 'El libro se actualiza cada hora.',
+      freshStale: 'Hace {t} que el libro no se actualiza. Debería actualizarse cada hora, así que puede que algo haya fallado. Abajo ves lo último que se publicó.',
+      freshAt: 'Última actualización: {d}',
+      lt1: 'menos de 1 min', uMin: 'min', uH: 'h', uD: 'días',
+      sBalance: 'Saldo del nodo', sBlocks: 'Bloques', sMovs: 'Movimientos sellados', sats: 'sats',
+      balNote: 'El saldo lo informa el propio nodo: desde fuera no se puede comprobar.',
+      lastTitle: 'Último bloque',
+      lastLine: 'Bloque n.º {n} · {motivo} · cerrado {d}',
+      lastHash: 'Huella SHA-256 del bloque',
+      copy: 'Copiar', copied: 'Copiado',
+      openTitle: 'Movimientos todavía sin sellar',
+      openHelp: 'Ya ocurrieron, pero aún no están dentro de un bloque. Se sellan cuando se juntan 5, cuando el más antiguo lleva 24 horas esperando o cuando un pago de salida lleva 15 minutos sin que nadie lo explique. El libro se revisa cada hora, así que el sello puede tardar hasta una hora más.',
+      openNone: 'No hay ninguno.',
+      movTitle: 'Últimos movimientos',
+      noMovs: 'Todavía no hay movimientos: el libro solo tiene el bloque de inicio.',
+      more: 'Mostrar {k} más', loadingMore: 'Leyendo…',
+      readFail: 'No se pudieron leer algunos bloques. Prueba de nuevo más tarde.',
+      colN: 'N.º', colTime: 'Hora (UTC)', colType: 'Tipo', colSats: 'Sats', colFee: 'Comisión (msat)', colHash: 'Hash',
+      legTitle: 'Qué significa cada tipo',
+      t_entrada: 'Entrada', t_reclamo: 'Renta reclamada', t_liquidez: 'Liquidez', t_gasto: 'Gasto', t_retiro: 'Retiro', t_sin_clasificar: 'Sin clasificar',
+      legEntrada: 'Un pago que recibió el nodo (una donación o un depósito).',
+      legReclamo: 'Un pago que el Baúl envió a una persona que reclamó su renta.',
+      legLiquidez: 'Un pago que el nodo hizo para conseguir liquidez en sus canales.',
+      legGasto: 'Un pago de salida que el operador explicó después como un gasto de funcionamiento, como el servidor (VPS) o el dominio web.',
+      legRetiro: 'Un pago de salida con el que el operador retira fondos del nodo, por ejemplo para pasarlos a otro nodo. Es excepcional, y el operador dará explicaciones.',
+      legSin: 'Un pago de salida que nadie ha explicado todavía. Aparece así a propósito: todo pago de salida que registra el nodo figura aquí.',
+      legFee: 'La comisión es la que informa el nodo para ese pago, en milisatoshis (1 sat = 1.000 msat). Los montos de salida incluyen esa comisión.',
+      legHash: 'El hash es el identificador del pago (o de la transacción on-chain).',
+      m_inicio: 'inicio del libro', m_cinco_movimientos: '5 movimientos', m_sin_clasificar: 'pago sin clasificar', m_24_horas: '24 horas', m_latido: 'latido (7 días sin movimientos)',
+      alertTitle: 'Avisos del generador', alertNote: 'Texto original, en español.',
+      al_falta: 'Hay {n} movimiento(s) ya sellado(s) que el nodo ya no lista.', al_neg: 'El saldo calculado de un bloque salía negativo ({a} sats): se publicó 0.', al_dif: 'Diferencia contable de {a} sats entre el saldo del nodo ({b}) y el saldo inicial más los movimientos ({c}). Puede ser pasajera (pagos en curso).',
+      detTitle: 'Detalles técnicos', detNode: 'Nodo', detFormat: 'Formato', detRules: 'Reglas de cierre', detCredit: 'Crédito de comisiones',
+      rules: '{a} movimientos, {b} horas, latido de {c} días, {d} min de gracia',
+      vTitle: 'Compruébalo tú mismo',
+      vIntro: 'Cada bloque lleva la huella (SHA-256) del bloque anterior. Si alguien cambiara un bloque ya publicado, la cadena dejaría de cerrar. Puedes hacer esta comprobación aquí mismo, en tu navegador:',
+      vBtn: 'Comprobar la cadena y sumar por tipo',
+      vRunning: 'Leyendo bloque {i} de {n}…',
+      vOk: 'La cadena es íntegra. Bloques enlazados: {n}. Movimientos numerados sin saltos: {m}. Las huellas coinciden con el índice.',
+      vTotals: 'Totales por tipo', vCount: 'Cantidad', vSum: 'Suma (sats)', vIn: 'Entró en total', vOut: 'Salió en total',
+      vCaveat: 'Ojo: esta página y los datos salen del mismo servidor. Si el servidor estuviera comprometido, podría mostrarte ambas cosas manipuladas, y esta prueba es solo parcial (el verificador hace 20 comprobaciones). Para una comprobación independiente usa el verificador de abajo y compara con la copia de GitHub y los sellos de tiempo en Bitcoin.',
+      vNoSha: 'Este navegador no puede calcular huellas aquí (hace falta una conexión segura). Usa el verificador de abajo.',
+      vBig: 'El libro ya es demasiado grande para comprobarlo en el navegador. Usa el verificador de abajo.',
+      vFailHead: 'La comprobación NO pasó:',
+      vF_http: 'No se pudo leer el bloque {n} (error {s}).',
+      vF_json: 'El bloque {n} no tiene el formato esperado.',
+      vF_num: 'El bloque {n} dice ser otro número de bloque.',
+      vF_link: 'El bloque {n} no enlaza con el anterior: la cadena está rota aquí.',
+      vF_idx: 'La huella del bloque {n} no coincide con la del índice.',
+      vF_seq: 'La numeración de los movimientos se rompe en el bloque {n}.',
+      vF_state: 'La huella del último bloque no coincide con la que dice el estado.',
+      vF_net: 'No se pudo leer el libro (error de red). Prueba de nuevo.',
+      howTitle: 'Verificación independiente',
+      howIntro: 'El verificador es un solo archivo de Python, hecho a partir de la especificación y no del código del servidor. Con Python 3:',
+      lnkRepo: 'Verificador, especificación y copia en GitHub', lnkFiles: 'Los archivos del libro',
+      limTitle: 'Garantías',
+      limYesTitle: 'Qué garantiza',
+      limYes: ['Que si alguien cambia un bloque ya publicado, se nota: cada bloque lleva la huella del anterior, y las copias en GitHub y los sellos de tiempo en Bitcoin (OpenTimestamps) guardan lo que se publicó.', 'Que cada salida que registra el nodo queda a la vista (cuánto y cuándo), para que cualquiera juzgue si es razonable, y lo que nadie explica sale como «sin clasificar».', 'Que el libro se compara de forma automática con la copia en GitHub, con la frecuencia que GitHub permita (el historial público del repositorio muestra cuándo se hizo cada copia), y que, si hay alguna alteración, el operador actúa.'],
+      limNoTitle: 'Qué no garantiza',
+      limNo: ['Que el operador no pueda dejar un pago fuera del libro: es quien maneja el nodo.', 'Que el saldo de los canales privados sea el real: nadie más puede verlo.', 'Que cada reclamo venga de una persona distinta.'],
+      limCheck: 'Si enviaste o recibiste un pago, comprueba que su hash está en el libro.',
+      privText: 'El libro publica la hora, el tipo, el monto, la comisión y el hash de cada pago, y nada más: no hay direcciones IP, facturas, direcciones Lightning ni mensajes.',
+      privLink: 'Política de privacidad',
+      chainTitle: 'Bloques encadenados',
+      chainHelp: 'Cada bloque lleva la huella del anterior (el que está a su derecha), y el eslabón que los une tiene los colores de esa huella. El más reciente está a la izquierda. Si alguien cambiara un bloque ya publicado, la cadena dejaría de cerrar.',
+      carrilLabel: 'Bloques encadenados, del más reciente (izquierda) al más antiguo (derecha)',
+      blkTitle: 'Bloque n.º {n}', blkOpenTag: 'abierto',
+      ago: 'hace {t}', blkNoMovs: 'sin movimientos',
+      blkFp: 'huella', blkPrev: 'anterior', blkStart: 'inicio del libro', blkFile: 'Ver archivo',
+      linkOk: 'El bloque {a} lleva la huella del bloque {b}.',
+      linkBad: 'Atención: el bloque {a} lleva una huella distinta de la que el índice da para el bloque {b}.',
+      linkOpen: 'El próximo bloque llevará la huella del bloque {b}.',
+      olderBtn: 'Ver bloques anteriores',
+      moreLabel: 'Para quien quiera entender más',
+      openWhat: 'Qué significa «sin sellar»',
+      legSlots: 'Los cuadritos de cada bloque usan estos mismos colores, uno por movimiento.',
+      expTitle: 'Un experimento abierto',
+      expP1: 'Take Power es un proyecto experimental. Queremos ensayar una renta básica universal con Bitcoin y averiguar algo simple: si nadie cobra impuestos, ¿la gente está dispuesta a financiar lo público por voluntad propia?',
+      expP2: 'La regla del experimento es esta: lo que se dona al Baúl Común de la Humanidad se reparte entre quienes se sumen y quieran tomar el poder. Cualquier otra salida del nodo (costos, liquidez, retiros) también queda anotada aquí, con su hora y su monto, para que cualquiera pueda juzgar si la regla se cumple.',
+      expPrinc: 'Tres principios guían el diseño',
+      expL: ['Simplicidad: pocas reglas, fáciles de entender.', 'Máxima transparencia, hasta donde permite Lightning: sus pagos son privados por diseño y no todo se puede ver desde fuera, pero sí podemos publicar cada movimiento del nodo en un libro que no se puede reescribir sin que se note.', 'Confianza en participantes anónimos: no pedimos nombre ni documentos. El sistema se apoya en la buena fe de quienes participan.'],
+      expP3: 'Es un experimento y puede fallar. Para eso es: para averiguarlo con cantidades pequeñas y a la vista de todos.',
+      funTitle: 'Cómo funciona el libro',
+      funL: ['El nodo del Baúl es una cartera Lightning. Cada pago que entra o sale se anota con su hora, su tipo, su monto, su comisión y el identificador del pago (el hash). Nada más: ni direcciones IP, ni facturas, ni mensajes.', 'Las anotaciones se agrupan en bloques. Un bloque se sella cuando se juntan 5 movimientos, cuando el más antiguo lleva 24 horas esperando o cuando un pago de salida lleva 15 minutos sin que nadie lo explique. Si pasan 7 días sin movimientos se sella un bloque vacío, el «latido», para que se vea que el libro sigue vivo.', 'Cada bloque lleva la huella (SHA-256) del bloque anterior. Si alguien cambiara un bloque ya publicado, su huella cambiaría y dejaría de coincidir con la que guarda el siguiente: la cadena se rompe y se nota.', 'Cada pago de salida se clasifica: renta reclamada, liquidez, gasto o retiro. Si nadie lo explicó, aparece como «sin clasificar», a propósito: todo pago de salida que registra el nodo figura aquí.', 'El libro se actualiza cada hora. Una copia se guarda en GitHub y se le ponen sellos de tiempo en Bitcoin (OpenTimestamps), para poder probar qué se publicó y cuándo.'],
+      bcTitle: '¿Es esto una blockchain?',
+      bcP1: 'No exactamente. Usa la misma idea de base, bloques que llevan la huella del anterior, pero sin una red de validadores que se pongan de acuerdo: este libro lo escribe una sola persona, la que opera el nodo, a la vista de todos. Se parece más a Git que a Bitcoin.',
+      bcP2: 'La blockchain de verdad es Bitcoin: en ella (y en Lightning, que se apoya en ella) viven los fondos, y en ella se anclan los sellos de tiempo del libro. No hacemos una cadena propia porque no hace falta que desconocidos se pongan de acuerdo sobre quién tiene qué (eso ya lo resuelve Bitcoin), y una cadena nueva sumaría complejidad sin arreglar lo esencial: que quien opera el nodo cuente todo lo que pasa en él.'
+    },
+    pt: {
+      docTitle: 'Livro público do Baú | Take Power',
+      metaDesc: 'Cada pagamento que entra ou sai do nó do Baú Comum da Humanidade, em blocos encadeados que qualquer pessoa pode conferir.',
+      navLabel: 'Navegação do site', navVision: 'Visão', navFondo: 'Baú', navBtc: 'Bitcoin', navEnergy: 'Padrão Energético', navTactic: 'Tática', langs: 'Idioma',
+      title: 'Livro público do Baú',
+      subtitle: 'Um registro público para a transparência do fundo.',
+      citaTrad: '«O homem livre nunca age com engano, mas sempre de boa-fé.»',
+      loading: 'Carregando o livro…',
+      empty: 'O livro ainda não começou. Quando o primeiro bloco for escrito, ele aparecerá aqui.',
+      error: 'Não foi possível ler o livro agora. Tente novamente em alguns minutos.',
+      retry: 'Tentar de novo',
+      freshOk: 'Atualizado há {t}',
+      freshHint: 'O livro é atualizado a cada hora.',
+      freshStale: 'O livro não é atualizado há {t}. Deveria atualizar a cada hora, então algo pode ter falhado. Abaixo está o último que foi publicado.',
+      freshAt: 'Última atualização: {d}',
+      lt1: 'menos de 1 min', uMin: 'min', uH: 'h', uD: 'dias',
+      sBalance: 'Saldo do nó', sBlocks: 'Blocos', sMovs: 'Movimentos selados', sats: 'sats',
+      balNote: 'O saldo é informado pelo próprio nó: de fora não dá para conferir.',
+      lastTitle: 'Último bloco',
+      lastLine: 'Bloco n.º {n} · {motivo} · fechado {d}',
+      lastHash: 'Impressão digital SHA-256 do bloco',
+      copy: 'Copiar', copied: 'Copiado',
+      openTitle: 'Movimentos ainda não selados',
+      openHelp: 'Já aconteceram, mas ainda não estão dentro de um bloco. São selados quando se juntam 5, quando o mais antigo espera há 24 horas ou quando um pagamento de saída fica 15 minutos sem que ninguém o explique. O livro é revisado a cada hora, então o selo pode demorar até uma hora a mais.',
+      openNone: 'Nenhum.',
+      movTitle: 'Últimos movimentos',
+      noMovs: 'Ainda não há movimentos: o livro só tem o bloco de início.',
+      more: 'Mostrar mais {k}', loadingMore: 'Lendo…',
+      readFail: 'Alguns blocos não puderam ser lidos. Tente novamente mais tarde.',
+      colN: 'N.º', colTime: 'Hora (UTC)', colType: 'Tipo', colSats: 'Sats', colFee: 'Taxa (msat)', colHash: 'Hash',
+      legTitle: 'O que significa cada tipo',
+      t_entrada: 'Entrada', t_reclamo: 'Renda reclamada', t_liquidez: 'Liquidez', t_gasto: 'Despesa', t_retiro: 'Retirada', t_sin_clasificar: 'Sem classificação',
+      legEntrada: 'Um pagamento que o nó recebeu (uma doação ou um depósito).',
+      legReclamo: 'Um pagamento que o Baú enviou a uma pessoa que reclamou sua renda.',
+      legLiquidez: 'Um pagamento que o nó fez para obter liquidez nos seus canais.',
+      legGasto: 'Um pagamento de saída que o operador explicou depois como uma despesa de funcionamento, como o servidor (VPS) ou o domínio web.',
+      legRetiro: 'Um pagamento de saída com o qual o operador retira fundos do nó, por exemplo para passá-los a outro nó. É excepcional, e o operador dará explicações.',
+      legSin: 'Um pagamento de saída que ninguém explicou ainda. Aparece assim de propósito: todo pagamento de saída que o nó registra consta aqui.',
+      legFee: 'A taxa é a que o nó informa para esse pagamento, em milissatoshis (1 sat = 1.000 msat). Os valores de saída incluem essa taxa.',
+      legHash: 'O hash é o identificador do pagamento (ou da transação on-chain).',
+      m_inicio: 'início do livro', m_cinco_movimientos: '5 movimentos', m_sin_clasificar: 'pagamento sem classificação', m_24_horas: '24 horas', m_latido: 'batimento (7 dias sem movimentos)',
+      alertTitle: 'Avisos do gerador', alertNote: 'Texto original, em espanhol.',
+      al_falta: 'Há {n} movimento(s) já selado(s) que o nó não lista mais.', al_neg: 'O saldo calculado de um bloco dava negativo ({a} sats): foi publicado 0.', al_dif: 'Diferença contábil de {a} sats entre o saldo do nó ({b}) e o saldo inicial mais os movimentos ({c}). Pode ser passageira (pagamentos em curso).',
+      detTitle: 'Detalhes técnicos', detNode: 'Nó', detFormat: 'Formato', detRules: 'Regras de fechamento', detCredit: 'Crédito de taxas',
+      rules: '{a} movimentos, {b} horas, batimento de {c} dias, {d} min de tolerância',
+      vTitle: 'Confira você mesmo',
+      vIntro: 'Cada bloco leva a impressão digital (SHA-256) do bloco anterior. Se alguém mudasse um bloco já publicado, a cadeia deixaria de fechar. Você pode fazer esta conferência aqui mesmo, no seu navegador:',
+      vBtn: 'Conferir a cadeia e somar por tipo',
+      vRunning: 'Lendo bloco {i} de {n}…',
+      vOk: 'A cadeia está íntegra. Blocos encadeados: {n}. Movimentos numerados sem saltos: {m}. As impressões digitais coincidem com o índice.',
+      vTotals: 'Totais por tipo', vCount: 'Quantidade', vSum: 'Soma (sats)', vIn: 'Entrou no total', vOut: 'Saiu no total',
+      vCaveat: 'Atenção: esta página e os dados vêm do mesmo servidor. Se o servidor estivesse comprometido, poderia mostrar os dois manipulados, e esta conferência é apenas parcial (o verificador faz 20 verificações). Para uma conferência independente, use o verificador abaixo e compare com a cópia no GitHub e os carimbos de tempo no Bitcoin.',
+      vNoSha: 'Este navegador não consegue calcular impressões digitais aqui (é preciso uma conexão segura). Use o verificador abaixo.',
+      vBig: 'O livro já é grande demais para ser conferido no navegador. Use o verificador abaixo.',
+      vFailHead: 'A conferência NÃO passou:',
+      vF_http: 'Não foi possível ler o bloco {n} (erro {s}).',
+      vF_json: 'O bloco {n} não tem o formato esperado.',
+      vF_num: 'O bloco {n} diz ser outro número de bloco.',
+      vF_link: 'O bloco {n} não se liga ao anterior: a cadeia está quebrada aqui.',
+      vF_idx: 'A impressão digital do bloco {n} não coincide com a do índice.',
+      vF_seq: 'A numeração dos movimentos se quebra no bloco {n}.',
+      vF_state: 'A impressão digital do último bloco não coincide com a que o estado informa.',
+      vF_net: 'Não foi possível ler o livro (erro de rede). Tente novamente.',
+      howTitle: 'Verificação independente',
+      howIntro: 'O verificador é um único arquivo em Python, feito a partir da especificação e não do código do servidor. Com Python 3:',
+      lnkRepo: 'Verificador, especificação e cópia no GitHub', lnkFiles: 'Os arquivos do livro',
+      limTitle: 'Garantias',
+      limYesTitle: 'O que garante',
+      limYes: ['Que, se alguém mudar um bloco já publicado, isso aparece: cada bloco leva a impressão digital do anterior, e as cópias no GitHub e os carimbos de tempo no Bitcoin (OpenTimestamps) guardam o que foi publicado.', 'Que cada saída que o nó registra fica à vista (quanto e quando), para que qualquer pessoa julgue se é razoável, e o que ninguém explica aparece como «sem classificação».', 'Que o livro é comparado automaticamente com a cópia no GitHub, com a frequência que o GitHub permitir (o histórico público do repositório mostra quando foi feita cada cópia), e que, se houver alguma alteração, o operador age.'],
+      limNoTitle: 'O que não garante',
+      limNo: ['Que o operador não possa deixar um pagamento de fora do livro: é ele quem opera o nó.', 'Que o saldo dos canais privados seja o real: ninguém mais consegue vê-lo.', 'Que cada reclamação venha de uma pessoa diferente.'],
+      limCheck: 'Se você enviou ou recebeu um pagamento, confira se o hash dele está no livro.',
+      privText: 'O livro publica a hora, o tipo, o valor, a taxa e o hash de cada pagamento, e nada mais: não há endereços IP, faturas, endereços Lightning nem mensagens.',
+      privLink: 'Política de privacidade',
+      chainTitle: 'Blocos encadeados',
+      chainHelp: 'Cada bloco leva a impressão digital do anterior (o que está à sua direita), e o elo que os une tem as cores dessa impressão digital. O mais recente fica à esquerda. Se alguém mudasse um bloco já publicado, a cadeia deixaria de fechar.',
+      carrilLabel: 'Blocos encadeados, do mais recente (esquerda) ao mais antigo (direita)',
+      blkTitle: 'Bloco n.º {n}', blkOpenTag: 'aberto',
+      ago: 'há {t}', blkNoMovs: 'sem movimentos',
+      blkFp: 'impressão digital', blkPrev: 'anterior', blkStart: 'início do livro', blkFile: 'Ver arquivo',
+      linkOk: 'O bloco {a} leva a impressão digital do bloco {b}.',
+      linkBad: 'Atenção: o bloco {a} leva uma impressão digital diferente da que o índice dá para o bloco {b}.',
+      linkOpen: 'O próximo bloco levará a impressão digital do bloco {b}.',
+      olderBtn: 'Ver blocos anteriores',
+      moreLabel: 'Para quem quiser entender mais',
+      openWhat: 'O que significa «não selado»',
+      legSlots: 'Os quadradinhos de cada bloco usam estas mesmas cores, um por movimento.',
+      expTitle: 'Um experimento aberto',
+      expP1: 'O Take Power é um projeto experimental. Queremos testar uma renda básica universal com Bitcoin e descobrir algo simples: se ninguém cobra impostos, as pessoas estão dispostas a financiar o que é público por vontade própria?',
+      expP2: 'A regra do experimento é esta: o que é doado ao Baú Comum da Humanidade é repartido entre quem participar e quiser tomar o poder. Qualquer outra saída do nó (custos, liquidez, retiradas) também fica registrada aqui, com a hora e o valor, para que qualquer pessoa possa julgar se a regra está sendo cumprida.',
+      expPrinc: 'Três princípios orientam a concepção',
+      expL: ['Simplicidade: poucas regras, fáceis de entender.', 'Máxima transparência, até onde a Lightning permite: os pagamentos dela são privados por natureza e nem tudo pode ser visto de fora, mas podemos publicar cada movimento do nó num livro que não pode ser reescrito sem que isso apareça.', 'Confiança em participantes anônimos: não pedimos nome nem documentos. O sistema se apoia na boa-fé de quem participa.'],
+      expP3: 'É um experimento e pode falhar. É para isso que ele serve: para descobrir com quantias pequenas e à vista de todos.',
+      funTitle: 'Como funciona o livro',
+      funL: ['O nó do Baú é uma carteira Lightning. Cada pagamento que entra ou sai é anotado com a hora, o tipo, o valor, a taxa e o identificador do pagamento (o hash). Nada mais: nem endereços IP, nem faturas, nem mensagens.', 'As anotações são agrupadas em blocos. Um bloco é selado quando se juntam 5 movimentos, quando o mais antigo espera há 24 horas ou quando um pagamento de saída fica 15 minutos sem que ninguém o explique. Se passam 7 dias sem movimentos, é selado um bloco vazio, o «batimento», para mostrar que o livro continua vivo.', 'Cada bloco leva a impressão digital (SHA-256) do bloco anterior. Se alguém mudasse um bloco já publicado, a impressão digital dele mudaria e deixaria de coincidir com a que o bloco seguinte guarda: a cadeia se rompe e isso aparece.', 'Cada pagamento de saída é classificado: renda reclamada, liquidez, despesa ou retirada. Se ninguém o explicou, aparece como «sem classificação», de propósito: todo pagamento de saída que o nó registra consta aqui.', 'O livro é atualizado a cada hora. Uma cópia é guardada no GitHub e recebe carimbos de tempo no Bitcoin (OpenTimestamps), para que se possa provar o que foi publicado e quando.'],
+      bcTitle: 'Isto é uma blockchain?',
+      bcP1: 'Não exatamente. Usa a mesma ideia básica, blocos que levam a impressão digital do anterior, mas sem uma rede de validadores que entram em acordo: este livro é escrito por uma só pessoa, a que opera o nó, à vista de todos. Parece-se mais com o Git do que com o Bitcoin.',
+      bcP2: 'A blockchain de verdade é o Bitcoin: nela (e na Lightning, que se apoia nela) vivem os fundos, e nela se ancoram os carimbos de tempo do livro. Não fazemos uma cadeia própria porque não é preciso que desconhecidos entrem em acordo sobre quem tem o quê (isso o Bitcoin já resolve), e uma cadeia nova traria complexidade sem resolver o essencial: que quem opera o nó conte tudo o que acontece nele.'
+    },
+    fr: {
+      docTitle: 'Registre public du Coffre | Take Power',
+      metaDesc: "Chaque paiement qui entre dans le nœud du Coffre Commun de l'Humanité ou en sort, dans des blocs chaînés que chacun peut vérifier.",
+      navLabel: 'Navigation du site', navVision: 'Vision', navFondo: 'Coffre', navBtc: 'Bitcoin', navEnergy: 'Standard Énergétique', navTactic: 'Tactique', langs: 'Langue',
+      title: 'Registre public du Coffre',
+      subtitle: 'Un registre public pour la transparence du fonds.',
+      citaTrad: "«\u00a0L'homme libre n'agit jamais par tromperie, mais toujours de bonne foi.\u00a0»",
+      loading: 'Chargement du registre…',
+      empty: "Le registre n'a pas encore commencé. Quand le premier bloc sera écrit, il apparaîtra ici.",
+      error: 'Impossible de lire le registre pour le moment. Réessayez dans quelques minutes.',
+      retry: 'Réessayer',
+      freshOk: 'Mis à jour il y a {t}',
+      freshHint: 'Le registre est mis à jour toutes les heures.',
+      freshStale: "Le registre n'a pas été mis à jour depuis {t}. Il devrait l'être toutes les heures : un problème est possible. Ci-dessous, la dernière version publiée.",
+      freshAt: 'Dernière mise à jour : {d}',
+      lt1: "moins d'1 min", uMin: 'min', uH: 'h', uD: 'jours',
+      sBalance: 'Solde du nœud', sBlocks: 'Blocs', sMovs: 'Mouvements scellés', sats: 'sats',
+      balNote: "Le solde est communiqué par le nœud lui-même : on ne peut pas le vérifier de l'extérieur.",
+      lastTitle: 'Dernier bloc',
+      lastLine: 'Bloc n° {n} · {motivo} · clos {d}',
+      lastHash: 'Empreinte SHA-256 du bloc',
+      copy: 'Copier', copied: 'Copié',
+      openTitle: 'Mouvements pas encore scellés',
+      openHelp: "Ils ont déjà eu lieu, mais ne sont pas encore dans un bloc. Ils sont scellés quand 5 se sont accumulés, quand le plus ancien attend depuis 24 heures, ou quand un paiement sortant reste 15 minutes sans que personne ne l'explique. Le registre est revu toutes les heures : le scellement peut donc prendre jusqu'à une heure de plus.",
+      openNone: 'Aucun.',
+      movTitle: 'Derniers mouvements',
+      noMovs: "Il n'y a pas encore de mouvements : le registre n'a que son bloc de départ.",
+      more: 'Afficher {k} de plus', loadingMore: 'Lecture…',
+      readFail: "Certains blocs n'ont pas pu être lus. Réessayez plus tard.",
+      colN: 'N°', colTime: 'Heure (UTC)', colType: 'Type', colSats: 'Sats', colFee: 'Frais (msat)', colHash: 'Hash',
+      legTitle: 'Ce que signifie chaque type',
+      t_entrada: 'Entrée', t_reclamo: 'Revenu réclamé', t_liquidez: 'Liquidité', t_gasto: 'Dépense', t_retiro: 'Retrait', t_sin_clasificar: 'Non classé',
+      legEntrada: 'Un paiement reçu par le nœud (un don ou un dépôt).',
+      legReclamo: 'Un paiement que le Coffre a envoyé à une personne qui a réclamé son revenu.',
+      legLiquidez: 'Un paiement fait par le nœud pour obtenir de la liquidité dans ses canaux.',
+      legGasto: "Un paiement sortant que l'opérateur a expliqué ensuite comme une dépense de fonctionnement, comme le serveur (VPS) ou le nom de domaine.",
+      legRetiro: "Un paiement sortant par lequel l'opérateur retire des fonds du nœud, par exemple pour les transférer vers un autre nœud. C'est exceptionnel, et l'opérateur donnera des explications.",
+      legSin: "Un paiement sortant que personne n'a encore expliqué. Il apparaît ainsi exprès : tout paiement sortant enregistré par le nœud figure ici.",
+      legFee: 'Les frais sont ceux que le nœud indique pour ce paiement, en millisatoshis (1 sat = 1 000 msat). Les montants sortants incluent ces frais.',
+      legHash: "Le hash est l'identifiant du paiement (ou de la transaction on-chain).",
+      m_inicio: 'début du registre', m_cinco_movimientos: '5 mouvements', m_sin_clasificar: 'paiement non classé', m_24_horas: '24 heures', m_latido: 'battement (7 jours sans mouvements)',
+      alertTitle: 'Avertissements du générateur', alertNote: "Texte d'origine, en espagnol.",
+      al_falta: 'Il y a {n} mouvement(s) déjà scellé(s) que le nœud ne liste plus.', al_neg: "Le solde calculé d'un bloc était négatif ({a} sats) : 0 a été publié.", al_dif: 'Écart comptable de {a} sats entre le solde du nœud ({b}) et le solde initial plus les mouvements ({c}). Il peut être passager (paiements en cours).',
+      detTitle: 'Détails techniques', detNode: 'Nœud', detFormat: 'Format', detRules: 'Règles de clôture', detCredit: 'Crédit de frais',
+      rules: '{a} mouvements, {b} heures, battement de {c} jours, {d} min de délai',
+      vTitle: 'Vérifiez par vous-même',
+      vIntro: "Chaque bloc porte l'empreinte (SHA-256) du bloc précédent. Si quelqu'un modifiait un bloc déjà publié, la chaîne ne bouclerait plus. Vous pouvez faire cette vérification ici même, dans votre navigateur :",
+      vBtn: 'Vérifier la chaîne et totaliser par type',
+      vRunning: 'Lecture du bloc {i} sur {n}…',
+      vOk: "La chaîne est intacte. Blocs chaînés : {n}. Mouvements numérotés sans trou : {m}. Les empreintes correspondent à l'index.",
+      vTotals: 'Totaux par type', vCount: 'Nombre', vSum: 'Somme (sats)', vIn: 'Total entré', vOut: 'Total sorti',
+      vCaveat: "Attention : cette page et les données viennent du même serveur. Si le serveur était compromis, il pourrait vous montrer les deux manipulés, et cette vérification n'est que partielle (le vérificateur fait 20 contrôles). Pour une vérification indépendante, utilisez le vérificateur ci-dessous et comparez avec la copie GitHub et les horodatages Bitcoin.",
+      vNoSha: "Ce navigateur ne peut pas calculer d'empreintes ici (une connexion sécurisée est nécessaire). Utilisez le vérificateur ci-dessous.",
+      vBig: 'Le registre est déjà trop grand pour être vérifié dans le navigateur. Utilisez le vérificateur ci-dessous.',
+      vFailHead: 'La vérification a ÉCHOUÉ :',
+      vF_http: "Le bloc {n} n'a pas pu être lu (erreur {s}).",
+      vF_json: "Le bloc {n} n'a pas le format attendu.",
+      vF_num: 'Le bloc {n} prétend être un autre numéro de bloc.',
+      vF_link: 'Le bloc {n} ne se rattache pas au précédent : la chaîne est rompue ici.',
+      vF_idx: "L'empreinte du bloc {n} ne correspond pas à celle de l'index.",
+      vF_seq: 'La numérotation des mouvements se rompt au bloc {n}.',
+      vF_state: "L'empreinte du dernier bloc ne correspond pas à celle indiquée par l'état.",
+      vF_net: "Le registre n'a pas pu être lu (erreur réseau). Réessayez.",
+      howTitle: 'Vérification indépendante',
+      howIntro: 'Le vérificateur est un seul fichier Python, écrit à partir de la spécification et non du code du serveur. Avec Python 3 :',
+      lnkRepo: 'Vérificateur, spécification et copie GitHub', lnkFiles: 'Les fichiers du registre',
+      limTitle: 'Garanties',
+      limYesTitle: 'Ce que cela garantit',
+      limYes: ["Que si quelqu'un modifie un bloc déjà publié, cela se voit : chaque bloc porte l'empreinte du précédent, et les copies sur GitHub et les horodatages Bitcoin (OpenTimestamps) conservent ce qui a été publié.", 'Que chaque sortie enregistrée par le nœud reste visible (combien et quand), pour que chacun puisse juger si elle est raisonnable, et ce que personne n’explique apparaît comme « non classé ».', 'Que le registre est comparé automatiquement à la copie sur GitHub, aussi souvent que GitHub le permet (l’historique public du dépôt montre quand chaque copie a été faite), et que, en cas d’altération, l’opérateur agit.'],
+      limNoTitle: 'Ce que cela ne garantit pas',
+      limNo: ["Que l'opérateur ne puisse pas laisser un paiement hors du registre : c'est lui qui fait tourner le nœud.", "Que le solde des canaux privés soit le vrai : personne d'autre ne peut le voir.", 'Que chaque réclamation vienne d’une personne différente.'],
+      limCheck: 'Si vous avez envoyé ou reçu un paiement, vérifiez que son hash figure dans le registre.',
+      privText: "Le registre publie l'heure, le type, le montant, les frais et le hash de chaque paiement, et rien d'autre : ni adresses IP, ni factures, ni adresses Lightning, ni messages.",
+      privLink: 'Politique de confidentialité',
+      chainTitle: 'Blocs chaînés',
+      chainHelp: "Chaque bloc porte l'empreinte du précédent (celui qui est à sa droite), et le maillon qui les relie a les couleurs de cette empreinte. Le plus récent est à gauche. Si quelqu'un modifiait un bloc déjà publié, la chaîne ne bouclerait plus.",
+      carrilLabel: 'Blocs chaînés, du plus récent (à gauche) au plus ancien (à droite)',
+      blkTitle: 'Bloc n° {n}', blkOpenTag: 'ouvert',
+      ago: 'il y a {t}', blkNoMovs: 'sans mouvements',
+      blkFp: 'empreinte', blkPrev: 'précédent', blkStart: 'début du registre', blkFile: 'Voir le fichier',
+      linkOk: "Le bloc {a} porte l'empreinte du bloc {b}.",
+      linkBad: "Attention : le bloc {a} porte une empreinte différente de celle que l'index donne pour le bloc {b}.",
+      linkOpen: "Le prochain bloc portera l'empreinte du bloc {b}.",
+      olderBtn: 'Voir les blocs précédents',
+      moreLabel: 'Pour qui veut comprendre davantage',
+      openWhat: 'Que signifie « pas encore scellé »',
+      legSlots: 'Les petits carrés de chaque bloc utilisent ces mêmes couleurs, un par mouvement.',
+      expTitle: 'Une expérience ouverte',
+      expP1: "Take Power est un projet expérimental. Nous voulons essayer un revenu de base universel avec Bitcoin et répondre à une question simple : si personne ne prélève d'impôts, les gens sont-ils prêts à financer les biens et services publics de leur plein gré ?",
+      expP2: "La règle de l'expérience est la suivante : ce qui est donné au Coffre Commun de l'Humanité est réparti entre celles et ceux qui rejoignent le projet et veulent prendre le pouvoir. Toute autre sortie du nœud (coûts, liquidité, retraits) est elle aussi inscrite ici, avec son heure et son montant, pour que chacun puisse juger si la règle est respectée.",
+      expPrinc: 'Trois principes guident la conception',
+      expL: ['Simplicité : peu de règles, faciles à comprendre.', "Transparence maximale, dans la mesure où Lightning le permet : ses paiements sont privés par conception et tout ne se voit pas de l'extérieur, mais nous pouvons publier chaque mouvement du nœud dans un registre qui ne peut pas être réécrit sans que cela se voie.", "Confiance envers des participants anonymes : nous ne demandons ni nom ni papiers. Le système repose sur la bonne foi de celles et ceux qui participent."],
+      expP3: "C'est une expérience et elle peut échouer. C'est fait pour ça : pour le découvrir avec de petites sommes et à la vue de tous.",
+      funTitle: 'Comment fonctionne le registre',
+      funL: ["Le nœud du Coffre est un portefeuille Lightning. Chaque paiement qui entre ou sort est noté avec son heure, son type, son montant, ses frais et l'identifiant du paiement (le hash). Rien de plus : ni adresses IP, ni factures, ni messages.", "Les notes sont regroupées en blocs. Un bloc est scellé quand 5 mouvements se sont accumulés, quand le plus ancien attend depuis 24 heures, ou quand un paiement sortant reste 15 minutes sans que personne ne l'explique. Si 7 jours passent sans mouvements, un bloc vide est scellé, le « battement », pour montrer que le registre est bien vivant.", "Chaque bloc porte l'empreinte (SHA-256) du bloc précédent. Si quelqu'un modifiait un bloc déjà publié, son empreinte changerait et ne correspondrait plus à celle que garde le bloc suivant : la chaîne se rompt et cela se voit.", "Chaque paiement sortant est classé : revenu réclamé, liquidité, dépense ou retrait. Si personne ne l'a expliqué, il apparaît comme « non classé », exprès : tout paiement sortant enregistré par le nœud figure ici.", "Le registre est mis à jour toutes les heures. Une copie est conservée sur GitHub et reçoit des horodatages dans Bitcoin (OpenTimestamps), pour pouvoir prouver ce qui a été publié et quand."],
+      bcTitle: 'Est-ce une blockchain ?',
+      bcP1: "Pas exactement. Elle reprend la même idée de base, des blocs qui portent l'empreinte du précédent, mais sans réseau de validateurs qui se mettent d'accord : ce registre est écrit par une seule personne, celle qui fait tourner le nœud, à la vue de tous. Il ressemble plus à Git qu'à Bitcoin.",
+      bcP2: "La vraie blockchain, c'est Bitcoin : c'est là (et dans Lightning, qui s'appuie sur elle) que vivent les fonds, et c'est là que sont ancrés les horodatages du registre. Nous ne faisons pas de chaîne à nous parce qu'il n'est pas nécessaire que des inconnus s'accordent sur qui possède quoi (Bitcoin le résout déjà), et une nouvelle chaîne ajouterait de la complexité sans régler l'essentiel : que celui qui fait tourner le nœud déclare tout ce qui s'y passe."
+    },
+    en: {
+      docTitle: 'Public ledger of the Chest | Take Power',
+      metaDesc: "Every payment that enters or leaves the node of Humanity's Common Chest, in chained blocks that anyone can check.",
+      navLabel: 'Site navigation', navVision: 'Vision', navFondo: 'Chest', navBtc: 'Bitcoin', navEnergy: 'Energy Standard', navTactic: 'Tactic', langs: 'Language',
+      title: 'Public ledger of the Chest',
+      subtitle: 'A public record for the transparency of the fund.',
+      citaTrad: '“A free man never acts deceitfully, but always in good faith.”',
+      loading: 'Loading the ledger…',
+      empty: 'The ledger has not started yet. When the first block is written, it will appear here.',
+      error: 'The ledger could not be read right now. Please try again in a few minutes.',
+      retry: 'Try again',
+      freshOk: 'Updated {t} ago',
+      freshHint: 'The ledger updates every hour.',
+      freshStale: 'The ledger has not been updated for {t}. It should update every hour, so something may have failed. Below is the latest that was published.',
+      freshAt: 'Last update: {d}',
+      lt1: 'less than 1 min', uMin: 'min', uH: 'h', uD: 'days',
+      sBalance: 'Node balance', sBlocks: 'Blocks', sMovs: 'Sealed movements', sats: 'sats',
+      balNote: 'The balance is reported by the node itself: it cannot be checked from outside.',
+      lastTitle: 'Latest block',
+      lastLine: 'Block no. {n} · {motivo} · closed {d}',
+      lastHash: 'SHA-256 fingerprint of the block',
+      copy: 'Copy', copied: 'Copied',
+      openTitle: 'Movements not yet sealed',
+      openHelp: 'They already happened, but are not inside a block yet. They are sealed when 5 have gathered, when the oldest has been waiting 24 hours, or when an outgoing payment goes 15 minutes without anyone explaining it. The ledger is checked every hour, so sealing can take up to an hour longer.',
+      openNone: 'None.',
+      movTitle: 'Latest movements',
+      noMovs: 'There are no movements yet: the ledger only has its starting block.',
+      more: 'Show {k} more', loadingMore: 'Reading…',
+      readFail: 'Some blocks could not be read. Please try again later.',
+      colN: 'No.', colTime: 'Time (UTC)', colType: 'Type', colSats: 'Sats', colFee: 'Fee (msat)', colHash: 'Hash',
+      legTitle: 'What each type means',
+      t_entrada: 'Incoming', t_reclamo: 'Income claimed', t_liquidez: 'Liquidity', t_gasto: 'Expense', t_retiro: 'Withdrawal', t_sin_clasificar: 'Unclassified',
+      legEntrada: 'A payment the node received (a donation or a deposit).',
+      legReclamo: 'A payment the Chest sent to a person who claimed their income.',
+      legLiquidez: 'A payment the node made to obtain liquidity in its channels.',
+      legGasto: 'An outgoing payment the operator later explained as an operating expense, such as the server (VPS) or the web domain.',
+      legRetiro: 'An outgoing payment by which the operator takes funds out of the node, for example to move them to another node. It is exceptional, and the operator will give explanations.',
+      legSin: 'An outgoing payment nobody has explained yet. It is shown like this on purpose: every outgoing payment the node records appears here.',
+      legFee: 'The fee is the one the node reports for that payment, in millisatoshis (1 sat = 1,000 msat). Outgoing amounts include that fee.',
+      legHash: 'The hash is the identifier of the payment (or of the on-chain transaction).',
+      m_inicio: 'start of the ledger', m_cinco_movimientos: 'five movements', m_sin_clasificar: 'unclassified payment', m_24_horas: '24 hours', m_latido: 'heartbeat (7 days without movements)',
+      alertTitle: 'Warnings from the generator', alertNote: 'Original text, in Spanish.',
+      al_falta: 'There are {n} already sealed movement(s) that the node no longer lists.', al_neg: 'The computed balance of a block came out negative ({a} sats): 0 was published.', al_dif: 'Accounting gap of {a} sats between the node balance ({b}) and the opening balance plus the movements ({c}). It may be temporary (payments in progress).',
+      detTitle: 'Technical details', detNode: 'Node', detFormat: 'Format', detRules: 'Closing rules', detCredit: 'Fee credit',
+      rules: '{a} movements, {b} hours, {c}-day heartbeat, {d} min grace',
+      vTitle: 'Check it yourself',
+      vIntro: 'Each block carries the fingerprint (SHA-256) of the previous block. If someone changed a block that was already published, the chain would stop closing. You can run this check right here, in your browser:',
+      vBtn: 'Check the chain and add up by type',
+      vRunning: 'Reading block {i} of {n}…',
+      vOk: 'The chain is intact. Blocks linked: {n}. Movements numbered without gaps: {m}. The fingerprints match the index.',
+      vTotals: 'Totals by type', vCount: 'Count', vSum: 'Sum (sats)', vIn: 'Total in', vOut: 'Total out',
+      vCaveat: 'Careful: this page and the data come from the same server. If the server were compromised, it could show you both manipulated, and this check is only partial (the verifier runs 20 checks). For an independent check use the verifier below and compare with the GitHub copy and the Bitcoin timestamps.',
+      vNoSha: 'This browser cannot compute fingerprints here (a secure connection is needed). Use the verifier below.',
+      vBig: 'The ledger is already too big to check in the browser. Use the verifier below.',
+      vFailHead: 'The check did NOT pass:',
+      vF_http: 'Block {n} could not be read (error {s}).',
+      vF_json: 'Block {n} does not have the expected format.',
+      vF_num: 'Block {n} claims to be a different block number.',
+      vF_link: 'Block {n} does not link to the previous one: the chain is broken here.',
+      vF_idx: 'The fingerprint of block {n} does not match the index.',
+      vF_seq: 'The numbering of the movements breaks in block {n}.',
+      vF_state: 'The fingerprint of the last block does not match what the status file says.',
+      vF_net: 'The ledger could not be read (network error). Please try again.',
+      howTitle: 'Independent verification',
+      howIntro: "The verifier is a single Python file, written from the specification and not from the server's code. With Python 3:",
+      lnkRepo: 'Verifier, specification and GitHub copy', lnkFiles: 'The ledger files',
+      limTitle: 'Guarantees',
+      limYesTitle: 'It guarantees',
+      limYes: ['That if someone changes a block that was already published, it shows: each block carries the fingerprint of the previous one, and the copies on GitHub and the Bitcoin timestamps (OpenTimestamps) keep what was published.', 'That every outgoing payment the node records stays in view (how much and when), so anyone can judge whether it is reasonable, and whatever nobody explains shows up as “unclassified”.', 'That the ledger is automatically compared with the copy on GitHub, as often as GitHub allows (the repository’s public history shows when each copy was made), and that, if anything has been altered, the operator acts.'],
+      limNoTitle: 'It does not guarantee',
+      limNo: ['That the operator cannot leave a payment out of the ledger: the operator runs the node.', 'That the balance in private channels is the real one: nobody else can see it.', 'That every claim comes from a different person.'],
+      limCheck: 'If you sent or received a payment, check that its hash is in the ledger.',
+      privText: 'The ledger publishes the time, the type, the amount, the fee and the hash of each payment, and nothing else: no IP addresses, invoices, Lightning addresses or messages.',
+      privLink: 'Privacy policy',
+      chainTitle: 'Chained blocks',
+      chainHelp: 'Each block carries the fingerprint of the previous one (the block on its right), and the link joining them has the colors of that fingerprint. The most recent block is on the left. If someone changed a block that was already published, the chain would stop closing.',
+      carrilLabel: 'Chained blocks, from the most recent (left) to the oldest (right)',
+      blkTitle: 'Block no. {n}', blkOpenTag: 'open',
+      ago: '{t} ago', blkNoMovs: 'no movements',
+      blkFp: 'fingerprint', blkPrev: 'previous', blkStart: 'start of the ledger', blkFile: 'View file',
+      linkOk: 'Block {a} carries the fingerprint of block {b}.',
+      linkBad: 'Warning: block {a} carries a fingerprint different from the one the index gives for block {b}.',
+      linkOpen: 'The next block will carry the fingerprint of block {b}.',
+      olderBtn: 'Show earlier blocks',
+      moreLabel: 'For those who want to understand more',
+      openWhat: 'What “not yet sealed” means',
+      legSlots: 'The little squares in each block use these same colors, one per movement.',
+      expTitle: 'An open experiment',
+      expP1: 'Take Power is an experimental project. We want to try out a universal basic income with Bitcoin and find out something simple: if nobody collects taxes, are people willing to fund public goods and services of their own accord?',
+      expP2: "The rule of the experiment is this: what is donated to Humanity's Common Chest is shared among those who join in and want to take power. Any other outflow from the node (costs, liquidity, withdrawals) is also recorded here, with its time and amount, so anyone can judge whether the rule is being kept.",
+      expPrinc: 'Three principles guide the design',
+      expL: ['Simplicity: few rules, easy to understand.', 'Maximum transparency, as far as Lightning allows: its payments are private by design and not everything can be seen from outside, but we can publish every movement of the node in a ledger that cannot be rewritten without it showing.', 'Trust in anonymous participants: we do not ask for names or documents. The system relies on the good faith of those who take part.'],
+      expP3: 'It is an experiment and it may fail. That is what it is for: to find out with small amounts and in plain sight.',
+      funTitle: 'How the ledger works',
+      funL: ["The Chest's node is a Lightning wallet. Every payment that enters or leaves is noted with its time, type, amount, fee and the payment identifier (the hash). Nothing else: no IP addresses, no invoices, no messages.", 'The notes are grouped into blocks. A block is sealed when 5 movements have gathered, when the oldest has been waiting 24 hours, or when an outgoing payment goes 15 minutes without anyone explaining it. If 7 days pass without movements, an empty block is sealed, the “heartbeat”, to show that the ledger is still alive.', 'Each block carries the fingerprint (SHA-256) of the previous block. If someone changed a block that was already published, its fingerprint would change and no longer match the one the next block keeps: the chain breaks, and it shows.', 'Every outgoing payment is classified: income claimed, liquidity, expense or withdrawal. If nobody has explained it, it appears as “unclassified”, on purpose: every outgoing payment the node records appears here.', 'The ledger updates every hour. A copy is kept on GitHub and gets Bitcoin timestamps (OpenTimestamps), so it can be proven what was published and when.'],
+      bcTitle: 'Is this a blockchain?',
+      bcP1: 'Not exactly. It uses the same basic idea, blocks that carry the fingerprint of the previous one, but without a network of validators that agree with each other: this ledger is written by one person, the one who runs the node, in plain sight. It is closer to Git than to Bitcoin.',
+      bcP2: 'The real blockchain is Bitcoin: the funds live on it (and on Lightning, which builds on it), and the ledger’s timestamps are anchored in it. We do not build a chain of our own because strangers do not need to agree on who owns what (Bitcoin already solves that), and a new chain would add complexity without fixing the essential thing: that whoever runs the node reports everything that happens in it.'
+    }
+  };
+
+  var S = {
+    lang: 'es',
+    fase: 'cargando',
+    estado: null, indice: null, total: 0,
+    movs: [], siguiente: 0, cargandoMas: false, fallaLectura: false,
+    blq: Object.create(null), pend: Object.create(null), gen: 0, carril: LANE, cargandoCarril: false,
+    abiertas: Object.create(null), irA: null,
+    dif: 0,
+    verif: { fase: 'reposo' }
+  };
+
+  // ---------------------------------------------------------------- utilidades
+  function h(tag, attrs) {
+    var e = document.createElement(tag);
+    if (attrs) {
+      for (var k in attrs) {
+        if (!Object.prototype.hasOwnProperty.call(attrs, k)) continue;
+        var v = attrs[k];
+        if (v === null || v === undefined || v === false) continue;
+        if (k === 'class') e.className = v;
+        else if (k.slice(0, 2) === 'on') e.addEventListener(k.slice(2), v);
+        else e.setAttribute(k, v === true ? '' : String(v));
+      }
+    }
+    for (var i = 2; i < arguments.length; i++) add(e, arguments[i]);
+    return e;
+  }
+  function add(e, c) {
+    if (c === null || c === undefined || c === false) return;
+    if (Array.isArray(c)) { for (var i = 0; i < c.length; i++) add(e, c[i]); return; }
+    e.appendChild(typeof c === 'object' ? c : document.createTextNode(String(c)));
+  }
+  function fmt(s, v) {
+    return String(s).replace(/\{(\w+)\}/g, function (m, k) { return Object.prototype.hasOwnProperty.call(v, k) ? String(v[k]) : m; });
+  }
+  // Como fmt, pero devuelve una lista de partes: los valores que son nodos del DOM se insertan tal cual.
+  function fmtN(s, v) {
+    var partes = [], re = /\{(\w+)\}/g, i = 0, m;
+    s = String(s);
+    while ((m = re.exec(s)) !== null) {
+      if (m.index > i) partes.push(s.slice(i, m.index));
+      partes.push(Object.prototype.hasOwnProperty.call(v, m[1]) ? v[m[1]] : m[0]);
+      i = re.lastIndex;
+    }
+    if (i < s.length) partes.push(s.slice(i));
+    return partes;
+  }
+  function sinCorte(texto) { return h('span', { class: 'nw' }, texto); }
+  function esEntero(n) { return typeof n === 'number' && isFinite(n) && Math.floor(n) === n; }
+  function num(n) {
+    if (!esEntero(n)) return '—';
+    try { return new Intl.NumberFormat(LOCALES[S.lang]).format(n); } catch (e) { return String(n); }
+  }
+  function numSigno(n) {
+    if (!esEntero(n)) return '—';
+    try { return new Intl.NumberFormat(LOCALES[S.lang], { signDisplay: 'exceptZero' }).format(n); } catch (e) { return (n > 0 ? '+' : '') + n; }
+  }
+  function hora(iso) {
+    var m = /^(\d{4}-\d{2}-\d{2})T(\d{2}:\d{2}:\d{2})\.\d{3}Z$/.exec(String(iso));
+    return m ? m[1] + ' ' + m[2] : String(iso === undefined ? '—' : iso);
+  }
+  function corto(s) { s = String(s); return s.length > 20 ? s.slice(0, 8) + '…' + s.slice(-8) : s; }
+  function claseSegura(s) { return /^[a-z_]{1,20}$/.test(s) ? s : 'otro'; }
+  function esSha(s) { return typeof s === 'string' && /^[0-9a-f]{64}$/.test(s); }
+  // cuatro colores sacados de los cuatro primeros bytes de la huella: huellas iguales, colores iguales (el cero del primer bloque no tiene color)
+  function colores(sha) {
+    if (!esSha(sha) || sha === ZERO) return null;
+    var c = [];
+    for (var i = 0; i < 4; i++) c.push('hsl(' + Math.round(parseInt(sha.substr(i * 2, 2), 16) * 360 / 256) + ',70%,56%)');
+    return c;
+  }
+  function ahora() { return Date.now() + S.dif; }
+  function pad6(n) { var s = String(n); while (s.length < 6) s = '0' + s; return s; }
+  function hex(buf) {
+    var a = new Uint8Array(buf), s = '';
+    for (var i = 0; i < a.length; i++) s += (a[i] < 16 ? '0' : '') + a[i].toString(16);
+    return s;
+  }
+  function duracion(ms, t) {
+    var min = Math.floor(ms / 60000);
+    if (min < 1) return t.lt1;
+    if (min < 60) return min + ' ' + t.uMin;
+    var hh = Math.floor(min / 60), mm = min % 60;
+    if (hh < 48) return hh + ' ' + t.uH + (mm ? ' ' + mm + ' ' + t.uMin : '');
+    return Math.floor(hh / 24) + ' ' + t.uD;
+  }
+  function origen() { return location.protocol === 'https:' ? location.origin : HOME; }
+  function copiar(texto, btn, t) {
+    function listo() {
+      if (!btn) return;
+      btn.textContent = t.copied;
+      setTimeout(function () { btn.textContent = t.copy; }, 1500);
+    }
+    function respaldo() {
+      var ta = h('textarea', { 'aria-hidden': 'true', style: 'position:fixed;left:-9999px;top:0' });
+      ta.value = texto;
+      document.body.appendChild(ta);
+      ta.select();
+      var bien = false;
+      try { bien = document.execCommand('copy'); } catch (e) {}
+      document.body.removeChild(ta);
+      if (bien) listo();
+    }
+    if (navigator.clipboard && navigator.clipboard.writeText) navigator.clipboard.writeText(texto).then(listo, respaldo);
+    else respaldo();
+  }
+  function botonCopiar(texto, t) {
+    var b = h('button', { type: 'button', class: 'copy' }, t.copy);
+    b.setAttribute('aria-label', t.copy + ': ' + corto(texto));
+    b.addEventListener('click', function () { copiar(texto, b, t); });
+    return b;
+  }
+
+  // ---------------------------------------------------------------- lectura de datos
+  function leerArchivo(ruta) {
+    return fetch(BASE + ruta, { cache: 'no-store', credentials: 'omit' }).then(function (r) {
+      var fecha = Date.parse(r.headers.get('Date') || '');
+      if (!r.ok) return { status: r.status, json: null, fecha: fecha };
+      return r.text().then(function (txt) {
+        var j = null;
+        try { j = JSON.parse(txt); } catch (e) {}
+        return { status: r.status, json: j, fecha: fecha };
+      });
+    });
+  }
+  function estadoValido(e) {
+    return !!e && typeof e === 'object' && !Array.isArray(e) && typeof e.actualizado_en === 'string' && !isNaN(Date.parse(e.actualizado_en)) && esEntero(e.bloques) && e.bloques >= 0;
+  }
+  function leerBloque(n) {
+    return fetch(BASE + 'bloques/' + pad6(n) + '.json', { cache: 'no-store', credentials: 'omit' }).then(function (r) {
+      if (!r.ok) return null;
+      return r.json();
+    }).then(function (b) {
+      return b && typeof b === 'object' && Array.isArray(b.movimientos) ? b : null;
+    }).catch(function () { return null; });
+  }
+  function pedir(n) {
+    if (S.pend[n]) return S.pend[n];
+    var gen = S.gen;
+    var p = leerBloque(n).then(function (b) {
+      if (gen === S.gen) {
+        if (b) S.blq[n] = b;
+        else { S.blq[n] = false; if (S.pend[n] === p) delete S.pend[n]; }
+      }
+      return b;
+    });
+    S.pend[n] = p;
+    return p;
+  }
+  function cargar(silencioso) {
+    if (silencioso && (S.cargandoMas || S.cargandoCarril || S.verif.fase === 'corriendo')) return Promise.resolve();
+    if (!silencioso) { S.fase = 'cargando'; render(); }
+    return Promise.all([leerArchivo('estado.json'), leerArchivo('indice.json')]).then(function (rs) {
+      var e = rs[0], ix = rs[1];
+      if (e.status === 404 && ix.status === 404) {
+        S.fase = 'vacio'; S.estado = null; S.indice = null; S.total = 0; S.movs = []; S.siguiente = 0;
+        S.blq = Object.create(null); S.pend = Object.create(null); S.gen++;
+        render();
+        return;
+      }
+      if (!estadoValido(e.json)) throw new Error('estado');
+      if (isFinite(e.fecha)) S.dif = e.fecha - Date.now();
+      var indice = ix.json && Array.isArray(ix.json.bloques) ? ix.json : null;
+      var total = Math.max(e.json.bloques, indice ? indice.bloques.length : 0);
+      var u = e.json.ultimo_bloque, uAntes = S.estado && S.estado.ultimo_bloque;
+      var cambio = !S.estado || total !== S.total || (u && u.sha256) !== (uAntes && uAntes.sha256);
+      S.estado = e.json; S.indice = indice; S.total = total;
+      S.fase = 'listo';
+      if (cambio) { S.movs = []; S.siguiente = total; S.fallaLectura = false; S.verif = { fase: 'reposo' }; S.blq = Object.create(null); S.pend = Object.create(null); S.gen++; }
+      var tareas = [];
+      if (cambio && S.siguiente >= 1) tareas.push(cargarMas()); else render();
+      if (S.total >= 1) tareas.push(cargarCarril());
+      return Promise.all(tareas);
+    }).catch(function () {
+      if (!silencioso) { S.fase = 'error'; render(); }
+    });
+  }
+  // pide los bloques que se ven en la cadena y todavia no se leyeron (o fallaron); los que ya se pidieron para la tabla no se vuelven a pedir
+  function cargarCarril() {
+    var lote = [], hasta = Math.max(1, S.total - S.carril + 1);
+    for (var n = S.total; n >= hasta; n--) if (!S.blq[n]) lote.push(n);
+    if (!lote.length) return Promise.resolve();
+    S.cargandoCarril = true;
+    return Promise.all(lote.map(function (n) { return pedir(n); })).then(function () { S.cargandoCarril = false; render(); }, function () { S.cargandoCarril = false; render(); });
+  }
+  function masBloques() {
+    S.carril += LANE;
+    render();
+    cargarCarril();
+  }
+  function cargarMas() {
+    if (S.cargandoMas || S.siguiente < 1) return Promise.resolve();
+    S.cargandoMas = true;
+    render();
+    var objetivo = S.movs.length + POR_PAGINA;
+    function paso() {
+      if (S.movs.length >= objetivo || S.siguiente < 1) return Promise.resolve();
+      var lote = [];
+      for (var k = 0; k < LOTE_BLOQUES && S.siguiente - k >= 1; k++) lote.push(S.siguiente - k);
+      return Promise.all(lote.map(function (n) { return pedir(n); })).then(function (bs) {
+        for (var i = 0; i < bs.length; i++) {
+          if (!bs[i]) { S.fallaLectura = true; continue; }
+          var ms = bs[i].movimientos;
+          for (var j = ms.length - 1; j >= 0; j--) if (ms[j] && typeof ms[j] === 'object') S.movs.push(ms[j]);
+        }
+        S.siguiente -= lote.length;
+        return paso();
+      });
+    }
+    return paso().catch(function () { S.fallaLectura = true; }).then(function () { S.cargandoMas = false; render(); });
+  }
+
+  // ---------------------------------------------------------------- comprobar la cadena en el navegador
+  function Falla(k, a) { this.k = k; this.a = a || {}; }
+  function verificar() {
+    if (S.verif.fase === 'corriendo') return;
+    var n = S.total;
+    if (!(window.crypto && window.crypto.subtle)) { S.verif = { fase: 'sin_sha' }; render(); return; }
+    if (n > MAX_VERIF) { S.verif = { fase: 'grande' }; render(); return; }
+    S.verif = { fase: 'corriendo', i: 0, n: n };
+    render();
+    var res = new Array(n), sig = 0, hechos = 0, fallo = null;
+    function trabajador() {
+      if (fallo || sig >= n) return Promise.resolve();
+      var i = ++sig;
+      return fetch(BASE + 'bloques/' + pad6(i) + '.json', { cache: 'no-store', credentials: 'omit' }).then(function (r) {
+        if (!r.ok) throw new Falla('http', { n: i, s: r.status });
+        return r.arrayBuffer();
+      }).then(function (buf) {
+        return window.crypto.subtle.digest('SHA-256', buf).then(function (d) {
+          res[i - 1] = { buf: buf, sha: hex(d) };
+          hechos++;
+          if (hechos % 10 === 0 && !fallo) { S.verif.i = hechos; render(); }
+        });
+      }).then(trabajador, function (e) { if (!fallo) fallo = e; });
+    }
+    var pool = [];
+    for (var k = 0; k < PARALELO; k++) pool.push(trabajador());
+    Promise.all(pool).then(function () {
+      if (fallo) throw fallo;
+      analizar(res, n);
+    }).catch(function (e) {
+      S.verif = e instanceof Falla ? { fase: 'falla', k: e.k, a: e.a } : { fase: 'falla', k: 'net', a: {} };
+      render();
+    });
+  }
+  function analizar(res, n) {
+    var prev = ZERO, esperado = 1, tot = Object.create(null), entro = 0, salio = 0;
+    for (var i = 1; i <= n; i++) {
+      var r = res[i - 1], b;
+      try { b = JSON.parse(new TextDecoder('utf-8', { fatal: true }).decode(r.buf)); } catch (e) { throw new Falla('json', { n: i }); }
+      if (!b || typeof b !== 'object' || !Array.isArray(b.movimientos)) throw new Falla('json', { n: i });
+      if (b.bloque !== i) throw new Falla('num', { n: i });
+      if (b.anterior !== prev) throw new Falla('link', { n: i });
+      var ix = S.indice && S.indice.bloques[i - 1];
+      if (ix && ix.sha256 !== r.sha) throw new Falla('idx', { n: i });
+      for (var j = 0; j < b.movimientos.length; j++) {
+        var m = b.movimientos[j];
+        if (!m || typeof m !== 'object' || typeof m.tipo !== 'string' || !esEntero(m.sats)) throw new Falla('json', { n: i });
+        if (m.n !== esperado) throw new Falla('seq', { n: i });
+        esperado++;
+        var c = tot[m.tipo] || (tot[m.tipo] = { n: 0, sats: 0 });
+        c.n++; c.sats += m.sats;
+        if (m.sats > 0) entro += m.sats; else salio -= m.sats;
+      }
+      prev = r.sha;
+    }
+    var u = S.estado && S.estado.ultimo_bloque;
+    if (u && u.bloque === n && u.sha256 !== prev) throw new Falla('state', { n: n });
+    S.verif = { fase: 'ok', n: n, m: esperado - 1, tot: tot, entro: entro, salio: salio };
+    render();
+  }
+
+  // ---------------------------------------------------------------- vista
+  function insignia(tipo, t) {
+    var k = claseSegura(tipo);
+    return h('span', { class: 'badge b-' + k }, t['t_' + tipo] && TIPOS.indexOf(tipo) >= 0 ? t['t_' + tipo] : String(tipo));
+  }
+  function filaMov(m, t) {
+    var clave = typeof m.hash_pago === 'string' && m.hash_pago ? m.hash_pago : (typeof m.tx === 'string' && m.tx ? 'tx:' + m.tx : (typeof m.ref === 'string' ? m.ref : ''));
+    return h('tr', null,
+      h('td', { 'data-l': t.colN, class: 'r' }, m.n === undefined ? '—' : num(m.n)),
+      h('td', { 'data-l': t.colTime, title: String(m.hora) }, hora(m.hora)),
+      h('td', { 'data-l': t.colType }, insignia(String(m.tipo), t)),
+      h('td', { 'data-l': t.colSats, class: 'r ' + (m.sats < 0 ? 'neg' : 'pos') }, numSigno(m.sats)),
+      h('td', { 'data-l': t.colFee, class: 'r' }, num(m.comision_msat)),
+      h('td', { 'data-l': t.colHash }, clave ? h('span', { class: 'val' }, h('span', { class: 'mono', title: clave }, corto(clave)), botonCopiar(clave, t)) : '—')
+    );
+  }
+  function tabla(movs, t) {
+    return h('div', { class: 'tw' }, h('table', { class: 'mov' },
+      h('caption', null, t.movTitle),
+      h('thead', null, h('tr', null,
+        h('th', { scope: 'col', class: 'r' }, t.colN), h('th', { scope: 'col' }, t.colTime), h('th', { scope: 'col' }, t.colType),
+        h('th', { scope: 'col', class: 'r' }, t.colSats), h('th', { scope: 'col', class: 'r' }, t.colFee), h('th', { scope: 'col' }, t.colHash))),
+      h('tbody', null, movs.map(function (m) { return filaMov(m, t); }))));
+  }
+  function frescura() {
+    var t = TXT[S.lang], e = S.estado;
+    var edad = Math.max(0, ahora() - Date.parse(e.actualizado_en));
+    var clase = edad > ALARMA_MS ? 'bad' : (edad > AVISO_MS ? 'warn' : 'ok');
+    var d = duracion(edad, t);
+    return h('div', { id: 'fresh', class: 'fresh ' + clase, role: 'status' },
+      h('strong', null, clase === 'ok' ? fmt(t.freshOk, { t: d }) : fmt(t.freshStale, { t: d })),
+      h('small', null, fmtN(t.freshAt, { d: sinCorte(hora(e.actualizado_en) + ' UTC') }), clase === 'ok' ? ' · ' + t.freshHint : ''));
+  }
+  function vistaVerificacion(t) {
+    var v = S.verif, caja = [];
+    caja.push(h('p', null, t.vIntro));
+    caja.push(h('p', null, h('button', { type: 'button', class: 'btn', 'data-fid': 'verif', 'aria-disabled': v.fase === 'corriendo' ? 'true' : null, onclick: verificar }, t.vBtn)));
+    if (v.fase === 'corriendo') caja.push(h('p', { role: 'status' }, fmt(t.vRunning, { i: v.i, n: v.n })));
+    if (v.fase === 'sin_sha') caja.push(h('div', { class: 'badbox' }, t.vNoSha));
+    if (v.fase === 'grande') caja.push(h('div', { class: 'badbox' }, t.vBig));
+    if (v.fase === 'falla') caja.push(h('div', { class: 'badbox', role: 'alert' }, h('strong', null, t.vFailHead), ' ', fmt(t['vF_' + v.k] || t.vF_net, v.a)));
+    if (v.fase === 'ok') {
+      var orden = TIPOS.concat(Object.keys(v.tot).filter(function (k) { return TIPOS.indexOf(k) < 0; }));
+      caja.push(h('div', { class: 'okbox', role: 'status' }, fmt(t.vOk, { n: num(v.n), m: num(v.m) })));
+      caja.push(h('h3', null, t.vTotals));
+      caja.push(h('div', { class: 'tw' }, h('table', { class: 'mov' },
+        h('thead', null, h('tr', null, h('th', { scope: 'col' }, t.colType), h('th', { scope: 'col', class: 'r' }, t.vCount), h('th', { scope: 'col', class: 'r' }, t.vSum))),
+        h('tbody', null, orden.filter(function (k) { return v.tot[k]; }).map(function (k) {
+          return h('tr', null, h('td', { 'data-l': t.colType }, insignia(k, t)), h('td', { 'data-l': t.vCount, class: 'r' }, num(v.tot[k].n)), h('td', { 'data-l': t.vSum, class: 'r' }, numSigno(v.tot[k].sats)));
+        })))));
+      caja.push(h('p', { class: 'note' }, t.vIn + ': ' + num(v.entro) + ' ' + t.sats + ' · ' + t.vOut + ': ' + num(v.salio) + ' ' + t.sats));
+    }
+    caja.push(h('p', { class: 'note' }, t.vCaveat));
+    return caja;
+  }
+  // ---------------------------------------------------------------- persianas
+  // Un bloque de texto que se despliega con un clic. Abierto o cerrado se recuerda en S.abiertas, porque la pagina se redibuja entera
+  // (cada 5 minutos, al cambiar de idioma, mientras se comprueba la cadena) y si no, se cerrarian solas.
+  function persiana(id, titulo, cuerpo, mini) {
+    var d = h('details', { class: 'pers' + (mini ? ' mini' : ''), id: id });
+    if (S.abiertas[id]) d.setAttribute('open', '');
+    d.addEventListener('toggle', function () { S.abiertas[id] = d.open; });
+    d.appendChild(h('summary', { 'data-fid': 'p-' + id }, h('span', null, titulo)));
+    d.appendChild(h('div', { class: 'cuerpo' }, cuerpo));
+    return d;
+  }
+  function lista(tag, items, clase) { return h(tag, { class: clase || null }, items.map(function (x) { return h('li', null, x); })); }
+
+  // ---------------------------------------------------------------- la cadena de bloques
+  function shaIx(n) {   // huella del bloque n segun el indice o el estado (lo que el servidor dice); el "bloque 0" es el cero del principio
+    if (n < 1) return ZERO;
+    var ix = S.indice && S.indice.bloques[n - 1];
+    if (ix && typeof ix === 'object' && ix.bloque === n && esSha(ix.sha256)) return ix.sha256;
+    var u = S.estado && S.estado.ultimo_bloque;
+    if (u && typeof u === 'object' && u.bloque === n && esSha(u.sha256)) return u.sha256;
+    return null;
+  }
+  function shaDe(n) {   // como shaIx, y si no hay indice, la que lleva escrita el bloque siguiente
+    var s = shaIx(n);
+    if (s) return s;
+    var sig = S.blq[n + 1];
+    return sig && esSha(sig.anterior) ? sig.anterior : null;
+  }
+  function capRanuras() {
+    var r = S.estado && S.estado.reglas, n = r && typeof r === 'object' ? r.movimientos_por_bloque : null;
+    return esEntero(n) && n >= 1 && n <= MAX_RANURAS ? n : RANURAS;
+  }
+  function lomo(sha) {
+    var c = colores(sha) || [null, null, null, null], l = h('span', { class: 'lomo', 'aria-hidden': 'true' });
+    c.forEach(function (col) { var i = h('i'); if (col) i.style.background = col; l.appendChild(i); });
+    return l;
+  }
+  function chip(rotulo, sha, ceroTexto) {
+    var c = colores(sha), sw = null;
+    if (c) { sw = h('span', { class: 'sw', 'aria-hidden': 'true' }); c.forEach(function (col) { var i = h('i'); i.style.background = col; sw.appendChild(i); }); }
+    return h('div', { class: 'chip', title: esSha(sha) ? sha : null }, h('span', null, rotulo),
+      h('span', { class: 'v' }, sw, h('span', { class: 'mono' }, sha === ZERO ? ceroTexto : (esSha(sha) ? sha.slice(0, 8) : '…'))));
+  }
+  function resumenTipos(tipos, t) {
+    var cuentas = Object.create(null), orden = [];
+    tipos.forEach(function (k) { k = String(k); if (!cuentas[k]) { cuentas[k] = 0; orden.push(k); } cuentas[k]++; });
+    var claves = TIPOS.filter(function (k) { return cuentas[k]; }).concat(orden.filter(function (k) { return TIPOS.indexOf(k) < 0; }));
+    return claves.map(function (k) { return cuentas[k] + ' ' + (TIPOS.indexOf(k) >= 0 ? t['t_' + k] : k); }).join(', ');
+  }
+  function sumas(movs) {
+    var s = { entro: 0, salio: 0 };
+    movs.forEach(function (m) { if (esEntero(m.sats)) { if (m.sats > 0) s.entro += m.sats; else s.salio -= m.sats; } });
+    return s;
+  }
+  function filaSumas(s, t) {
+    if (!s.entro && !s.salio) return null;
+    return h('div', { class: 'bq-suma' }, s.entro ? h('span', { class: 'pos' }, numSigno(s.entro)) : null, s.entro && s.salio ? ' ' : null, s.salio ? h('span', { class: 'neg' }, numSigno(-s.salio)) : null, ' ' + t.sats);
+  }
+  function tarjeta(n, t) {
+    var ix = S.indice && S.indice.bloques[n - 1];
+    if (!ix || typeof ix !== 'object' || ix.bloque !== n) ix = null;
+    var b = S.blq[n] || null;
+    var cerrado = ix && typeof ix.cerrado_en === 'string' ? ix.cerrado_en : (b && typeof b.cerrado_en === 'string' ? b.cerrado_en : null);
+    var motivo = ix && ix.motivo !== undefined ? ix.motivo : (b ? b.motivo : undefined);
+    var movs = b ? b.movimientos.filter(function (m) { return m && typeof m === 'object'; }) : null;
+    var cuenta = movs ? movs.length : (ix && esEntero(ix.movimientos) && ix.movimientos >= 0 ? ix.movimientos : null);
+    var cap = capRanuras(), tipos = [], i;
+    if (movs) tipos = movs.map(function (m) { return String(m.tipo); });
+    else if (cuenta !== null) for (i = 0; i < cuenta && i < cap; i++) tipos.push(null);
+    var cuadros = h('div', { class: 'ranuras', 'aria-hidden': 'true' });
+    for (i = 0; i < tipos.length && i < cap; i++) cuadros.appendChild(h('i', { class: 'cu' + (tipos[i] !== null ? ' tp-' + claseSegura(tipos[i]) : '') }));
+    if (cuenta !== null && cuenta > cap) cuadros.appendChild(h('span', { class: 'mas' }, '+' + num(cuenta - cap)));
+    if (cuenta === 0) cuadros.appendChild(h('span', { class: 'mas' }, t.blkNoMovs));
+    var ms = Date.parse(cerrado);
+    var titulo = fmt(t.blkTitle, { n: num(n) });
+    var sha = shaDe(n), prev = b ? b.anterior : shaIx(n - 1);
+    return h('div', { class: 'bloque', id: 'bq-' + n, role: 'group', 'aria-label': titulo },
+      lomo(sha),
+      h('div', { class: 'bq-cab' }, h('b', null, titulo), isFinite(ms) ? h('small', { title: hora(cerrado) + ' UTC' }, fmt(t.ago, { t: duracion(Math.max(0, ahora() - ms), t) })) : null),
+      h('span', { class: 'sr' }, cuenta === 0 ? t.blkNoMovs : (movs ? resumenTipos(tipos, t) : '')),
+      cuadros,
+      movs ? filaSumas(sumas(movs), t) : null,
+      motivo === undefined ? null : h('div', { class: 'bq-motivo' }, t['m_' + motivo] || String(motivo)),
+      h('div', { class: 'bq-chips' }, chip(t.blkFp, sha, t.blkStart), chip(t.blkPrev, prev, t.blkStart)),
+      h('a', { class: 'bq-ver', href: BASE + 'bloques/' + pad6(n) + '.json', 'aria-label': t.blkFile + ': ' + pad6(n) + '.json' }, t.blkFile));
+  }
+  function tarjetaAbierta(t, abiertos) {   // abiertos: del mas antiguo al mas nuevo
+    var cap = capRanuras(), cuadros = h('div', { class: 'ranuras', 'aria-hidden': 'true' }), titulo = fmt(t.blkTitle, { n: num(S.total + 1) });
+    for (var i = 0; i < cap; i++) cuadros.appendChild(h('i', { class: 'cu ' + (i < abiertos.length ? 'tp-' + claseSegura(String(abiertos[i].tipo)) : 'vacia') }));
+    if (abiertos.length > cap) cuadros.appendChild(h('span', { class: 'mas' }, '+' + num(abiertos.length - cap)));
+    return h('div', { class: 'bloque abierto', id: 'bq-abierto', role: 'group', 'aria-label': titulo + ' (' + t.blkOpenTag + ')' },
+      lomo(null),
+      h('div', { class: 'bq-cab' }, h('b', null, titulo), h('small', { class: 'tag' }, t.blkOpenTag)),
+      h('span', { class: 'sr' }, abiertos.length ? resumenTipos(abiertos.map(function (m) { return m.tipo; }), t) : t.blkNoMovs),
+      cuadros,
+      filaSumas(sumas(abiertos), t),
+      h('div', { class: 'bq-chips' }, chip(t.blkPrev, shaIx(S.total), t.blkStart)),
+      h('a', { class: 'bq-ver', href: BASE + 'estado.json' }, 'estado.json'));
+  }
+  // el eslabon entre el bloque de la izquierda (izq, el mas nuevo) y el de su derecha (der): lleva los colores de la huella de der.
+  // Sale rojo si el bloque izq ya se leyo y dice venir de una huella distinta de la que el indice da para der (es una comparacion de datos, no el calculo del SHA-256: ese es el boton de abajo).
+  function eslabon(izq, der, t) {
+    var abierto = izq === S.total + 1, esperado = shaIx(der), bi = abierto ? null : S.blq[izq];
+    var dice = bi ? bi.anterior : undefined;
+    var roto = !!bi && !!esperado && dice !== esperado;
+    var sha = roto ? null : (esperado || (typeof dice === 'string' ? dice : null)), c = colores(sha);
+    var d = h('div', { class: 'enlace' + (abierto ? ' abierto' : '') + (roto ? ' roto' : '') });
+    d.innerHTML = ESLABON;
+    if (c) { d.style.setProperty('--ca', c[0]); d.style.setProperty('--cb', c[1]); }
+    var msg = roto ? fmt(t.linkBad, { a: num(izq), b: num(der) }) : (abierto ? fmt(t.linkOpen, { b: num(der) }) : fmt(t.linkOk, { a: num(izq), b: num(der) }));
+    d.setAttribute('title', msg);
+    if (roto) { d.setAttribute('role', 'img'); d.setAttribute('aria-label', msg); d.appendChild(h('b', { class: 'ojo', 'aria-hidden': 'true' }, '!')); }
+    else d.setAttribute('aria-hidden', 'true');
+    return d;
+  }
+  function vistaCadena(t, abiertos) {
+    var e = S.estado, u = e.ultimo_bloque, carril = [];
+    carril.push(tarjetaAbierta(t, abiertos.slice().reverse()));
+    var hasta = Math.max(1, S.total - S.carril + 1);
+    for (var n = S.total; n >= hasta; n--) { carril.push(eslabon(n + 1, n, t)); carril.push(tarjeta(n, t)); }
+    if (hasta > 1) carril.push(h('div', { class: 'mas-bloques' }, h('button', { type: 'button', class: 'btn', 'data-fid': 'carril-mas', onclick: masBloques }, t.olderBtn)));
+    var sec = [h('h2', null, t.chainTitle), h('p', { class: 'note' }, t.chainHelp),
+      h('div', { class: 'carril', role: 'region', tabindex: '0', 'data-fid': 'carril', 'aria-label': t.carrilLabel }, carril)];
+    if (u && typeof u === 'object') {
+      sec.push(h('h3', null, t.lastTitle),
+        h('p', null, fmtN(t.lastLine, { n: num(u.bloque), motivo: t['m_' + u.motivo] || String(u.motivo), d: sinCorte(hora(u.cerrado_en) + ' UTC') })),
+        h('div', { class: 'note' }, t.lastHash),
+        h('div', { class: 'hash mono', id: 'ultimo-hash' }, String(u.sha256)),
+        botonCopiar(String(u.sha256), t));
+    }
+    return h('section', { class: 'card', id: 'cadena' }, sec);
+  }
+
+  // Los avisos los escribe el generador en espanol con 3 frases fijas; aqui se reconocen y se traducen. Una frase desconocida
+  // se muestra tal cual (con la nota "texto original, en espanol"), para no esconder nada.
+  var ALERTAS = [
+    { re: /^hay (\d{1,12}) movimiento\(s\) ya sellado\(s\) que phoenixd ya no lista$/, k: 'al_falta', v: function (m) { return { n: num(+m[1]) }; } },
+    { re: /^el saldo calculado de un bloque salia negativo \((-?\d{1,15}) sats\): se publico 0$/, k: 'al_neg', v: function (m) { return { a: num(+m[1]) }; } },
+    { re: /^diferencia contable de (-?\d{1,15}) sats entre el saldo del nodo \((-?\d{1,15})\) y el saldo inicial mas los movimientos \((-?\d{1,15})\); puede ser transitoria \(pagos en curso\)$/, k: 'al_dif', v: function (m) { return { a: num(+m[1]), b: num(+m[2]), c: num(+m[3]) }; } }
+  ];
+  function alertaTraducida(a, t) {
+    for (var i = 0; i < ALERTAS.length; i++) {
+      var m = ALERTAS[i].re.exec(a);
+      if (m && t[ALERTAS[i].k]) return fmt(t[ALERTAS[i].k], ALERTAS[i].v(m));
+    }
+    return null;
+  }
+
+  // ---------------------------------------------------------------- vista
+  function vistaListo(t) {
+    var e = S.estado, out = [];
+    out.push(frescura());
+    if (Array.isArray(e.alertas) && e.alertas.length) {
+      var crudas = 0;
+      var items = e.alertas.map(function (a) { var x = alertaTraducida(String(a), t); if (x === null) { crudas++; return h('li', null, String(a)); } return h('li', null, x); });
+      out.push(h('div', { class: 'warnbox' }, h('h2', null, t.alertTitle), h('ul', null, items), crudas ? h('p', { class: 'note' }, t.alertNote) : null));
+    }
+    out.push(h('div', { class: 'stats' },
+      h('div', { class: 'stat' }, h('div', { class: 'k' }, t.sBalance), h('div', { class: 'v', id: 'saldo' }, num(e.saldo_sat), ' ', h('small', null, t.sats)), h('div', { class: 'note' }, t.balNote)),
+      h('div', { class: 'stat' }, h('div', { class: 'k' }, t.sBlocks), h('div', { class: 'v', id: 'bloques' }, num(e.bloques))),
+      h('div', { class: 'stat' }, h('div', { class: 'k' }, t.sMovs), h('div', { class: 'v', id: 'sellados' }, num(e.movimientos_sellados)))));
+    var abiertos = Array.isArray(e.abierto) ? e.abierto.filter(function (m) { return m && typeof m === 'object'; }).reverse() : [];
+    out.push(vistaCadena(t, abiertos));
+    out.push(h('section', { class: 'card', id: 'abiertos' }, h('h2', null, t.openTitle),
+      persiana('abierto', t.openWhat, h('p', null, t.openHelp), true),
+      abiertos.length ? tabla(abiertos, t) : h('p', { class: 'note' }, t.openNone)));
+    var sec = [h('h2', null, t.movTitle)];
+    if (S.movs.length) sec.push(tabla(S.movs, t));
+    else if (!S.cargandoMas) sec.push(h('p', { class: 'note' }, t.noMovs));
+    if (S.fallaLectura) sec.push(h('p', { class: 'note' }, t.readFail));
+    if (S.siguiente >= 1 || S.cargandoMas) {
+      sec.push(h('p', { class: 'center' }, h('button', { type: 'button', class: 'btn', 'data-fid': 'mas', 'aria-disabled': S.cargandoMas ? 'true' : null, onclick: cargarMas }, S.cargandoMas ? t.loadingMore : fmt(t.more, { k: POR_PAGINA }))));
+    }
+    sec.push(persiana('leyenda', t.legTitle, [
+      h('dl', { class: 'leg' }, TIPOS.map(function (k) { return [h('dt', null, insignia(k, t)), h('dd', null, t[{ entrada: 'legEntrada', reclamo: 'legReclamo', liquidez: 'legLiquidez', gasto: 'legGasto', retiro: 'legRetiro', sin_clasificar: 'legSin' }[k]])]; })),
+      h('p', { class: 'note' }, t.legSlots + ' ' + t.legFee + ' ' + t.legHash)], true));
+    out.push(h('section', { class: 'card', id: 'movimientos' }, sec));
+    out.push(h('p', { class: 'masl' }, t.moreLabel));
+    out.push(persiana('funciona', t.funTitle, lista('ol', t.funL)));
+    out.push(persiana('limites', t.limTitle, [
+      h('h3', null, t.limYesTitle), lista('ul', t.limYes, 'lim'),
+      h('h3', null, t.limNoTitle), lista('ul', t.limNo, 'lim'),
+      h('p', null, t.limCheck),
+      h('h3', null, t.bcTitle), h('p', null, t.bcP1), h('p', null, t.bcP2),
+      h('p', { class: 'note' }, t.privText + ' ', h('a', { href: '/privacy/' }, t.privLink))]));
+    out.push(persiana('verificar', t.vTitle, vistaVerificacion(t)));
+    var cmd = 'git clone ' + REPO + '\ncd takepower-ledger\npython3 verify_ledger.py --url ' + origen() + BASE;
+    var r = e.reglas && typeof e.reglas === 'object' ? e.reglas : null;
+    out.push(persiana('independiente', t.howTitle, [
+      h('p', null, t.howIntro), h('pre', { class: 'cmd mono' }, cmd), botonCopiar(cmd, t),
+      h('p', null, h('a', { href: REPO, target: '_blank', rel: 'noopener noreferrer' }, t.lnkRepo)),
+      h('p', null, t.lnkFiles + ': ', h('a', { href: BASE + 'estado.json' }, 'estado.json'), ' · ', h('a', { href: BASE + 'indice.json' }, 'indice.json'), ' · ', h('a', { href: BASE + 'bloques/000001.json' }, 'bloques/000001.json')),
+      persiana('tecnicos', t.detTitle, h('dl', { class: 'det mono' },
+        h('dt', null, t.detNode), h('dd', null, e.nodo === undefined ? '—' : String(e.nodo)),
+        h('dt', null, t.detFormat), h('dd', null, String(e.formato)),
+        h('dt', null, t.detRules), h('dd', null, r ? fmt(t.rules, { a: r.movimientos_por_bloque, b: r.horas_maximas, c: r.latido_dias, d: r.gracia_minutos }) : '—'),
+        h('dt', null, t.detCredit), h('dd', null, num(e.credito_comisiones_sat) + ' ' + t.sats)), true)]));
+    return out;
+  }
+  function cita(t) {
+    return h('figure', { class: 'cita' },
+      h('blockquote', null, h('p', null, t.citaTrad)),
+      h('figcaption', null, CITA_AUTOR));
+  }
+  function nav(t) {
+    return h('nav', { class: 'nav', 'aria-label': t.navLabel }, NAV.map(function (it) {
+      var marca = h('span', { 'aria-hidden': 'true' });
+      if (it.icono) marca.innerHTML = ICONOS[it.icono]; else marca.textContent = it.glifo;
+      return h('a', { class: it.clase, href: HOME + it.ruta, 'data-fid': 'nav-' + it.id }, marca, t[it.clave]);
+    }));
+  }
+  function vista() {
+    var t = TXT[S.lang];
+    var botones = LANGS.map(function (l) {
+      return h('button', { type: 'button', class: 'btn', 'data-fid': 'lang-' + l, 'aria-pressed': S.lang === l ? 'true' : 'false', 'aria-label': NOMBRES[l], lang: l === 'pt' ? 'pt-BR' : l, onclick: function () { setLang(l); } }, l === 'pt' ? 'BR' : l.toUpperCase());
+    });
+    var cuerpo = [];
+    if (S.fase === 'cargando') cuerpo.push(h('p', { class: 'center', role: 'status' }, t.loading));
+    else if (S.fase === 'vacio') cuerpo.push(h('section', { class: 'card', id: 'vacio' }, h('p', null, t.empty)));
+    else if (S.fase === 'error') cuerpo.push(h('section', { class: 'card', id: 'error' }, h('p', { role: 'alert' }, t.error), h('button', { type: 'button', class: 'btn', 'data-fid': 'reintentar', onclick: function () { cargar(false); } }, t.retry)));
+    else cuerpo = vistaListo(t);
+    return h('div', { class: 'wrap' },
+      h('div', { class: 'top' },
+        nav(t),
+        h('div', { class: 'langs', role: 'group', 'aria-label': t.langs }, botones)),
+      h('header', { class: 'hero' },
+        h('div', { class: 'ico', 'aria-hidden': 'true' }, LIBRO),
+        h('h1', null, t.title), h('p', null, t.subtitle)),
+      h('main', null,
+        persiana('experimento', t.expTitle, [h('p', null, t.expP1), h('p', null, t.expP2), h('h3', null, t.expPrinc), lista('ul', t.expL), h('p', null, t.expP3)]),
+        cuerpo),
+      h('div', { class: 'foot' }, cita(t), h('a', { href: HOME }, '₿ takepower.world')));
+  }
+  function render() {
+    var t = TXT[S.lang];
+    var foco = document.activeElement && document.activeElement.getAttribute ? document.activeElement.getAttribute('data-fid') : null;
+    document.documentElement.lang = S.lang === 'pt' ? 'pt-BR' : S.lang;
+    document.title = t.docTitle;
+    var meta = document.querySelector('meta[name=description]');
+    if (meta) meta.setAttribute('content', t.metaDesc);
+    var app = document.getElementById('app');
+    var viejo = app.querySelector('.carril'), izq = viejo ? viejo.scrollLeft : 0;
+    app.textContent = '';
+    var v = vista();
+    app.appendChild(v);
+    var nuevo = app.querySelector('.carril');
+    if (nuevo && izq) nuevo.scrollLeft = izq;
+    if (foco) { var n = app.querySelector('[data-fid="' + foco + '"]'); if (n) n.focus({ preventScroll: true }); }
+    if (S.irA && !S.cargandoMas && !S.cargandoCarril) {
+      var dest = document.getElementById(S.irA);
+      if (dest) { S.irA = null; dest.scrollIntoView(); }
+    }
+  }
+  function setLang(l) {
+    S.lang = l;
+    try { localStorage.setItem('lang', l); } catch (e) {}
+    render();
+  }
+  // un enlace como /ledger/#verificar abre esa persiana y baja hasta ella
+  function abrirPorHash() {
+    var id = String(location.hash || '').replace(/^#/, '');
+    if (HASHES.indexOf(id) < 0) return;
+    S.abiertas[id] = true;
+    S.irA = id;
+  }
+
+  // ---------------------------------------------------------------- arranque
+  try { var g = localStorage.getItem('lang'); if (LANGS.indexOf(g) >= 0) S.lang = g; } catch (e) {}
+  abrirPorHash();
+  window.addEventListener('hashchange', function () { abrirPorHash(); render(); });
+  render();
+  cargar(false);
+  setInterval(function () {
+    var f = document.getElementById('fresh');
+    if (f && S.estado) f.parentNode.replaceChild(frescura(), f);
+  }, 30000);
+  setInterval(function () { cargar(true); }, REFRESCO_MS);
+})();
+</script>
+</body>
+</html>

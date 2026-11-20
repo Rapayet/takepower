@@ -1,0 +1,10 @@
+[Unit]
+Description=Purga horaria de IP de reclamos y de votos (fondo-ip-purge)
+
+[Timer]
+OnCalendar=hourly
+RandomizedDelaySec=300
+Persistent=true
+
+[Install]
+WantedBy=timers.target

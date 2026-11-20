@@ -1,0 +1,12 @@
+[Unit]
+Description=Quita de la base del fondo las IP de reclamos y de votos con mas de 22 dias
+After=fondo-backend.service
+
+[Service]
+Type=oneshot
+TimeoutStartSec=300
+Environment=DB_PATH=/opt/fondo/backend/fondo.db
+Environment=IP_RETENTION_DAYS=22
+Environment=BETTER_SQLITE3=/opt/fondo/backend/node_modules/better-sqlite3
+ExecStart=/usr/bin/node /usr/local/sbin/fondo-ip-purge.js
+Nice=10

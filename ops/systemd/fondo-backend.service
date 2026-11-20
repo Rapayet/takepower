@@ -1,0 +1,15 @@
+[Unit]
+Description=Fondo Soberano Backend
+After=network.target
+
+[Service]
+Type=simple
+User=root
+WorkingDirectory=/opt/fondo/backend
+ExecStart=/usr/bin/node index.js
+Restart=always
+RestartSec=10
+KillMode=process
+
+[Install]
+WantedBy=multi-user.target

@@ -5,11 +5,12 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Energy Standard | Take Power</title>
   <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>₿</text></svg>">
+  <link href="https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400;0,700;1,400;1,700&display=swap" rel="stylesheet">
   <script src="https://cdn.tailwindcss.com"></script>
   <style>
     :root { --accent:#f7931a; --bg:#071510; --bg2:#0d2620; --text:#e0e0e0; --text2:#9ca3af; --green:#10b981; --red:#ef4444; }
     * { margin:0; padding:0; box-sizing:border-box; }
-    body { font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif; background:var(--bg); color:var(--text); line-height:1.6; }
+    body { font-family:'Lora',serif; background:var(--bg); color:var(--text); line-height:1.6; }
     
     /* Quitar spinners de inputs numéricos */
     input[type=number]::-webkit-inner-spin-button,
@@ -146,7 +147,7 @@
         formulaEq: "Precio (sats) = Energía Incorporada (MJ) × Tasa (sats/MJ)",
         formulaWhere: "¿De dónde sale la Tasa?",
         formulaWhereText: "Cada valor tiene una fuente verificable. Nada está puesto a dedo:",
-        fS1: "Hashrate de la red", fS1d: "Dato público de mempool.space, verificable por cualquiera en tiempo real",
+        fS1: "Hashrate de la red", fS1d: "Dato público de mempool.space (si no responde, de Blockchain.com), verificable por cualquiera", redCargando: "Consultando el hashrate de la red…", redSinDato: "No se pudo obtener el hashrate de la red: mempool.space y Blockchain.com no respondieron. Todos los precios de esta página se calculan con ese dato, así que ahora no se muestran.", redReintentar: "Reintentar", redUltimo: "último dato", redVolver: "Volver al inicio",
         fS2: "Eficiencia promedio mineros", fS2d: "Promedio de ASICs actuales. Es la única variable estimada: no sabemos exactamente qué equipos minan en el mundo",
         fS3: "Potencia total de la red", fS4: "Energía consumida por hora",
         fS5: "Sats emitidos por hora", fS5d: "dato inmutable del protocolo Bitcoin",
@@ -161,7 +162,7 @@
         votesText3: "Productos con 77% de votos negativos son eliminados.",
         // Trabajo humano
         hwTitle: "👤 Sobre el trabajo humano",
-        hwIntro: "Bitcoin es energía congelada en el tiempo. Es decir: el valor es energía gastada en el tiempo — trabajo. Cada sat existe porque alguien gastó tiempo y energía irreversible en prueba de trabajo. Tu hora de trabajo funciona igual: es tiempo irreversible de tu vida que no se puede copiar, falsificar ni inflar.",
+        hwIntro: "Bitcoin es tiempo convertido en información: trabajo computacional, energía gastada sin retorno. Si el valor nace del trabajo y este gasta energía, no tiene sentido cobrar por una hora de tu vida en una moneda que alguien más puede emitir a voluntad: eso diluye el valor de lo que hiciste, pues se te pagaría en algo que no equivale a tu esfuerzo. Cada sat existe porque se gastó tiempo y energía en el Proof of Work. Lo lógico es que se te pague con algo que respete la teoría del valor-trabajo, una unidad que registra e informa sobre el trabajo hecho.",
         hwRBU: "La Renta Básica Universal es el cimiento",
         hwRBU1: "Sin RBU, el trabajo es coerción. Trabajas para no morirte de hambre, no porque elijas hacerlo. Y cuando alguien necesita trabajar para sobrevivir, acepta cualquier precio. El empleador lo sabe. El resultado es que el salario justo nunca se alcanza porque el trabajador no puede decir \"no\".",
         hwRBU2: "Con RBU, la supervivencia está cubierta. El trabajo se convierte en un intercambio voluntario entre iguales. El obrero puede rechazar una oferta injusta sin consecuencias fatales. Un precio negociado bajo amenaza de hambre no es un precio justo: es extorsión.",
@@ -180,7 +181,8 @@
         svcBaseT2: "Este sistema presupone una Renta Básica Universal — la supervivencia está cubierta, el trabajo es voluntario. El multiplicador por experticia refleja los años de formación acumulados en cada hora.",
         h1: "1 hora", day6: "Jornada (6h)", wk: "Semana", mo: "Mes",
         svcFoot: "Semana = 4 días × 6h. Mes = 4 semanas.",
-        footerQuote: "\"Bitcoin es energía congelada en el tiempo\""
+        footerQuote: "\"Bitcoin es tiempo convertido en información\"",
+        privacyLink: "Política de privacidad"
       },
       en: {
         title: "Energy Standard",
@@ -246,7 +248,7 @@
         formulaEq: "Price (sats) = Embodied Energy (MJ) × Rate (sats/MJ)",
         formulaWhere: "Where does the Rate come from?",
         formulaWhereText: "Every value has a verifiable source. Nothing is made up:",
-        fS1: "Network hashrate", fS1d: "Public data from mempool.space, verifiable by anyone in real time",
+        fS1: "Network hashrate", fS1d: "Public data from mempool.space (or Blockchain.com if it does not respond), verifiable by anyone", redCargando: "Fetching the network hashrate…", redSinDato: "The network hashrate could not be fetched: mempool.space and Blockchain.com did not respond. Every price on this page is computed from that figure, so prices are not shown right now.", redReintentar: "Retry", redUltimo: "last data", redVolver: "Back to home",
         fS2: "Average miner efficiency", fS2d: "Current ASIC average. The only estimated variable: we don't know exactly which equipment mines worldwide",
         fS3: "Total network power", fS4: "Energy consumed per hour",
         fS5: "Sats issued per hour", fS5d: "immutable Bitcoin protocol data",
@@ -260,7 +262,7 @@
         votesText2: "The community votes and you decide if you trust a price.",
         votesText3: "Products with 77% negative votes are removed.",
         hwTitle: "👤 About human work",
-        hwIntro: "Bitcoin is energy frozen in time. That is: value is energy spent over time — work. Each sat exists because someone spent irreversible time and energy on proof of work. Your work hour functions the same: it is irreversible time from your life that cannot be copied, faked, or inflated.",
+        hwIntro: "Bitcoin is time converted into information: computational work, energy spent with no return. If value is born from work, and work expends energy, it makes no sense to charge for an hour of your life in a currency that someone else can issue at will: that dilutes the value of what you did, since you would be paid in something that does not equal your effort. Each sat exists because time and energy were spent on Proof of Work. The logical thing is to be paid with something that respects the labor theory of value, a unit that records and reports on the work done.",
         hwRBU: "Universal Basic Income is the foundation",
         hwRBU1: "Without UBI, work is coercion. You work to not starve, not because you choose to. And when someone needs to work to survive, they accept any price. The employer knows this. The result is that fair wages are never reached because the worker cannot say \"no\".",
         hwRBU2: "With UBI, survival is covered. Work becomes a voluntary exchange between equals. The worker can reject an unfair offer without fatal consequences. A price negotiated under threat of hunger is not a fair price: it is extortion.",
@@ -278,7 +280,8 @@
         svcBaseT2: "This system assumes a Universal Basic Income — survival is covered, work is voluntary. The expertise multiplier reflects years of training accumulated in each hour.",
         h1: "1 hour", day6: "Workday (6h)", wk: "Week", mo: "Month",
         svcFoot: "Week = 4 days × 6h. Month = 4 weeks.",
-        footerQuote: "\"Bitcoin is energy frozen in time\""
+        footerQuote: "\"Bitcoin is time converted into information\"",
+        privacyLink: "Privacy policy"
       },
       br: {
         title: "Padrão Energético",
@@ -344,7 +347,7 @@
         formulaEq: "Preço (sats) = Energia Incorporada (MJ) × Taxa (sats/MJ)",
         formulaWhere: "De onde vem a Taxa?",
         formulaWhereText: "Cada valor tem uma fonte verificável. Nada foi inventado:",
-        fS1: "Hashrate da rede", fS1d: "Dado público de mempool.space, verificável por qualquer pessoa em tempo real",
+        fS1: "Hashrate da rede", fS1d: "Dado público de mempool.space (se não responder, de Blockchain.com), verificável por qualquer pessoa", redCargando: "Consultando o hashrate da rede…", redSinDato: "Não foi possível obter o hashrate da rede: mempool.space e Blockchain.com não responderam. Todos os preços desta página são calculados com esse dado, por isso não são exibidos agora.", redReintentar: "Tentar de novo", redUltimo: "último dado", redVolver: "Voltar ao início",
         fS2: "Eficiência média dos mineradores", fS2d: "Média dos ASICs atuais. É a única variável estimada: não sabemos exatamente quais equipamentos mineram no mundo",
         fS3: "Potência total da rede", fS4: "Energia consumida por hora",
         fS5: "Sats emitidos por hora", fS5d: "dado imutável do protocolo Bitcoin",
@@ -358,7 +361,7 @@
         votesText2: "A comunidade vota e você decide se confia em um preço.",
         votesText3: "Produtos com 77% de votos negativos são removidos.",
         hwTitle: "👤 Sobre o trabalho humano",
-        hwIntro: "Bitcoin é energia congelada no tempo. Ou seja: o valor é energia gasta no tempo — trabalho. Cada sat existe porque alguém gastou tempo e energia irreversíveis em prova de trabalho. Sua hora de trabalho funciona igual: é tempo irreversível da sua vida que não pode ser copiado, falsificado ou inflado.",
+        hwIntro: "Bitcoin é tempo convertido em informação: trabalho computacional, energia gasta sem retorno. Se o valor nasce do trabalho e este gasta energia, não faz sentido cobrar por uma hora da sua vida em uma moeda que outra pessoa pode emitir à vontade: isso dilui o valor do que você fez, pois você seria pago com algo que não equivale ao seu esforço. Cada sat existe porque foram gastos tempo e energia no Proof of Work. O lógico é que você seja pago com algo que respeite a teoria do valor-trabalho, uma unidade que registra e informa sobre o trabalho realizado.",
         hwRBU: "A Renda Básica Universal é o alicerce",
         hwRBU1: "Sem RBU, o trabalho é coerção. Você trabalha para não morrer de fome, não porque escolhe. E quando alguém precisa trabalhar para sobreviver, aceita qualquer preço. O empregador sabe disso. O resultado é que o salário justo nunca é alcançado porque o trabalhador não pode dizer \"não\".",
         hwRBU2: "Com RBU, a sobrevivência está coberta. O trabalho se torna uma troca voluntária entre iguais. O trabalhador pode rejeitar uma oferta injusta sem consequências fatais. Um preço negociado sob ameaça de fome não é um preço justo: é extorsão.",
@@ -376,7 +379,8 @@
         svcBaseT2: "Este sistema pressupõe uma Renda Básica Universal — a sobrevivência está coberta, o trabalho é voluntário. O multiplicador por expertise reflete os anos de formação acumulados em cada hora.",
         h1: "1 hora", day6: "Jornada (6h)", wk: "Semana", mo: "Mês",
         svcFoot: "Semana = 4 dias × 6h. Mês = 4 semanas.",
-        footerQuote: "\"Bitcoin é energia congelada no tempo\""
+        footerQuote: "\"Bitcoin é tempo convertido em informação\"",
+        privacyLink: "Política de privacidade"
       },
       fr: {
         title: "Standard Énergétique",
@@ -442,7 +446,7 @@
         formulaEq: "Prix (sats) = Énergie Incorporée (MJ) × Taux (sats/MJ)",
         formulaWhere: "D'où vient le Taux?",
         formulaWhereText: "Chaque valeur a une source vérifiable. Rien n'est inventé:",
-        fS1: "Hashrate du réseau", fS1d: "Donnée publique de mempool.space, vérifiable par tous en temps réel",
+        fS1: "Hashrate du réseau", fS1d: "Donnée publique de mempool.space (ou de Blockchain.com s’il ne répond pas), vérifiable par tous", redCargando: "Récupération du hashrate du réseau…", redSinDato: "Impossible d’obtenir le hashrate du réseau : mempool.space et Blockchain.com n’ont pas répondu. Tous les prix de cette page sont calculés à partir de cette donnée ; ils ne sont donc pas affichés pour l’instant.", redReintentar: "Réessayer", redUltimo: "dernière donnée", redVolver: "Retour à l’accueil",
         fS2: "Efficacité moyenne des mineurs", fS2d: "Moyenne des ASICs actuels. C'est la seule variable estimée: nous ne savons pas exactement quels équipements minent dans le monde",
         fS3: "Puissance totale du réseau", fS4: "Énergie consommée par heure",
         fS5: "Sats émis par heure", fS5d: "donnée immuable du protocole Bitcoin",
@@ -456,7 +460,7 @@
         votesText2: "La communauté vote et vous décidez si vous faites confiance à un prix.",
         votesText3: "Les produits avec 77% de votes négatifs sont supprimés.",
         hwTitle: "👤 À propos du travail humain",
-        hwIntro: "Bitcoin est de l'énergie gelée dans le temps. C'est-à-dire: la valeur est de l'énergie dépensée dans le temps — le travail. Chaque sat existe parce que quelqu'un a dépensé du temps et de l'énergie irréversibles en preuve de travail. Votre heure de travail fonctionne de la même façon: c'est du temps irréversible de votre vie qui ne peut être copié, falsifié ou gonflé.",
+        hwIntro: "Bitcoin est du temps converti en information: travail computationnel, énergie dépensée sans retour. Si la valeur naît du travail et que celui-ci dépense de l'énergie, cela n'a aucun sens de faire payer une heure de votre vie dans une monnaie que quelqu'un d'autre peut émettre à volonté: cela dilue la valeur de ce que vous avez fait, puisque vous seriez payé avec quelque chose qui n'équivaut pas à votre effort. Chaque sat existe parce que du temps et de l'énergie ont été dépensés dans le Proof of Work. La logique veut que vous soyez payé avec quelque chose qui respecte la théorie de la valeur-travail, une unité qui enregistre et informe sur le travail accompli.",
         hwRBU: "Le Revenu de Base Universel est le fondement",
         hwRBU1: "Sans RBU, le travail est de la coercition. Vous travaillez pour ne pas mourir de faim, pas parce que vous le choisissez. Et quand quelqu'un doit travailler pour survivre, il accepte n'importe quel prix. L'employeur le sait. Le résultat est que le salaire juste n'est jamais atteint parce que le travailleur ne peut pas dire « non ».",
         hwRBU2: "Avec le RBU, la survie est couverte. Le travail devient un échange volontaire entre égaux. L'ouvrier peut rejeter une offre injuste sans conséquences fatales. Un prix négocié sous la menace de la faim n'est pas un prix juste: c'est de l'extorsion.",
@@ -474,7 +478,8 @@
         svcBaseT2: "Ce système présuppose un Revenu de Base Universel — la survie est couverte, le travail est volontaire. Le multiplicateur par expertise reflète les années de formation accumulées dans chaque heure.",
         h1: "1 heure", day6: "Journée (6h)", wk: "Semaine", mo: "Mois",
         svcFoot: "Semaine = 4 jours × 6h. Mois = 4 semaines.",
-        footerQuote: "\"Le Bitcoin est de l'énergie gelée dans le temps\""
+        footerQuote: "\"Le Bitcoin est du temps converti en information\"",
+        privacyLink: "Politique de confidentialité"
       }
     };
 
@@ -644,6 +649,8 @@
 
     // ========== SISTEMA DE VOTOS CON API ==========
     let votosPredefinidos = {};
+    let comunidadSig = '';   // huella de lo ultimo recibido: si no cambia, la pantalla no se toca
+    let redSig = '';         // huella de los datos de red mostrados
     
     async function loadCommunityProducts(skipRender) {
       try {
@@ -659,8 +666,12 @@
         }));
         misVotos = vData.votes || {};
         votosPredefinidos = pvData.votes || {};
+        // Si nada cambio desde la ultima consulta (caso normal cada 30 s), no se toca la pantalla.
+        const sigNueva = JSON.stringify([comunidad, misVotos, votosPredefinidos]);
+        if (sigNueva === comunidadSig) return;
+        comunidadSig = sigNueva;
         buildTodos();
-        if (!skipRender) render();
+        if (!skipRender) refreshCatalog();
       } catch (e) { console.error('Error cargando productos:', e); }
     }
     
@@ -681,7 +692,7 @@
             if (prod) { prod.votosUp = data.votes_up; prod.votosDown = data.votes_down; }
             if (data.eliminated) { comunidad = comunidad.filter(p => p.id !== id); }
           }
-          buildTodos(); render();
+          buildTodos(); refreshCatalog();
         }
       } catch (e) { console.error('Error votando:', e); }
     }
@@ -701,11 +712,19 @@
     const SATS_POR_BTC = 100000000;
     const BLOQUES_POR_HORA = 6;
     
-    let networkData = {
-      hashrate_ehs: 850, potencia_gw: 23.8,
-      tasa_sats_mj: 156, tasa_sats_kwh: 562,
-      loading: true, lastUpdate: null
-    };
+    // Sin cifras inventadas: el hashrate sale de mempool.space y, si falla, de Blockchain.com.
+    // Si fallan las dos: se usa el ultimo dato real guardado en este navegador, mostrando su fecha; si nunca hubo, no se muestran precios.
+    const RED_KEY = 'energyRed', RED_MIN_EH = 100, RED_MAX_EH = 20000, RED_TIMEOUT_MS = 15000;
+    const RED_SIN = { hashrate_ehs: null, potencia_gw: null, tasa_sats_mj: null, tasa_sats_kwh: null };
+    function redValido(e) { return typeof e === 'number' && isFinite(e) && e >= RED_MIN_EH && e <= RED_MAX_EH; }
+    function redGuardado() {
+      try {
+        const g = JSON.parse(localStorage.getItem(RED_KEY) || 'null');
+        if (g && redValido(g.ehs) && typeof g.at === 'number' && g.at > 0 && g.at <= Date.now() + 60000 && (g.src === 'mempool.space' || g.src === 'Blockchain.com')) return g;
+      } catch (e) {}
+      return null;
+    }
+    let networkData = { ...RED_SIN, phase: 'wait', src: null, at: null, loading: true, lastUpdate: null };
 
     function calcularTasa(hashrate_ehs) {
       const hashrate_ths = hashrate_ehs * 1000000;
@@ -718,22 +737,132 @@
       return { hashrate_ehs, potencia_gw: potencia_gw.toFixed(1), tasa_sats_mj: Math.round(tasa_sats_mj), tasa_sats_kwh: Math.round(tasa_sats_kwh) };
     }
 
-    async function fetchNetworkData() {
+    (function () { const g = redGuardado(); if (g) networkData = { ...calcularTasa(g.ehs), phase: 'last', src: g.src, at: g.at, loading: true, lastUpdate: null }; })();
+    async function redPedir(url, leer) {
+      let timer = 0;
       try {
-        const response = await fetch('https://mempool.space/api/v1/mining/hashrate/3d');
-        const data = await response.json();
-        if (data.currentHashrate) {
-          const hashrate_ehs = data.currentHashrate / 1e18;
-          networkData = { ...calcularTasa(hashrate_ehs), loading: false, lastUpdate: new Date() };
+        const ctl = new AbortController();
+        timer = setTimeout(function () { ctl.abort(); }, RED_TIMEOUT_MS);
+        const r = await fetch(url, { referrerPolicy: 'no-referrer', signal: ctl.signal });
+        if (!r.ok) return null;
+        const e = await leer(r);
+        return redValido(e) ? e : null;
+      } catch (error) { return null; } finally { clearTimeout(timer); }
+    }
+    let redOcupado = false;
+    async function fetchNetworkData() {
+      if (redOcupado) return;
+      redOcupado = true;
+      const habia = networkData.tasa_sats_mj != null;
+      try {
+        let src = 'mempool.space';
+        let ehs = await redPedir('https://mempool.space/api/v1/mining/hashrate/3d', async function (r) { const d = await r.json(); return d && typeof d.currentHashrate === 'number' ? d.currentHashrate / 1e18 : null; });
+        if (ehs === null) {
+          src = 'Blockchain.com';
+          ehs = await redPedir('https://blockchain.info/q/hashrate', async function (r) { const x = (await r.text()).trim(); return /^\d+(\.\d+)?(e\+?\d+)?$/i.test(x) ? Number(x) / 1e9 : null; });
         }
-      } catch (error) {
-        networkData = { ...calcularTasa(850), loading: false, lastUpdate: null };
-      }
+        if (ehs !== null) {
+          const at = Date.now();
+          networkData = { ...calcularTasa(ehs), phase: 'live', src: src, at: at, loading: false, lastUpdate: new Date(at) };
+          try { localStorage.setItem(RED_KEY, JSON.stringify({ ehs: ehs, at: at, src: src })); } catch (e) {}
+        } else if (habia) {
+          networkData = { ...networkData, phase: 'last', loading: false };
+        } else {
+          networkData = { ...RED_SIN, phase: 'none', src: null, at: null, loading: false, lastUpdate: null };
+        }
+      } finally { redOcupado = false; }
       initProducts();
-      if (tab !== 'calc') render();
+      const sigRed = JSON.stringify([networkData.hashrate_ehs === null ? null : Number(networkData.hashrate_ehs).toFixed(0), networkData.potencia_gw, networkData.tasa_sats_mj, networkData.tasa_sats_kwh, networkData.phase, networkData.src, networkData.phase === 'last' ? networkData.at : 0]);
+      if (sigRed === redSig) return;
+      redSig = sigRed;
+      if (!habia || networkData.tasa_sats_mj == null) render();
+      else if (tab !== 'calc') softRender();
+    }
+    function redReintentar() { networkData = { ...networkData, phase: networkData.tasa_sats_mj == null ? 'wait' : networkData.phase }; redSig = ''; render(); fetchNetworkData(); }
+    function redFecha(ms) {
+      const loc = { es: 'es', en: 'en', br: 'pt-BR', fr: 'fr' }[lang] || 'es';
+      try { return new Date(ms).toLocaleString(loc, { day: 'numeric', month: 'short', hour: '2-digit', minute: '2-digit' }); } catch (e) { return new Date(ms).toISOString().slice(0, 16).replace('T', ' '); }
+    }
+    function redEtiqueta(t) {
+      const base = Number(networkData.hashrate_ehs).toFixed(0) + ' EH/s · ' + networkData.potencia_gw + ' GW · ' + networkData.src;
+      if (networkData.phase === 'live') return '<div class="text-sky-300 text-sm" id="red-estado" data-phase="live">' + base + ' ✓</div>';
+      return '<div class="text-amber-300 text-sm" id="red-estado" data-phase="last">' + base + ' · ' + t.redUltimo + ': ' + redFecha(networkData.at) + '</div>';
     }
 
-    let TASA = 156;
+    let TASA = null;
+
+    // ========== MIGRACION POR ETAPAS (pestana) ==========
+    // Fuente: «Patron Energetico: precios basados en energia real usando Bitcoin como puente» (takepower.world, v6).
+    const MIG = {"es": {"tab": "💾 Migración por etapas", "introTitle": "Un proceso, no una solución mágica", "intro1": "Los precios en sats que muestra esta página son una referencia de piso, no el precio que una cosa «debería» tener. Mientras la energía no se cotice en Bitcoin, la calculadora sirve para estimar y comparar, no para fijar precios definitivos.", "intro2": "La propuesta de fondo es migrar el sistema económico a Bitcoin. Eso no ocurre por decreto ni gracias a una fórmula: ocurre poco a poco, a medida que productores, comunidades y gobiernos se ponen de acuerdo. Lo importante es hacer acuerdos y usar la imaginación.", "phasesTitle": "Las tres fases de la transición", "phasesIntro": "El Patrón Energético no busca precisión absoluta desde el primer día. Es un proceso que mejora con la adopción.", "now": "Estamos aquí", "lblData": "Fuente de datos", "lblPrec": "Precisión", "p1t": "Fase 1 · Estimaciones", "p1s": "Ahora", "p1d": "Tasa calculada a partir del hashrate + MJ estimados de la literatura científica.", "p1p": "Aproximada, pero útil para comparar productos entre sí.", "p1x": "Mientras la electricidad no se cotice en Bitcoin, los precios con energía incorporada son referencias de piso.", "p2t": "Fase 2 · Mercados mixtos", "p2s": "Transición", "p2d": "Costos energéticos reales pagados en sats.", "p2p": "Mejorada: datos parciales, pero reales.", "p2x": "A medida que más productores de energía acepten Bitcoin, los precios dejan de ser estimaciones. Un agricultor ya no estima MJ: suma lo que realmente pagó en sats a la cooperativa solar, al proveedor de diésel, etc.", "p3t": "Fase 3 · Madurez", "p3s": "Denominador común", "p3d": "Los mercados de energía cotizan directamente en Bitcoin.", "p3p": "Alta: precios de mercado reales.", "p3x": "El petróleo cotiza en sats por barril, el gas en sats por m³ y la electricidad en sats por kWh. La tasa sats/MJ surge del mercado, no de estimaciones.", "analogy": "Bitcoin ya recorrió este camino con el dinero: empezó valiendo cero, alguien pagó dos pizzas con 10.000 BTC y su precio se fue descubriendo en millones de transacciones. El Patrón Energético sigue el mismo camino.", "exTitle": "Ejemplo ilustrativo: un agricultor de café (1 kg)", "ex1": "Fase 1, por estimación: cultivo 8 MJ + procesamiento 4 MJ + transporte local 3 MJ = 15 MJ.", "ex2": "Fase 2, con costos reales en sats: bombeo de agua (cooperativa solar) 200 sats + secado (panel propio) 0 sats + transporte (diésel, de fiat a sats) 150 sats = 350 sats de precio piso.", "ex3": "En la fase 2 el agricultor ya no estima: suma lo que de verdad pagó y luego decide su margen según el mercado local.", "socialTitle": "Factor social (amplificador opcional)", "social1": "La fórmula base ya favorece a las renovables por eficiencia física: cocinar con inducción solar necesita 1 MJ y con un fogón de leña abierto 10,6 MJ para el mismo resultado. Pero las comunidades pueden decidir ir más allá.", "social2": "El factor social es un multiplicador opcional que premia o penaliza según la fuente de energía (la eficiencia ya está en los MJ). Es transparente y ajustable: cada comunidad decide el suyo según sus valores, como el impacto ambiental, la salud pública, la deforestación o sus compromisos internacionales.", "colSource": "Fuente de energía", "colFactor": "Factor", "colEffect": "Efecto", "rows": [["Solar directa", "×1,1", "Premio"], ["Renovable / nuclear", "×1,0", "Neutral"], ["Gas natural", "×0,9", "Penalización leve"], ["Diésel", "×0,8", "Penalización"], ["Carbón", "×0,6", "Penalización fuerte"]], "socialEq": "Precio (sats) = MJ × Factor social × Tasa (sats/MJ)", "socialNote": "La calculadora de esta página no aplica ningún factor social: es una decisión que toma cada comunidad, no nosotros.", "polTitle": "¿Por qué funciona políticamente?", "a1": "Al individualista", "q1": "Mira los números: cocinar con inducción cuesta {ind} sats; con leña, {lena} sats. Tu dinero rinde más con renovables. Y a largo plazo, el dólar pierde poder adquisitivo frente a los sats.", "a2": "Al colectivista", "q2": "Además de la eficiencia física, podemos agregar un factor social que penalice aún más los combustibles fósiles, transparente y decidido democráticamente por cada comunidad. El registro público de Bitcoin permite trazabilidad y permite pensar la infraestructura de Bitcoin y la producción energética como bienes comunes.", "a3": "Al escéptico", "q3": "La diferencia de eficiencia viene de Boltzmann y Carnot: física del siglo XIX, no una agenda política. El factor social es opcional y transparente.", "a4": "A los gobiernos y al Tratado sobre Combustibles Fósiles", "q4": "La inversión en renovables es termodinámicamente superior y el espacio fiscal se optimiza con física. El factor social puede alinearse con los compromisos internacionales.", "key": "La clave: la fórmula base ya incentiva las renovables por termodinámica y eficiencia física (exergía). El factor social amplifica ese incentivo para las comunidades que quieran ir más allá.", "closeTitle": "Ninguna fórmula reemplaza los acuerdos", "close1": "Las cifras de esta página son una herramienta para conversar, comparar y decidir. La transición la hacen las personas: cooperativas que empiezan a cobrar en sats, comunidades que eligen su factor social, productores que comparten sus costos reales.", "close2": "No hay atajos: hacen falta acuerdos e imaginación."}, "br": {"tab": "💾 Migração por etapas", "introTitle": "Um processo, não uma solução mágica", "intro1": "Os preços em sats que esta página mostra são uma referência de piso, não o preço que uma coisa «deveria» ter. Enquanto a energia não for cotada em Bitcoin, a calculadora serve para estimar e comparar, não para fixar preços definitivos.", "intro2": "A proposta de fundo é migrar o sistema econômico para o Bitcoin. Isso não acontece por decreto nem graças a uma fórmula: acontece aos poucos, à medida que produtores, comunidades e governos chegam a acordos. O importante é fazer acordos e usar a imaginação.", "phasesTitle": "As três fases da transição", "phasesIntro": "O Padrão Energético não busca precisão absoluta desde o primeiro dia. É um processo que melhora com a adoção.", "now": "Estamos aqui", "lblData": "Fonte de dados", "lblPrec": "Precisão", "p1t": "Fase 1 · Estimativas", "p1s": "Agora", "p1d": "Taxa calculada a partir do hashrate + MJ estimados da literatura científica.", "p1p": "Aproximada, mas útil para comparar produtos entre si.", "p1x": "Enquanto a eletricidade não for cotada em Bitcoin, os preços com energia incorporada são referências de piso.", "p2t": "Fase 2 · Mercados mistos", "p2s": "Transição", "p2d": "Custos energéticos reais pagos em sats.", "p2p": "Melhorada: dados parciais, mas reais.", "p2x": "À medida que mais produtores de energia aceitarem Bitcoin, os preços deixam de ser estimativas. Um agricultor já não estima MJ: soma o que realmente pagou em sats à cooperativa solar, ao fornecedor de diesel etc.", "p3t": "Fase 3 · Maturidade", "p3s": "Denominador comum", "p3d": "Os mercados de energia cotam diretamente em Bitcoin.", "p3p": "Alta: preços de mercado reais.", "p3x": "O petróleo é cotado em sats por barril, o gás em sats por m³ e a eletricidade em sats por kWh. A taxa sats/MJ surge do mercado, não de estimativas.", "analogy": "O Bitcoin já percorreu esse caminho com o dinheiro: começou valendo zero, alguém pagou duas pizzas com 10.000 BTC e seu preço foi sendo descoberto em milhões de transações. O Padrão Energético segue o mesmo caminho.", "exTitle": "Exemplo ilustrativo: um agricultor de café (1 kg)", "ex1": "Fase 1, por estimativa: cultivo 8 MJ + processamento 4 MJ + transporte local 3 MJ = 15 MJ.", "ex2": "Fase 2, com custos reais em sats: bombeamento de água (cooperativa solar) 200 sats + secagem (painel próprio) 0 sats + transporte (diesel, de fiat para sats) 150 sats = 350 sats de preço piso.", "ex3": "Na fase 2 o agricultor já não estima: soma o que realmente pagou e depois decide sua margem conforme o mercado local.", "socialTitle": "Fator social (amplificador opcional)", "social1": "A fórmula base já favorece as renováveis pela eficiência física: cozinhar com indução solar exige 1 MJ e com um fogão a lenha aberto 10,6 MJ para o mesmo resultado. Mas as comunidades podem decidir ir além.", "social2": "O fator social é um multiplicador opcional que premia ou penaliza conforme a fonte de energia (a eficiência já está nos MJ). É transparente e ajustável: cada comunidade decide o seu de acordo com seus valores, como o impacto ambiental, a saúde pública, o desmatamento ou seus compromissos internacionais.", "colSource": "Fonte de energia", "colFactor": "Fator", "colEffect": "Efeito", "rows": [["Solar direta", "×1,1", "Prêmio"], ["Renovável / nuclear", "×1,0", "Neutro"], ["Gás natural", "×0,9", "Penalização leve"], ["Diesel", "×0,8", "Penalização"], ["Carvão", "×0,6", "Penalização forte"]], "socialEq": "Preço (sats) = MJ × Fator social × Taxa (sats/MJ)", "socialNote": "A calculadora desta página não aplica nenhum fator social: é uma decisão de cada comunidade, não nossa.", "polTitle": "Por que funciona politicamente?", "a1": "Ao individualista", "q1": "Veja os números: cozinhar com indução custa {ind} sats; com lenha, {lena} sats. Seu dinheiro rende mais com renováveis. E, a longo prazo, o dólar perde poder de compra frente aos sats.", "a2": "Ao coletivista", "q2": "Além da eficiência física, podemos acrescentar um fator social que penalize ainda mais os combustíveis fósseis, transparente e decidido democraticamente por cada comunidade. O registro público do Bitcoin permite rastreabilidade e permite pensar a infraestrutura do Bitcoin e a produção de energia como bens comuns.", "a3": "Ao cético", "q3": "A diferença de eficiência vem de Boltzmann e Carnot: física do século XIX, não uma agenda política. O fator social é opcional e transparente.", "a4": "Aos governos e ao Tratado sobre Combustíveis Fósseis", "q4": "O investimento em renováveis é termodinamicamente superior e o espaço fiscal se otimiza com física. O fator social pode se alinhar com os compromissos internacionais.", "key": "A chave: a fórmula base já incentiva as renováveis por termodinâmica e eficiência física (exergia). O fator social amplifica esse incentivo para as comunidades que quiserem ir além.", "closeTitle": "Nenhuma fórmula substitui os acordos", "close1": "Os números desta página são uma ferramenta para conversar, comparar e decidir. A transição é feita pelas pessoas: cooperativas que começam a cobrar em sats, comunidades que escolhem seu fator social, produtores que compartilham seus custos reais.", "close2": "Não há atalhos: são necessários acordos e imaginação."}, "en": {"tab": "💾 Step-by-step migration", "introTitle": "A process, not a magic solution", "intro1": "The sat prices on this page are a floor reference, not the price something «should» have. Until energy is priced in Bitcoin, the calculator is for estimating and comparing, not for setting final prices.", "intro2": "The underlying proposal is to migrate the economic system to Bitcoin. That does not happen by decree or thanks to a formula: it happens gradually, as producers, communities and governments reach agreements. What matters is making agreements and using our imagination.", "phasesTitle": "The three phases of the transition", "phasesIntro": "The Energy Standard does not aim for absolute precision from day one. It is a process that improves with adoption.", "now": "We are here", "lblData": "Data source", "lblPrec": "Precision", "p1t": "Phase 1 · Estimates", "p1s": "Now", "p1d": "Rate computed from the hashrate + MJ estimated from the scientific literature.", "p1p": "Approximate, but useful for comparing products with each other.", "p1x": "Until electricity is priced in Bitcoin, prices based on embodied energy are floor references.", "p2t": "Phase 2 · Mixed markets", "p2s": "Transition", "p2d": "Real energy costs paid in sats.", "p2p": "Improved: partial but real data.", "p2x": "As more energy producers accept Bitcoin, prices stop being estimates. A farmer no longer estimates MJ: they add up what they actually paid in sats to the solar cooperative, the diesel supplier, and so on.", "p3t": "Phase 3 · Maturity", "p3s": "Common denominator", "p3d": "Energy markets are priced directly in Bitcoin.", "p3p": "High: real market prices.", "p3x": "Oil is priced in sats per barrel, gas in sats per m³ and electricity in sats per kWh. The sats/MJ rate emerges from the market, not from estimates.", "analogy": "Bitcoin already walked this path with money: it started out worth zero, someone paid for two pizzas with 10,000 BTC, and its price was discovered over millions of transactions. The Energy Standard follows the same path.", "exTitle": "Illustrative example: a coffee farmer (1 kg)", "ex1": "Phase 1, by estimate: growing 8 MJ + processing 4 MJ + local transport 3 MJ = 15 MJ.", "ex2": "Phase 2, with real costs in sats: water pumping (solar cooperative) 200 sats + drying (own panel) 0 sats + transport (diesel, fiat to sats) 150 sats = 350 sats floor price.", "ex3": "In phase 2 the farmer no longer estimates: they add up what they actually paid and then set their margin according to the local market.", "socialTitle": "Social factor (optional amplifier)", "social1": "The base formula already favors renewables through physical efficiency: cooking with solar induction takes 1 MJ, while an open wood fire takes 10.6 MJ for the same result. But communities can decide to go further.", "social2": "The social factor is an optional multiplier that rewards or penalizes according to the energy source (efficiency is already in the MJ). It is transparent and adjustable: each community sets its own according to its values, such as environmental impact, public health, deforestation or international commitments.", "colSource": "Energy source", "colFactor": "Factor", "colEffect": "Effect", "rows": [["Direct solar", "×1.1", "Reward"], ["Renewable / nuclear", "×1.0", "Neutral"], ["Natural gas", "×0.9", "Mild penalty"], ["Diesel", "×0.8", "Penalty"], ["Coal", "×0.6", "Strong penalty"]], "socialEq": "Price (sats) = MJ × Social factor × Rate (sats/MJ)", "socialNote": "The calculator on this page applies no social factor: that decision belongs to each community, not to us.", "polTitle": "Why does it work politically?", "a1": "To the individualist", "q1": "Look at the numbers: cooking with induction costs {ind} sats; with firewood, {lena} sats. Your money goes further with renewables. And in the long run, the dollar loses purchasing power against sats.", "a2": "To the collectivist", "q2": "Beyond physical efficiency, we can add a social factor that penalizes fossil fuels even more, transparent and decided democratically by each community. Bitcoin's public ledger allows traceability and lets us think of Bitcoin infrastructure and energy production as commons.", "a3": "To the skeptic", "q3": "The efficiency difference comes from Boltzmann and Carnot: 19th-century physics, not a political agenda. The social factor is optional and transparent.", "a4": "To governments and the Fossil Fuel Treaty", "q4": "Investing in renewables is thermodynamically superior, and fiscal space is optimized with physics. The social factor can be aligned with international commitments.", "key": "The key: the base formula already rewards renewables through thermodynamics and physical efficiency (exergy). The social factor amplifies that incentive for communities that want to go further.", "closeTitle": "No formula replaces agreements", "close1": "The figures on this page are a tool for talking, comparing and deciding. People make the transition: cooperatives that start charging in sats, communities that choose their social factor, producers that share their real costs.", "close2": "There are no shortcuts: it takes agreements and imagination."}, "fr": {"tab": "💾 Migration par étapes", "introTitle": "Un processus, pas une solution magique", "intro1": "Les prix en sats affichés sur cette page sont une référence plancher, pas le prix qu’une chose « devrait » avoir. Tant que l’énergie n’est pas cotée en Bitcoin, la calculatrice sert à estimer et à comparer, pas à fixer des prix définitifs.", "intro2": "La proposition de fond est de faire migrer le système économique vers Bitcoin. Cela n’arrive ni par décret ni grâce à une formule : cela se fait peu à peu, à mesure que producteurs, communautés et gouvernements trouvent des accords. L’essentiel est de passer des accords et de faire preuve d’imagination.", "phasesTitle": "Les trois phases de la transition", "phasesIntro": "Le Standard Énergétique ne vise pas une précision absolue dès le premier jour. C’est un processus qui s’améliore avec l’adoption.", "now": "Nous sommes ici", "lblData": "Source des données", "lblPrec": "Précision", "p1t": "Phase 1 · Estimations", "p1s": "Maintenant", "p1d": "Taux calculé à partir du hashrate + MJ estimés à partir de la littérature scientifique.", "p1p": "Approximative, mais utile pour comparer les produits entre eux.", "p1x": "Tant que l’électricité n’est pas cotée en Bitcoin, les prix fondés sur l’énergie incorporée sont des références plancher.", "p2t": "Phase 2 · Marchés mixtes", "p2s": "Transition", "p2d": "Coûts énergétiques réels payés en sats.", "p2p": "Améliorée : données partielles, mais réelles.", "p2x": "À mesure que davantage de producteurs d’énergie acceptent Bitcoin, les prix cessent d’être des estimations. Un agriculteur n’estime plus les MJ : il additionne ce qu’il a réellement payé en sats à la coopérative solaire, au fournisseur de diesel, etc.", "p3t": "Phase 3 · Maturité", "p3s": "Dénominateur commun", "p3d": "Les marchés de l’énergie sont cotés directement en Bitcoin.", "p3p": "Élevée : prix réels du marché.", "p3x": "Le pétrole est coté en sats par baril, le gaz en sats par m³ et l’électricité en sats par kWh. Le taux sats/MJ émerge du marché, et non d’estimations.", "analogy": "Bitcoin a déjà parcouru ce chemin avec la monnaie : il a commencé à valoir zéro, quelqu’un a payé deux pizzas avec 10 000 BTC, et son prix s’est découvert au fil de millions de transactions. Le Standard Énergétique suit le même chemin.", "exTitle": "Exemple illustratif : un producteur de café (1 kg)", "ex1": "Phase 1, par estimation : culture 8 MJ + transformation 4 MJ + transport local 3 MJ = 15 MJ.", "ex2": "Phase 2, avec des coûts réels en sats : pompage de l’eau (coopérative solaire) 200 sats + séchage (panneau personnel) 0 sat + transport (diesel, de fiat à sats) 150 sats = 350 sats de prix plancher.", "ex3": "En phase 2, le producteur n’estime plus : il additionne ce qu’il a réellement payé, puis fixe sa marge selon le marché local.", "socialTitle": "Facteur social (amplificateur optionnel)", "social1": "La formule de base favorise déjà les renouvelables par l’efficacité physique : cuisiner à l’induction solaire demande 1 MJ, contre 10,6 MJ sur un feu de bois ouvert, pour le même résultat. Mais les communautés peuvent décider d’aller plus loin.", "social2": "Le facteur social est un multiplicateur optionnel qui récompense ou pénalise selon la source d’énergie (l’efficacité est déjà dans les MJ). Il est transparent et ajustable : chaque communauté fixe le sien selon ses valeurs, comme l’impact environnemental, la santé publique, la déforestation ou ses engagements internationaux.", "colSource": "Source d’énergie", "colFactor": "Facteur", "colEffect": "Effet", "rows": [["Solaire direct", "×1,1", "Prime"], ["Renouvelable / nucléaire", "×1,0", "Neutre"], ["Gaz naturel", "×0,9", "Pénalité légère"], ["Diesel", "×0,8", "Pénalité"], ["Charbon", "×0,6", "Pénalité forte"]], "socialEq": "Prix (sats) = MJ × Facteur social × Taux (sats/MJ)", "socialNote": "La calculatrice de cette page n’applique aucun facteur social : c’est une décision qui revient à chaque communauté, pas à nous.", "polTitle": "Pourquoi cela fonctionne-t-il politiquement ?", "a1": "À l’individualiste", "q1": "Regarde les chiffres : cuisiner à l’induction coûte {ind} sats ; au bois, {lena} sats. Ton argent va plus loin avec les renouvelables. Et à long terme, le dollar perd du pouvoir d’achat face aux sats.", "a2": "Au collectiviste", "q2": "Au-delà de l’efficacité physique, nous pouvons ajouter un facteur social qui pénalise encore davantage les combustibles fossiles, transparent et décidé démocratiquement par chaque communauté. Le registre public de Bitcoin permet la traçabilité et permet de penser l’infrastructure de Bitcoin et la production d’énergie comme des biens communs.", "a3": "Au sceptique", "q3": "La différence d’efficacité vient de Boltzmann et de Carnot : de la physique du XIXe siècle, pas un agenda politique. Le facteur social est optionnel et transparent.", "a4": "Aux gouvernements et au Traité sur les combustibles fossiles", "q4": "Investir dans les renouvelables est thermodynamiquement supérieur, et l’espace budgétaire s’optimise avec la physique. Le facteur social peut s’aligner sur les engagements internationaux.", "key": "La clé : la formule de base favorise déjà les renouvelables par la thermodynamique et l’efficacité physique (exergie). Le facteur social amplifie cet incitatif pour les communautés qui veulent aller plus loin.", "closeTitle": "Aucune formule ne remplace les accords", "close1": "Les chiffres de cette page sont un outil pour discuter, comparer et décider. Ce sont les personnes qui font la transition : des coopératives qui commencent à facturer en sats, des communautés qui choisissent leur facteur social, des producteurs qui partagent leurs coûts réels.", "close2": "Il n’y a pas de raccourci : il faut des accords et de l’imagination."}};
+    function migEsc(x) { return String(x).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;'); }
+    function migHTML() {
+      const m = MIG[lang] || MIG.es;
+      const T = networkData.tasa_sats_mj;
+      const loc = { es: 'es', en: 'en', br: 'pt-BR', fr: 'fr' }[lang] || 'es';
+      const n = (x) => Math.round(x).toLocaleString(loc);
+      const q1 = migEsc(m.q1).replace('{ind}', n(1 * T)).replace('{lena}', n(10.6 * T));
+      const fase = (i, cur) => `
+            <div class="bg-[#071510] border-l-4 ${cur ? 'border-emerald-400' : 'border-gray-600'} p-4 rounded-r-lg" data-fase="${i}">
+              <div class="flex flex-wrap items-baseline justify-between gap-2 mb-2">
+                <h3 class="${cur ? 'text-emerald-300' : 'text-gray-200'} font-semibold">${migEsc(m['p' + i + 't'])} <span class="text-gray-500 font-normal text-sm">· ${migEsc(m['p' + i + 's'])}</span></h3>
+                ${cur ? `<span class="text-xs px-2 py-0.5 rounded-full bg-emerald-700/60 text-emerald-100">${migEsc(m.now)}</span>` : ''}
+              </div>
+              <p class="text-gray-400 text-sm"><span class="text-gray-300">${migEsc(m.lblData)}:</span> ${migEsc(m['p' + i + 'd'])}</p>
+              <p class="text-gray-400 text-sm mt-1"><span class="text-gray-300">${migEsc(m.lblPrec)}:</span> ${migEsc(m['p' + i + 'p'])}</p>
+              <p class="text-gray-400 text-sm mt-2">${migEsc(m['p' + i + 'x'])}</p>
+            </div>`;
+      const filas = m.rows.map(r => `
+              <div class="grid grid-cols-3 gap-2 py-2 border-b border-gray-800 text-sm"><span class="text-gray-300">${migEsc(r[0])}</span><span class="text-amber-400 font-mono text-center">${migEsc(r[1])}</span><span class="text-gray-400 text-right">${migEsc(r[2])}</span></div>`).join('');
+      const voz = (a, q) => `
+            <div class="bg-[#071510] border-l-4 border-sky-400 p-4 rounded-r-lg">
+              <h3 class="text-sky-300 font-medium mb-2">${migEsc(a)}</h3>
+              <p class="text-gray-400 text-sm italic">«${q}»</p>
+            </div>`;
+      return `
+        <div class="space-y-6" id="mig-panel">
+          <div class="bg-[#0d2620] rounded-2xl p-6 border border-emerald-800">
+            <h2 class="text-lg font-bold text-white mb-4">💾 ${migEsc(m.introTitle)}</h2>
+            <p class="text-gray-300 text-sm mb-3">${migEsc(m.intro1)}</p>
+            <p class="text-amber-200 text-sm font-medium">${migEsc(m.intro2)}</p>
+          </div>
+
+          <div class="bg-[#0d2620] rounded-2xl p-6 border border-emerald-800">
+            <h2 class="text-lg font-bold text-white mb-2">${migEsc(m.phasesTitle)}</h2>
+            <p class="text-gray-400 text-sm mb-4">${migEsc(m.phasesIntro)}</p>
+            <div class="space-y-3">${fase(1, true)}${fase(2, false)}${fase(3, false)}</div>
+            <p class="text-gray-300 text-sm mt-4">${migEsc(m.analogy)}</p>
+            <div class="bg-[#071510] border-l-4 border-amber-500 p-4 rounded-r-lg mt-4">
+              <h3 class="text-amber-400 font-medium mb-2">☕ ${migEsc(m.exTitle)}</h3>
+              <p class="text-gray-400 text-sm">${migEsc(m.ex1)} 15 × ${n(T)} = <strong class="text-emerald-400">${n(15 * T)} sats</strong></p>
+              <p class="text-gray-400 text-sm mt-2">${migEsc(m.ex2)}</p>
+              <p class="text-gray-500 text-sm mt-2">${migEsc(m.ex3)}</p>
+            </div>
+          </div>
+
+          <div class="bg-[#0d2620] rounded-2xl p-6 border border-emerald-800">
+            <h2 class="text-lg font-bold text-white mb-3">${migEsc(m.socialTitle)}</h2>
+            <p class="text-gray-400 text-sm mb-2">${migEsc(m.social1)}</p>
+            <p class="text-gray-400 text-sm mb-4">${migEsc(m.social2)}</p>
+            <div class="bg-[#071510] rounded-lg px-4 py-2 mb-4">
+              <div class="grid grid-cols-3 gap-2 py-2 border-b border-emerald-800 text-xs uppercase tracking-wide text-gray-500"><span>${migEsc(m.colSource)}</span><span class="text-center">${migEsc(m.colFactor)}</span><span class="text-right">${migEsc(m.colEffect)}</span></div>${filas}
+            </div>
+            <p class="text-emerald-300 font-mono text-sm bg-black/30 p-3 rounded break-words">${migEsc(m.socialEq)}</p>
+            <p class="text-gray-500 text-xs mt-3">${migEsc(m.socialNote)}</p>
+          </div>
+
+          <div class="bg-[#0d2620] rounded-2xl p-6 border border-emerald-800">
+            <h2 class="text-lg font-bold text-white mb-4">${migEsc(m.polTitle)}</h2>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-3">${voz(m.a1, q1)}${voz(m.a2, migEsc(m.q2))}${voz(m.a3, migEsc(m.q3))}${voz(m.a4, migEsc(m.q4))}</div>
+            <p class="text-white text-sm font-medium mt-4 bg-emerald-900/30 border border-emerald-700 rounded-lg p-4">🔑 ${migEsc(m.key)}</p>
+          </div>
+
+          <div class="bg-gradient-to-r from-[#0d2620] to-[#15403a] rounded-2xl p-6 border border-amber-600/60 text-center">
+            <h2 class="text-lg font-bold text-amber-300 mb-3">🤝 ${migEsc(m.closeTitle)}</h2>
+            <p class="text-gray-300 text-sm mb-3">${migEsc(m.close1)}</p>
+            <p class="text-white font-semibold">✨ ${migEsc(m.close2)}</p>
+          </div>
+        </div>`;
+    }
     function updateTASA() { TASA = networkData.tasa_sats_mj; }
 
     // ========== FUNCIONES ==========
@@ -1085,7 +1214,8 @@
       const tabBtns = [
         {id:'catalog', label:t.tabCatalog},
         {id:'calc', label:t.tabCalculate},
-        {id:'how', label:t.tabHow}
+        {id:'how', label:t.tabHow},
+        {id:'mig', label:(MIG[lang] || MIG.es).tab}
       ].map(tb => 
         `<button onclick="setTab('${tb.id}')" class="px-4 py-2 rounded-lg text-sm font-medium transition ${tab===tb.id ? 'bg-emerald-600 text-white' : 'bg-[#0d2620] text-emerald-200 border border-emerald-800 hover:border-emerald-600'}">${tb.label}</button>`
       ).join('');
@@ -1311,7 +1441,7 @@
 
       // How it works panel
       const hr = networkData.hashrate_ehs.toFixed ? networkData.hashrate_ehs.toFixed(0) : networkData.hashrate_ehs;
-      const ths = (typeof networkData.hashrate_ehs === 'number' ? networkData.hashrate_ehs : 850) * 1000000;
+      const ths = networkData.hashrate_ehs * 1000000;
       const mj_h = (ths * EFICIENCIA_J_TH * 3600) / 1000000;
       const sats_h = REWARD_BTC * SATS_POR_BTC * BLOQUES_POR_HORA;
 
@@ -1432,7 +1562,7 @@
               <span class="text-amber-500 font-bold text-xl">${T} sats/MJ</span>
               <span class="text-gray-400 ml-2">· ${networkData.tasa_sats_kwh} sats/kWh</span>
             </div>
-            <div class="text-sky-300 text-sm">${hr} EH/s · ${networkData.potencia_gw} GW · mempool.space ${networkData.loading ? '⏳' : '✓'}</div>
+            ${redEtiqueta(t)}
           </div>
 
           <div class="flex flex-wrap gap-2 mb-6">${tabBtns}</div>
@@ -1454,11 +1584,12 @@
 
           <div class="panel ${tab==='calc'?'active':''}">${calcHTML}</div>
           <div class="panel ${tab==='how'?'active':''}">${howHTML}</div>
+          <div class="panel ${tab==='mig'?'active':''}">${tab==='mig' ? migHTML() : ''}</div>
 
           <footer class="text-center py-8 mt-8 border-t border-emerald-900">
             <p class="text-gray-400">⚡ ${t.title} — Open Source</p>
             <p class="text-gray-500 italic text-sm mt-2">${t.footerQuote}</p>
-            <div class="mt-4"><a href="/privacy/" class="text-emerald-400/50 hover:text-emerald-300 text-xs">Privacy Policy</a></div>
+            <div class="mt-4"><a href="/privacy/" class="text-emerald-400/50 hover:text-emerald-300 text-xs">${t.privacyLink}</a></div>
           </footer>
         </div>
       `;
@@ -1509,6 +1640,60 @@
           btn.classList.add('border-gray-600', 'text-gray-400');
         }
       });
+    }
+
+    // ---- Parche nov-2026: redibujar sin borrar lo que la persona esta haciendo ----
+    const renderConDato = render;
+    function renderSinDato() {
+      const t = texts[lang] || texts.es;
+      const esperando = networkData.phase === 'wait';
+      const langBtns = ['es','br','fr','en'].map(l => `<button onclick="setLang('${l}')" class="px-3 py-1 rounded text-sm ${lang===l ? 'bg-emerald-600 text-white' : 'bg-[#0d2620] text-emerald-200 hover:bg-emerald-700'}">${l.toUpperCase()}</button>`).join('');
+      document.getElementById('app').innerHTML = `
+        <div class="max-w-6xl mx-auto p-4">
+          <div class="flex flex-wrap justify-between items-center gap-2 mb-4">
+            <a href="https://takepower.world/" class="px-3 py-1 rounded text-sm bg-[#0d2620] text-emerald-200 hover:bg-emerald-600 hover:text-white">← ${t.redVolver}</a>
+            <div class="flex gap-2">${langBtns}</div>
+          </div>
+          <div class="bg-gradient-to-r from-[#0d2620] to-[#15403a] rounded-2xl p-6 mb-6 text-center border border-emerald-800">
+            <h1 class="text-2xl md:text-3xl font-bold text-white mb-2">⚡ ${t.title} ₿</h1>
+            <p class="text-emerald-200">${t.subtitle}</p>
+          </div>
+          <div id="red-aviso" data-phase="${esperando ? 'wait' : 'none'}" class="bg-[#0d2620] border-l-4 ${esperando ? 'border-sky-400' : 'border-amber-500'} rounded-r-lg p-6 mb-6">
+            <p class="${esperando ? 'text-sky-200' : 'text-amber-200'}">${esperando ? '⏳ ' + t.redCargando : t.redSinDato}</p>
+            ${esperando ? '' : `<button onclick="redReintentar()" class="mt-4 px-4 py-2 rounded-lg bg-emerald-600 hover:bg-emerald-500 text-white font-semibold">${t.redReintentar}</button>`}
+          </div>
+          <footer class="text-center py-8 mt-8 border-t border-emerald-900">
+            <p class="text-gray-400">⚡ ${t.title} — Open Source</p>
+            <p class="text-gray-500 italic text-sm mt-2">${t.footerQuote}</p>
+            <div class="mt-4"><a href="/privacy/" class="text-emerald-400/50 hover:text-emerald-300 text-xs">${t.privacyLink}</a></div>
+          </footer>
+        </div>`;
+    }
+    render = function () { if (networkData.tasa_sats_mj == null) renderSinDato(); else renderConDato(); };
+    const renderBase = render;
+    render = function () {
+      const s0 = document.getElementById('search-input');
+      const sv = s0 ? s0.value : '';
+      const foc = !!(s0 && document.activeElement === s0);
+      const ca = foc ? s0.selectionStart : null, cb = foc ? s0.selectionEnd : null;
+      const y = window.scrollY;
+      renderBase();
+      const s1 = document.getElementById('search-input');
+      if (s1 && sv) { s1.value = sv; renderProducts(); }
+      if (s1 && foc) { try { s1.focus({ preventScroll: true }); s1.setSelectionRange(ca, cb); } catch (e) {} }
+      if (window.scrollY !== y) window.scrollTo(0, y);
+    };
+    // Actualiza solo la cuadricula de productos (si esta en pantalla): conserva busqueda, foco y desplazamiento.
+    function refreshCatalog() { if (document.getElementById('products-grid')) renderProducts(); }
+    // Redibujo por temporizador: si la persona esta escribiendo en un campo, se pospone.
+    let softPend = false;
+    function softRender() {
+      const a = document.activeElement;
+      if (a && /^(INPUT|TEXTAREA|SELECT)$/.test(a.tagName)) {
+        if (!softPend) { softPend = true; setTimeout(function () { softPend = false; softRender(); }, 5000); }
+        return;
+      }
+      render();
     }
 
     // Init

@@ -1,0 +1,11 @@
+[Unit]
+Description=Vigilante independiente del Baul (revisa las salidas de phoenixd; frena si algo no cuadra)
+After=network.target
+
+[Service]
+Type=oneshot
+EnvironmentFile=-/etc/vigilante.env
+ExecStart=/usr/bin/node /opt/fondo/vigilante/vigilante.js
+TimeoutStartSec=120
+Nice=10
+SyslogIdentifier=vigilante

@@ -1,0 +1,14 @@
+[Unit]
+Description=Phoenix Lightning Daemon
+After=network.target
+
+[Service]
+Type=simple
+User=root
+WorkingDirectory=/opt/fondo/phoenixd-0.7.1-linux-x64
+ExecStart=/opt/fondo/phoenixd-0.7.1-linux-x64/phoenixd
+Restart=always
+RestartSec=10
+
+[Install]
+WantedBy=multi-user.target
